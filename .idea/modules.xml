@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:\IntelliJ_IDEA_workspace\dbcourses\dbcourse.iml" filepath="E:\IntelliJ_IDEA_workspace\dbcourses\dbcourse.iml" />
       <module fileurl="file://$PROJECT_DIR$/dbcourses.iml" filepath="$PROJECT_DIR$/dbcourses.iml" />
     </modules>
   </component>
