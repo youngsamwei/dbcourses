@@ -346,7 +346,9 @@ h1 {
         $('#editor').append(html);
 
         var ue =  resetEditor("myEditor");
-        //ue.setContent("");
+        ue.ready(function(){
+            ue.setContent("");
+        });
         $("#dlg").dialog("open").dialog("setTitle", "添加文本信息");
         url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId;
     }
@@ -367,7 +369,6 @@ h1 {
                 $.messager.alert("系统提示", "保存成功");
                 $("#dlg").dialog("close");
 
-                resetValue();
             }
         });
     }
@@ -384,13 +385,13 @@ h1 {
 
         var $target = $('#' + contentid);
         var content = $target.html();
-
-        ue.setContent(content);
+        ue.ready(function(){
+            ue.setContent(content);
+        });
         url = "/paragraph/edit.do?id="  + id;
     }
     function closeArticleDialog() {
         $("#dlg").dialog("close");
-        resetValue();
     }
 
 //Html编码获取Html转义实体
