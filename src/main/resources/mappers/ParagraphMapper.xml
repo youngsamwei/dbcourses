@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IParagraphDao">
+  <resultMap type="Paragraph" id="ParagraphResult">
+    <result property="id" column="id"/>
+    <result property="knowledgepointId" column="knowledgepointId"/>
+    <result property="paragraphOrder" column="paragraphOrder"/>
+    <result property="paragraphTitle" column="paragraphTitle"/>
+    <result property="paragraphContent" column="paragraphContent"/>
+    <result property="paragraphCreateDate" column="paragraphCreateDate"/>
+    <result property="addName" column="addName"/>
+  </resultMap>
+
+  <!-- 插入一个段落时，需要指定段落位置，该位置后面的段落编号+1 -->
+  <update id="updateParagraphOrder" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder + 1
+    where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
+
+</mapper>
