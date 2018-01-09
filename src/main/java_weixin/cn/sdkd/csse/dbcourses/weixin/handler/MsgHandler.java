@@ -1,6 +1,5 @@
 package cn.sdkd.csse.dbcourses.weixin.handler;
 
-import cn.sdkd.csse.dbcourses.dao.IKnowledgepointDao;
 import cn.sdkd.csse.dbcourses.entity.Knowledgepoint;
 import cn.sdkd.csse.dbcourses.service.IKnowledgepointService;
 import cn.sdkd.csse.dbcourses.weixin.builder.TextBuilder;
@@ -13,7 +12,6 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutNewsMessage;
 import me.chanjar.weixin.mp.builder.outxml.NewsBuilder;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -73,13 +71,13 @@ public class MsgHandler extends AbstractHandler {
       WxMpXmlOutNewsMessage.Item item = new WxMpXmlOutNewsMessage.Item();
       item.setTitle("数据库课程资源");
       item.setDescription("数据库知识点展示");
-      item.setPicUrl("http://0.xiaoqrobot.duapp.com/images/avatar_liufeng.jpg");
-      item.setUrl("http://dbcourses.free.ngrok.cc/index.html");
+      item.setPicUrl("");
+      item.setUrl("http://dbcourses.free.ngrok.cc/index.html?q=2");
       return WxMpXmlOutMessage.NEWS().addArticle(item).fromUser(wxMessage.getToUser())
         .toUser(wxMessage.getFromUser()).build();
     }
 
-    String content = "回复信息内容";
+    String content = "抱歉，没有查询到您输入的内容。";
     return new TextBuilder().build(content, wxMessage, weixinService);
 
   }

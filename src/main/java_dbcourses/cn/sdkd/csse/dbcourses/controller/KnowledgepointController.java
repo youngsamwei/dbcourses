@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -28,7 +29,13 @@ public class KnowledgepointController extends BaseController {
   @RequestMapping("/list")
   public List<Knowledgepoint> list(Knowledgepoint knowledgepoint) {
     EntityWrapper ew = new EntityWrapper();
-    ew.eq("id", knowledgepoint.getId());
+    if (knowledgepoint.getId() != null) {
+      ew.eq("id", knowledgepoint.getId());
+    } else if (knowledgepoint.getKnowledgepointName() != null){
+      ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
+    }else{
+      /*错误处理*/
+    }
     List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
     return ls;
   }
