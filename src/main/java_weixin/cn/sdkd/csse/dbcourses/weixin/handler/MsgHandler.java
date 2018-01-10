@@ -15,6 +15,7 @@ import me.chanjar.weixin.mp.builder.outxml.NewsBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,9 +48,9 @@ public class MsgHandler extends AbstractHandler {
       // 可以选择将消息保存到本地
     }
 
-    EntityWrapper ew = new EntityWrapper();
-    ew.like("knowledgepointName", wxMessage.getContent());
-    List<Knowledgepoint> kps = knowledgepointService.selectList(ew);
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("knowledgepointName", "%" + wxMessage.getContent() + "%");
+    List<Knowledgepoint> kps = knowledgepointService.selectTopTenByName(params);
     if (kps.size() > 0) {
       NewsBuilder nb = WxMpXmlOutMessage.NEWS();
       /*TODO：1)控制单个消息的条数，不超过10条
@@ -60,7 +61,7 @@ public class MsgHandler extends AbstractHandler {
         WxMpXmlOutNewsMessage.Item article1 = new WxMpXmlOutNewsMessage.Item();
         article1.setTitle(kp.getKnowledgepointName());
         article1.setDescription("");
-        article1.setUrl("http://dbcourses.free.ngrok.cc/index.html?q=" + kp.getId());
+        article1.setUrl("http://dbcourses.free.ngrok.cc/index.html?qid=" + kp.getId());
         nb.addArticle(article1);
       }
       return nb.fromUser(wxMessage.getToUser())

@@ -143,6 +143,18 @@ h1 {
       <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 </div>
 
+<div id="dlg_add_knowledgepoint" class="easyui-dialog"
+     style="width: 500px;height:150px;padding: 10px 20px; position: relative; z-index:1000;"
+     closed="true" buttons="#dlg_add_knowledgepoint_buttons"  data-options="modal:true ">
+    <input id="input_knowledgepoint" name="konwledgepointName" class="easyui-textbox" style="width:400px" ></input>
+</div>
+
+<div id="dlg_add_knowledgepoint_buttons">
+    <a href="javascript:addKnowledgepoint()" class="easyui-linkbutton"
+       iconCls="icon-ok">确定</a> <a href="javascript:closeKnowledgepointAddDialog()"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+</div>
+
 <div id="dlg" class="easyui-dialog"
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
      closed="true" buttons="#dlg-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
@@ -206,6 +218,14 @@ h1 {
           prompt: '请输入内容',
          });
 
+         /*为增加知识点的文本框增加回车事件。*/
+         $('#input_knowledgepoint').bind('keypress',function(event){
+            if(event.keyCode == "13")
+            {
+                addKnowledgepoint();
+            }
+        });
+
     }
 
     function getQueryString(name) {
@@ -218,7 +238,7 @@ h1 {
     function displayTitle(result ){
           var knowledgepointId = result[0].id;
                  var knowledgepointName = result[0].knowledgepointName;
-                var button0 = "<a href='javascript:void(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
+                var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
                 /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
                 var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ")' class='middle_button top_button fa fa-plus' title='在当前知识点最后增加一个段落'> 增加段落</a> ";
                 var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
@@ -339,6 +359,32 @@ h1 {
                             }
                         });
 
+    }
+
+    function openKnowledgepointAddDialog(){
+            $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
+    }
+    function closeKnowledgepointAddDialog(){
+            $("#dlg_add_knowledgepoint").dialog("close");
+    }
+    function addKnowledgepoint(){
+        var knowledgepointName = $('#input_knowledgepoint').val();
+        $.ajax({
+            type: "POST",
+            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            dataType: "json",
+            success: function (result) {
+               closeKnowledgepointAddDialog();
+               window.location.href='index.html?qname='+knowledgepointName;
+            },
+            "error": function (result) {
+                var response = result.responseText;
+                alert('errot');
+            }
+
+        });
     }
 
     function openArticleAddDialog(knowledgepointId) {

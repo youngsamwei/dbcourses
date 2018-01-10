@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IKnowledgepointDao">
+  <resultMap type="Knowledgepoint" id="KnowledgepointResult">
+    <result property="id" column="id"/>
+    <result property="knowledgepointName" column="knowledgepointName"/>
+    <result property="knowledgepointCreateDate" column="knowledgepointCreateDate"/>
+    <result property="addName" column="addName"/>
+  </resultMap>
+
+  <!-- 通用查询结果列-->
+  <sql id="Base_Column_List">
+    id, knowledgepointName, knowledgepointCreateDate, addName
+  </sql>
+
+  <select id="selectTopTenByName" resultType="Knowledgepoint" parameterType="Map">
+    select id, knowledgepointName, knowledgepointCreateDate, addName
+    from Knowledgepoint
+    where knowledgepointName like #{knowledgepointName}
+    limit 8
+  </select>
+
+</mapper>
