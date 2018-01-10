@@ -15,6 +15,7 @@
     id, knowledgepointName, knowledgepointCreateDate, addName
   </sql>
 
+  <!--  微信ArticleCount限制，说明为10， 但只能设置为8，否则微信会报服务器出现故障的错误 -->
   <select id="selectTopTenByName" resultType="Knowledgepoint" parameterType="Map">
     select id, knowledgepointName, knowledgepointCreateDate, addName
     from Knowledgepoint

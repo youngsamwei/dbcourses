@@ -107,6 +107,10 @@ h1 {
 .fa-thumbs-up:before{content:"\f164"}
 .fa-thumbs-down:before{content:"\f165"}
 .fa-money:before{content:"\f0d6"}
+
+.kbknowledgepoint{max-width:800px; margin:0 auto;}  /* 最大宽度，居中 */
+.kbparagraph{max-width:800px; margin:0 auto;}
+
 </style>
 </head>
 <body>
@@ -412,9 +416,9 @@ h1 {
                 return $(this).form("validate");
             },
             success: function (result) {
-                $.messager.alert("系统提示", "保存成功");
-                $("#dlg").dialog("close");
 
+                $("#dlg").dialog("close");
+                location.reload() ;
             }
         });
     }
