@@ -16,15 +16,35 @@ function loadKnowledgepointParagraph (qid){
             data: "{}",
             dataType: "json",
             success: function (result) {
-                displayTitle(result);
-                displayDescBlocks(result);
-                /*如果是查询跳转过来的，则需要关闭查询窗口。*/
-                closeSearchDialog();
-
+                if (result.length <=0)
+                {
+                     $.messager.show({
+                         title:'错误',
+                         msg:'没有查到知识点',
+                         showType:'fade',
+                         style:{
+                             right:'',
+                             bottom:''
+                         }
+                     });
+                }else{
+                    displayTitle(result);
+                    displayDescBlocks(result);
+                    /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+                    closeSearchDialog();
+                }
             },
             "error": function (result) {
                 var response = result.responseText;
-                alert('errot');
+                $.messager.show({
+                    title:'错误',
+                    msg:'没有查到知识点',
+                    showType:'fade',
+                    style:{
+                        right:'',
+                        bottom:''
+                    }
+                });
             }
         });
 }
