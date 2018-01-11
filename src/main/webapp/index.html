@@ -33,6 +33,7 @@
   <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_load.js"></script>
 
   <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
+  <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
 
 </head>
 <body>
@@ -59,7 +60,8 @@
 
   </div>
 
-  <div id="search-result">
+  <div id="search_result">
+    <div id='kp_inner'></div>
     <!-- 在此显示查询结果-->
   </div>
   <div id="dlg-search-buttons">
@@ -69,7 +71,7 @@
 
 <div id="dlg_add_knowledgepoint" class="easyui-dialog"
      style="width: 260px;height:130px;padding: 10px 20px; position: relative; z-index:1000;"
-     closed="true" buttons="#dlg_add_knowledgepoint_buttons"  data-options="modal:true ">
+     closed="true" maximizable="false" closable="false" buttons="#dlg_add_knowledgepoint_buttons"  data-options="modal:true">
     <input id="input_knowledgepoint" name="konwledgepointName" class="easyui-textbox" style="width:200px" ></input>
 
   <div id="dlg_add_knowledgepoint_buttons">
@@ -111,7 +113,8 @@
         */
         $('#ss').searchbox({
           searcher: function (value, name) {
-             window.location.href='index.html?qname='+value;
+              doSearchKnowledge(value, name);
+             /*window.location.href='index.html?qname='+value;*/
           },
           menu: '#box',
           prompt: '请输入内容',

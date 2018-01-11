@@ -138,11 +138,3 @@
         });
     }
 
-
-    function openSearchDialog(){
-        $("#dlg_search").dialog("open").dialog("setTitle", "查询");
-    }
-
-    function closeSearchDialog() {
-        $("#dlg_search").dialog("close");
-    }
