@@ -1,27 +1,26 @@
 
-function loadKnowledgepointParagraph (){
+function loadKnowledgepointParagraph (qid){
 
-        var qname  = getQueryString("qname");
-        var qid = getQueryString("qid");
-        var qstr = "";
-        if ((qid != '') && (qid != null)){
-          qstr = "id=" + qid;
-         }else if ((qname != '') && (qname != null)){
-          qstr = "knowledgepointName=" + qname;
-         }else{
-          /*出错处理*/
-         }
-         qstr = encodeURI(qstr);
+        $("#kbknowledgepoint").remove();
+        $("#kbparagraph").remove();
+
+       $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+        $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+
+        qstr = "id=" + qid;
+
         $.ajax({
             type: "POST",
-            url: "/knowledgepoint/list.do?"+qstr,
+            url: "/knowledgepoint/list.do?" + qstr,
             contentType: "application/json; charset=utf-8",
             data: "{}",
             dataType: "json",
             success: function (result) {
                 displayTitle(result);
                 displayDescBlocks(result);
-                /*setEditor();*/
+                /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+                closeSearchDialog();
+
             },
             "error": function (result) {
                 var response = result.responseText;
@@ -39,22 +38,22 @@ function loadKnowledgepointParagraph (){
 
     /*获取并显示知识点的名字*/
     function displayTitle(result ){
-          var knowledgepointId = result[0].id;
-                var knowledgepointName = result[0].knowledgepointName;
-                var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
-                /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-                var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
-                var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
-                var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
+        var knowledgepointId = result[0].id;
+        var knowledgepointName = result[0].knowledgepointName;
+        var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
+        /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
+        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
+        var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
+        var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
 
-                var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-                    button2, button1, button3, button0,
-                    "<div  id='content_" + knowledgepointId + "'>",
-                   '<h1>',  knowledgepointName,'</h1>',
-                    "</div>",
-                    "</div></P>"].join('\n');
-                //console.log(itemHTML);
-                $(".kbknowledgepoint").append(itemHTML);
+        var itemHTML = ["<P ><div style='background: #F0F8FF'>",
+            button2, button1, button3, button0,
+            "<div  id='content_" + knowledgepointId + "'>",
+           '<h1>',  knowledgepointName,'</h1>',
+            "</div>",
+            "</div></P>"].join('\n');
+        //console.log(itemHTML);
+        $(".kbknowledgepoint").append(itemHTML);
 
     }
     /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/

@@ -38,10 +38,10 @@
 </head>
 <body>
 
-<div class="kbknowledgepoint">
+<div id='kbknowledgepoint' class='kbknowledgepoint'>
 
 </div>
-<div class="kbparagraph">
+<div id='kbparagraph' class="kbparagraph">
 
 </div>
 
@@ -128,7 +128,8 @@
             }
         });
 
-        loadKnowledgepointParagraph();
+        var qid = getQueryString("qid");
+        loadKnowledgepointParagraph(qid);
     })
 
 
