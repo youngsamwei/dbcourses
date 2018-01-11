@@ -4,6 +4,7 @@ import cn.sdkd.csse.dbcourses.entity.Knowledgepoint;
 import cn.sdkd.csse.dbcourses.entity.Paragraph;
 
 import cn.sdkd.csse.dbcourses.service.IParagraphService;
+import cn.sdkd.csse.dbcourses.utils.DateUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -41,8 +42,15 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/add")
   @ResponseBody
   public Object add(@Valid Paragraph paragraph) {
-    paragraphService.insert(paragraph);
-    return renderSuccess("添加成功！");
+
+    try {
+      paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
+      paragraphService.insert(paragraph);
+      return renderSuccess("添加成功！");
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
+      return this.renderError(e.getLocalizedMessage());
+    }
   }
 
   @RequestMapping("/edit")
