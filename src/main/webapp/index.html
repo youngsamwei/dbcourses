@@ -112,9 +112,9 @@ h1 {
 .kbparagraph{max-width:800px; margin:0 auto;}
 
 </style>
+
 </head>
 <body>
-
 
 <div class="kbknowledgepoint">
 
@@ -141,27 +141,29 @@ h1 {
   <div id="search-result">
     <!-- 在此显示查询结果-->
   </div>
+  <div id="dlg-search-buttons">
+    <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+  </div>
 </div>
 
-<div id="dlg-search-buttons">
-      <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-</div>
 
 <div id="dlg_add_knowledgepoint" class="easyui-dialog"
      style="width: 500px;height:150px;padding: 10px 20px; position: relative; z-index:1000;"
      closed="true" buttons="#dlg_add_knowledgepoint_buttons"  data-options="modal:true ">
     <input id="input_knowledgepoint" name="konwledgepointName" class="easyui-textbox" style="width:400px" ></input>
-</div>
 
-<div id="dlg_add_knowledgepoint_buttons">
+  <div id="dlg_add_knowledgepoint_buttons">
     <a href="javascript:addKnowledgepoint()" class="easyui-linkbutton"
        iconCls="icon-ok">确定</a> <a href="javascript:closeKnowledgepointAddDialog()"
                                    class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+  </div>
 </div>
 
-<div id="dlg" class="easyui-dialog"
+
+
+<div id="dlg_edit_paragraph" class="easyui-dialog"
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
-     closed="true" buttons="#dlg-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
+     closed="true" buttons="#dlg_edit_paragraph_buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
   <form id="fm" method="post">
     <table cellspacing="8px">
       <tr>
@@ -170,20 +172,24 @@ h1 {
       </tr>
     </table>
   </form>
+
+  <div id="dlg_edit_paragraph_buttons">
+    <a href="javascript:saveArticle()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a> <a href="javascript:closeArticleDialog()"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+  </div>
 </div>
 
-<div id="dlg-buttons">
-  <a href="javascript:saveArticle()" class="easyui-linkbutton"
-     iconCls="icon-ok">保存</a> <a href="javascript:closeArticleDialog()"
-                                 class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-</div>
+
 
 </body>
 
 <script>
+
     /*增加，编辑时使用的交互的url*/
     var url = "";
-    window.onload = function () {
+    $(window).load ( function () {
+
         var qname  = getQueryString("qname");
         var qid = getQueryString("qid");
         var qstr = "";
@@ -194,6 +200,7 @@ h1 {
          }else{
           /*出错处理*/
          }
+         qstr = encodeURI(qstr);
         $.ajax({
             type: "POST",
             url: "/knowledgepoint/list.do?"+qstr,
@@ -210,6 +217,7 @@ h1 {
                 alert('errot');
             }
         });
+
 
         /*查询, 可以尝试增加自动补全功能。
         TODO:点击搜索按钮后弹出搜索对话框，支持实时查询数据库自动补全，点击搜索按钮后列出查询结果。
@@ -230,7 +238,7 @@ h1 {
             }
         });
 
-    }
+    })
 
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -244,7 +252,7 @@ h1 {
                  var knowledgepointName = result[0].knowledgepointName;
                 var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
                 /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-                var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ")' class='middle_button top_button fa fa-plus' title='在当前知识点最后增加一个段落'> 增加段落</a> ";
+                var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
                 var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
                 var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
 
@@ -272,11 +280,11 @@ h1 {
                     $.each(paragraphs, function (index, element) {
                         var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
                           : htmlDecode(element.paragraphContent);
-
+                        var paragraphOrder = element.paragraphOrder + 1;
                         var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
                         var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
                         var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
-                        var button4 = "<a href='javascript:void(0)' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
+                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
 
                         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
                             button1, button4, button2, button3,
@@ -391,7 +399,7 @@ h1 {
         });
     }
 
-    function openArticleAddDialog(knowledgepointId) {
+    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
         var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
         $('#editor').append(html);
 
@@ -399,8 +407,8 @@ h1 {
         ue.ready(function(){
             ue.setContent("");
         });
-        $("#dlg").dialog("open").dialog("setTitle", "添加文本信息");
-        url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId;
+        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "添加段落");
+        url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
     }
 
     function openSearchDialog(){
@@ -417,7 +425,7 @@ h1 {
             },
             success: function (result) {
 
-                $("#dlg").dialog("close");
+                $("#dlg_edit_paragraph").dialog("close");
                 location.reload() ;
             }
         });
@@ -425,8 +433,8 @@ h1 {
 
     function openArticleModifyDialog(id, contentid) {
 
-        $("#dlg").dialog("open").dialog("setTitle", "编辑段落");
-        $('#dlg').window('center');
+        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "编辑段落");
+        $('#dlg_edit_paragraph').window('center');
 
         var html = '<div id="myEditor" name="paragraphContent"></div>';
         $('#editor').append(html);
@@ -441,7 +449,7 @@ h1 {
         url = "/paragraph/edit.do?id="  + id;
     }
     function closeArticleDialog() {
-        $("#dlg").dialog("close");
+        $("#dlg_edit_paragraph").dialog("close");
     }
 
 //Html编码获取Html转义实体
