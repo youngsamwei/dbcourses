@@ -45,10 +45,37 @@
         url = "/paragraph/edit.do?id="  + id;
 
     }
+
     function closeArticleDialog() {
         $("#dlg_edit_paragraph").dialog("close");
     }
 
+    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
+        var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
+        $('#editor').append(html);
+
+        var ue =  resetEditor("myEditor");
+        ue.ready(function(){
+            ue.setContent("");
+            ue.focus();
+        });
+        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "添加段落");
+        url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
+    }
+
+    function saveArticle() {
+        $("#fm").form("submit", {
+            url: url,
+            onSubmit: function () {
+                return $(this).form("validate");
+            },
+            success: function (result) {
+
+                $("#dlg_edit_paragraph").dialog("close");
+                location.reload() ;
+            }
+        });
+    }
 
     function deleteArticle(paragraphId) {
 
@@ -111,32 +138,6 @@
         });
     }
 
-    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
-        var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
-        $('#editor').append(html);
-
-        var ue =  resetEditor("myEditor");
-        ue.ready(function(){
-            ue.setContent("");
-            ue.focus();
-        });
-        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "添加段落");
-        url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
-    }
-
-    function saveArticle() {
-        $("#fm").form("submit", {
-            url: url,
-            onSubmit: function () {
-                return $(this).form("validate");
-            },
-            success: function (result) {
-
-                $("#dlg_edit_paragraph").dialog("close");
-                location.reload() ;
-            }
-        });
-    }
 
     function openSearchDialog(){
         $("#dlg_search").dialog("open").dialog("setTitle", "查询");
