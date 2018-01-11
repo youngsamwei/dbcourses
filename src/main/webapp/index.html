@@ -5,7 +5,10 @@
     <title>数据库课程资源</title>
 
   <!-- 使得网页自适应手机屏幕 -->
-  <meta http-equiv="Content-type" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+  <meta name="viewport" http-equiv="Content-type" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
 
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <link rel="stylesheet" type="text/css"
@@ -24,98 +27,12 @@
 
   <link rel="stylesheet" type="text/css"
         href="/font-awesome-4.7.0/css/font-awesome.min.css">
-<style>
-h1 {
-    margin: 0 10px 0 0;
-    display: inline;
-    font-size: 34px;
-    line-height: 1.15;
-    font-weight: 400;
-    vertical-align: sub;
-    -webkit-margin-before: 0.67em;
-    -webkit-margin-after: 0.67em;
-}
 
-.top_button{
-  background-color:#97CBFF !important;
-}
+  <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
 
-.middle_button{
-    float: right;
-    width:45px;
-    text-align: center;
-    margin:1px auto;
-    height: 20px;
-    line-height: 19px;
-    background-color:#E0E0E0;
-    color:#fbfbfb;
-    text-align:center;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:8px;
-    border-left:4px solid #fbfbfb;
-    transition: all 0.3s;
-    border-radius: 0 0 0 0;
-    -webkit-border-radius: 0 0 0 0;
-    -moz-border-radius: 0 0 0 0;
-    -o-border-radius: 0 0 0 0;
-}
-.right_button{
-    float: right;
-    width:45px;
-    text-align: center;
-    margin:1px auto;
-    height: 20px;
-    line-height: 19px;
-    background-color:#E0E0E0;
-    color:#fbfbfb;
-    text-align:center;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:6px;
-    border-left:4px solid #fbfbfb;
-    transition: all 0.3s;
-    border-radius: 0 10px 0 0;
-    -webkit-border-radius: 0 10px 0 0;
-    -moz-border-radius: 0 10px 0 0;
-    -o-border-radius: 0 10px 0 0;
-}
-.left_button{
-    float: right;
-    width:45px;
-    text-align: center;
-    margin:1px auto;
-    height: 20px;
-    line-height: 19px;
-    background-color:#E0E0E0;
-    color:#fbfbfb;
-    text-align:center;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:6px;
-    transition: all 0.3s;
-    border-radius: 0 0 0 10px;
-    -webkit-border-radius: 0 0 0 10px;
-    -moz-border-radius: 0 0 0 10px;
-    -o-border-radius: 0 0 0 10px;
-}
- .left_button:hover, .right_button:hover, .middle_button:hover{
-                    opacity:0.8;
-                    font-size:10px;
-                    color:#000000;
-                    background-color:#C0C0C0;
-                }
-                .clear{
-                    clear:both;
-                }
-.fa-thumbs-up:before{content:"\f164"}
-.fa-thumbs-down:before{content:"\f165"}
-.fa-money:before{content:"\f0d6"}
+  <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_load.js"></script>
 
-.kbknowledgepoint{max-width:800px; margin:0 auto;}  /* 最大宽度，居中 */
-.kbparagraph{max-width:800px; margin:0 auto;}
-
-</style>
+  <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
 
 </head>
 <body>
@@ -152,9 +69,9 @@ h1 {
 
 
 <div id="dlg_add_knowledgepoint" class="easyui-dialog"
-     style="width: 460px;height:150px;padding: 10px 20px; position: relative; z-index:1000;"
+     style="width: 260px;height:130px;padding: 10px 20px; position: relative; z-index:1000;"
      closed="true" buttons="#dlg_add_knowledgepoint_buttons"  data-options="modal:true ">
-    <input id="input_knowledgepoint" name="konwledgepointName" class="easyui-textbox" style="width:400px" ></input>
+    <input id="input_knowledgepoint" name="konwledgepointName" class="easyui-textbox" style="width:200px" ></input>
 
   <div id="dlg_add_knowledgepoint_buttons">
     <a href="javascript:addKnowledgepoint()" class="easyui-linkbutton"
@@ -194,35 +111,6 @@ h1 {
     var url = "";
     $(window).load ( function () {
 
-        var qname  = getQueryString("qname");
-        var qid = getQueryString("qid");
-        var qstr = "";
-        if ((qid != '') && (qid != null)){
-          qstr = "id=" + qid;
-         }else if ((qname != '') && (qname != null)){
-          qstr = "knowledgepointName=" + qname;
-         }else{
-          /*出错处理*/
-         }
-         qstr = encodeURI(qstr);
-        $.ajax({
-            type: "POST",
-            url: "/knowledgepoint/list.do?"+qstr,
-            contentType: "application/json; charset=utf-8",
-            data: "{}",
-            dataType: "json",
-            success: function (result) {
-                displayTitle(result);
-                displayDescBlocks(result);
-                /*setEditor();*/
-            },
-            "error": function (result) {
-                var response = result.responseText;
-                alert('errot');
-            }
-        });
-
-
         /*查询, 可以尝试增加自动补全功能。
         TODO:点击搜索按钮后弹出搜索对话框，支持实时查询数据库自动补全，点击搜索按钮后列出查询结果。
         */
@@ -242,232 +130,11 @@ h1 {
             }
         });
 
+        loadKnowledgepointParagraph();
     })
 
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return decodeURI(r[2]); return null;
-    }
 
-    /*获取并显示知识点的名字*/
-    function displayTitle(result ){
-          var knowledgepointId = result[0].id;
-                var knowledgepointName = result[0].knowledgepointName;
-                var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
-                /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-                var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
-                var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
-                var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
 
-                var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-                    button2, button1, button3, button0,
-                    "<div  id='content_" + knowledgepointId + "'>",
-                   '<h1>',  knowledgepointName,'</h1>',
-                    "</div>",
-                    "</div></P>"].join('\n');
-                //console.log(itemHTML);
-                $(".kbknowledgepoint").append(itemHTML);
-
-    }
-    /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/
-    function displayDescBlocks(result) {
-
-            var knowledgepointId = result[0].id;
-            $.ajax({
-                type: "POST",
-                url: "/paragraph/list.do?knowledgepointId=" + knowledgepointId,
-                contentType: "application/json; charset=utf-8",
-                data: "{}",
-                dataType: "json",
-                success: function (paragraphs) {
-                    $.each(paragraphs, function (index, element) {
-                        var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
-                          : htmlDecode(element.paragraphContent);
-                        var paragraphOrder = element.paragraphOrder + 1;
-                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-                        var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
-                        var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
-                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
-
-                        var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-                            button1, button4, button2, button3,
-                            "<div class='content' id='content_" + element.id + "'>",
-                            content,
-                            "</div>",
-                            "</div></P>"].join('\n');
-                        //console.log(itemHTML);
-                        $(".kbparagraph").append(itemHTML);
-                    })
-                },
-                "error": function (result) {
-                    var response = result.responseText;
-                    alert('errot');
-                }
-
-            });
-
-    }
-
-    function setEditor(){
-
-        $('.content').click(function(e){
-            var $target = $(this);
-            var content = $target.html();
-            openArticleModifyDialog('0',content);
-        })
-    }
-
-    var url;
-    function resetEditor(editorID) {
-        return UE.getEditor(editorID, {
-            initialFrameHeight: '100%',
-            initialFrameWidth: '100%',
-            enableAutoSave: false,
-            elementPathEnabled: false,
-            wordCount: false
-            /*,  toolbars: [
-             [
-             'fontfamily', 'fontsize', 'forecolor', 'backcolor', 'bold', 'italic', 'underline', '|',
-             'link', '|',
-             ]
-             ]  */
-        });
-    }
-
-    function deleteArticle() {
-        var selectedRows = $("#dg").datagrid('getSelections');
-        if (selectedRows.length == 0) {
-            $.messager.alert("系统提示", "请选择要删除的数据！");
-            return;
-        }
-        var strIds = [];
-        for (var i = 0; i < selectedRows.length; i++) {
-            strIds.push(selectedRows[i].id);
-        }
-        var ids = strIds.join(",");
-        $.messager
-                .confirm(
-                        "系统提示",
-                        "您确认要删除这<font color=red>" + selectedRows.length
-                        + "</font>条数据吗？",
-                        function (r) {
-                            if (r) {
-                                $
-                                        .post(
-                                                "${pageContext.request.contextPath}/article/delete.do",
-                                                {
-                                                    ids: ids
-                                                },
-                                                function (result) {
-                                                    if (result.success) {
-                                                        $.messager.alert(
-                                                                "系统提示",
-                                                                "数据已成功删除！");
-                                                        $("#dg").datagrid(
-                                                                "reload");
-                                                    } else {
-                                                        $.messager.alert(
-                                                                "系统提示",
-                                                                "数据删除失败！");
-                                                    }
-                                                }, "json");
-                            }
-                        });
-
-    }
-
-    function openKnowledgepointAddDialog(){
-            $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
-            $('#input_knowledgepoint').focus();
-    }
-    function closeKnowledgepointAddDialog(){
-            $("#dlg_add_knowledgepoint").dialog("close");
-    }
-    function addKnowledgepoint(){
-        var knowledgepointName = $('#input_knowledgepoint').val();
-        $.ajax({
-            type: "POST",
-            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,
-            contentType: "application/json; charset=utf-8",
-            data: "{}",
-            dataType: "json",
-            success: function (result) {
-               closeKnowledgepointAddDialog();
-               window.location.href='index.html?qname='+knowledgepointName;
-            },
-            "error": function (result) {
-                var response = result.responseText;
-                alert('errot');
-            }
-
-        });
-    }
-
-    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
-        var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
-        $('#editor').append(html);
-
-        var ue =  resetEditor("myEditor");
-        ue.ready(function(){
-            ue.setContent("");
-            ue.focus();
-        });
-        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "添加段落");
-        url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
-    }
-
-    function openSearchDialog(){
-        $("#dlg_search").dialog("open").dialog("setTitle", "查询");
-    }
-    function closeSearchDialog() {
-        $("#dlg_search").dialog("close");
-    }
-    function saveArticle() {
-        $("#fm").form("submit", {
-            url: url,
-            onSubmit: function () {
-                return $(this).form("validate");
-            },
-            success: function (result) {
-
-                $("#dlg_edit_paragraph").dialog("close");
-                location.reload() ;
-            }
-        });
-    }
-
-    function openArticleModifyDialog(id, contentid) {
-
-        $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "编辑段落");
-        $('#dlg_edit_paragraph').window('center');
-
-        var html = '<div id="myEditor" name="paragraphContent"></div>';
-        $('#editor').append(html);
-
-        var ue =  resetEditor("myEditor");
-
-        var $target = $('#' + contentid);
-        var content = $target.html();
-        ue.ready(function(){
-            ue.setContent(content);
-            ue.focus();
-        });
-        url = "/paragraph/edit.do?id="  + id;
-
-    }
-    function closeArticleDialog() {
-        $("#dlg_edit_paragraph").dialog("close");
-    }
-
-//Html编码获取Html转义实体
-function htmlEncode(value){
- return $('<div/>').text(value).html();
-}
-//Html解码获取Html实体
-function htmlDecode(value){
- return $('<div/>').html(value).text();
-}
 </script>
 
 

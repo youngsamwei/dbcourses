@@ -1,0 +1,90 @@
+/*定义知识点和段落的显示样式。*/
+h1 {
+    margin: 0 10px 0 0;
+    display: inline;
+    font-size: 34px;
+    line-height: 1.15;
+    font-weight: 400;
+    vertical-align: sub;
+    -webkit-margin-before: 0.67em;
+    -webkit-margin-after: 0.67em;
+}
+
+.top_button{
+  background-color:#97CBFF !important;
+}
+
+.middle_button{
+    float: right;
+    width:45px;
+    text-align: center;
+    margin:1px auto;
+    height: 20px;
+    line-height: 19px;
+    background-color:#E0E0E0;
+    color:#fbfbfb;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:8px;
+    border-left:4px solid #fbfbfb;
+    transition: all 0.3s;
+    border-radius: 0 0 0 0;
+    -webkit-border-radius: 0 0 0 0;
+    -moz-border-radius: 0 0 0 0;
+    -o-border-radius: 0 0 0 0;
+}
+.right_button{
+    float: right;
+    width:45px;
+    text-align: center;
+    margin:1px auto;
+    height: 20px;
+    line-height: 19px;
+    background-color:#E0E0E0;
+    color:#fbfbfb;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:6px;
+    border-left:4px solid #fbfbfb;
+    transition: all 0.3s;
+    border-radius: 0 10px 0 0;
+    -webkit-border-radius: 0 10px 0 0;
+    -moz-border-radius: 0 10px 0 0;
+    -o-border-radius: 0 10px 0 0;
+}
+.left_button{
+    float: right;
+    width:45px;
+    text-align: center;
+    margin:1px auto;
+    height: 20px;
+    line-height: 19px;
+    background-color:#E0E0E0;
+    color:#fbfbfb;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:6px;
+    transition: all 0.3s;
+    border-radius: 0 0 0 10px;
+    -webkit-border-radius: 0 0 0 10px;
+    -moz-border-radius: 0 0 0 10px;
+    -o-border-radius: 0 0 0 10px;
+}
+ .left_button:hover, .right_button:hover, .middle_button:hover{
+                    opacity:0.8;
+                    font-size:10px;
+                    color:#000000;
+                    background-color:#C0C0C0;
+                }
+                .clear{
+                    clear:both;
+                }
+.fa-thumbs-up:before{content:"\f164"}
+.fa-thumbs-down:before{content:"\f165"}
+.fa-money:before{content:"\f0d6"}
+
+.kbknowledgepoint{max-width:800px; margin:0 auto;}  /* 最大宽度，居中 */
+.kbparagraph{max-width:800px; margin:0 auto;}
