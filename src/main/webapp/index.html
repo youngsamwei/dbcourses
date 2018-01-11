@@ -249,7 +249,7 @@ h1 {
     /*获取并显示知识点的名字*/
     function displayTitle(result ){
           var knowledgepointId = result[0].id;
-                 var knowledgepointName = result[0].knowledgepointName;
+                var knowledgepointName = result[0].knowledgepointName;
                 var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
                 /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
                 var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
@@ -375,6 +375,7 @@ h1 {
 
     function openKnowledgepointAddDialog(){
             $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
+            $('#input_knowledgepoint').focus();
     }
     function closeKnowledgepointAddDialog(){
             $("#dlg_add_knowledgepoint").dialog("close");
@@ -406,6 +407,7 @@ h1 {
         var ue =  resetEditor("myEditor");
         ue.ready(function(){
             ue.setContent("");
+            ue.focus();
         });
         $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "添加段落");
         url = "/paragraph/add.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
@@ -445,8 +447,10 @@ h1 {
         var content = $target.html();
         ue.ready(function(){
             ue.setContent(content);
+            ue.focus();
         });
         url = "/paragraph/edit.do?id="  + id;
+
     }
     function closeArticleDialog() {
         $("#dlg_edit_paragraph").dialog("close");
