@@ -92,7 +92,7 @@ function loadKnowledgepointParagraph (qid){
                           : htmlDecode(element.paragraphContent);
                         var paragraphOrder = element.paragraphOrder + 1;
                         var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-                        var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
+                        var button2 = "<a href='javascript:deleteArticle(" + element.id +")' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
                         var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
                         var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
 
