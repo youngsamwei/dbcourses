@@ -7,5 +7,5 @@ import com.baomidou.mybatisplus.service.IService;
  * Created by Sam on 2018/1/6.
  */
 public interface IParagraphService extends IService<Paragraph> {
-
+    public int sort(Paragraph entity);
 }

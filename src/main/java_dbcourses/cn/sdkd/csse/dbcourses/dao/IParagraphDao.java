@@ -8,4 +8,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface IParagraphDao extends BaseMapper<Paragraph> {
   public int updateParagraphOrder(Paragraph paragraph);
+  public int sortUp(Paragraph paragraph);
 }
