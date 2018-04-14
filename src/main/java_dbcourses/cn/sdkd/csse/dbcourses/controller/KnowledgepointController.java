@@ -22,7 +22,6 @@ public class KnowledgepointController extends BaseController {
 
   @Resource
   private IKnowledgepointService knowledgepointService;
-
   private static final long serialVersionUID = 1L;
   private static final Logger log = Logger.getLogger(KnowledgepointController.class);// 日志文件
 
@@ -54,7 +53,6 @@ public class KnowledgepointController extends BaseController {
       return this.renderError(e.getLocalizedMessage());
     }
   }
-
   @RequestMapping("/edit")
   @ResponseBody
   public Object edit(Knowledgepoint knowledgepoint) {

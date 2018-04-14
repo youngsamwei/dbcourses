@@ -97,7 +97,7 @@
                                                         $.messager.alert(
                                                                 "系统提示",
                                                                 "数据已成功删除！");
-
+                                                       // window.location.href='index.html';
                                                     } else {
                                                         $.messager.alert(
                                                                 "系统提示",
@@ -122,7 +122,7 @@
         var knowledgepointName = $('#input_knowledgepoint').val();
         $.ajax({
             type: "POST",
-            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,
+            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,//问号后面 为 传 的 值
             contentType: "application/json; charset=utf-8",
             data: "{}",
             dataType: "json",
@@ -134,7 +134,6 @@
                 var response = result.responseText;
                 alert('errot');
             }
-
         });
     }
 

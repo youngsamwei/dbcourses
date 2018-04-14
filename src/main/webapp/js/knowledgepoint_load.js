@@ -1,4 +1,4 @@
-
+////什么 鬼
 function loadKnowledgepointParagraph (qid){
 
         $("#kbknowledgepoint").remove();
@@ -8,7 +8,7 @@ function loadKnowledgepointParagraph (qid){
         $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
 
         qstr = "id=" + qid;
-
+·
         $.ajax({
             type: "POST",
             url: "/knowledgepoint/list.do?" + qstr,
@@ -65,9 +65,10 @@ function loadKnowledgepointParagraph (qid){
         var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
         var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
         var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        var button4 = "<a href=' javascript:void(0)' title='删除知识点'> 删除</a>>";
         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-            button2, button1, button3, button0,
+            button2, button1, button3, button0,button4,
             "<div  id='content_" + knowledgepointId + "'>",
            '<h1>',  knowledgepointName,'</h1>',
             "</div>",
@@ -91,9 +92,9 @@ function loadKnowledgepointParagraph (qid){
                         var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
                           : htmlDecode(element.paragraphContent);
                         var paragraphOrder = element.paragraphOrder + 1;
-                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-                        var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
-                        var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
+                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\")' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
+                        var button2 = "<a href='javascript:deleteArticle(" + element.id + ")' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
+                        var button3 = "<a href='javascript:deleteArticle(" + element.id + ")' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
                         var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
 
                         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
@@ -112,7 +113,6 @@ function loadKnowledgepointParagraph (qid){
                 }
 
             });
-
     }
 
 
