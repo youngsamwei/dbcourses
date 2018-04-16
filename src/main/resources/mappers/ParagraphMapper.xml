@@ -20,4 +20,11 @@
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
 
+  <!-- 段落向上移动一个顺序-->
+  <update id = "sortUp" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder + 6
+    where paragraphOrder = #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
+
 </mapper>

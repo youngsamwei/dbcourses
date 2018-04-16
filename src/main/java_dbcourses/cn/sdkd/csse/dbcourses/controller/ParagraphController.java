@@ -56,14 +56,21 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/edit")
   @ResponseBody
   public Object edit(@Valid Paragraph paragraph) {
-    paragraphService.updateById(paragraph);
+    paragraphService.updateAllColumnById(paragraph);
     return renderSuccess("编辑成功！");
   }
 
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-    paragraphService.deleteById(paragraph.getId());
+    paragraphService.deleteById(paragraph);
     return renderSuccess("删除成功！");
+  }
+
+  @RequestMapping("/sort")
+  @ResponseBody
+  public Object sort(@Valid Paragraph paragraph) {
+      paragraphService.sort(paragraph);
+      return renderSuccess("添加成功！");
   }
 }

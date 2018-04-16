@@ -3,6 +3,7 @@ package cn.sdkd.csse.dbcourses.service.impl;
 import cn.sdkd.csse.dbcourses.dao.IParagraphDao;
 import cn.sdkd.csse.dbcourses.entity.Paragraph;
 import cn.sdkd.csse.dbcourses.service.IParagraphService;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,11 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
     this.baseMapper.updateParagraphOrder(entity);
     return super.insert(entity);
   }
+
+  /*上移知识点段落*/
+
+  public int sort(Paragraph entity){
+    return this.baseMapper.sortUp(entity);
+  }
+
 }
