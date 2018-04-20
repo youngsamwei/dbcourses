@@ -45,7 +45,7 @@
         <mybaitsplus.version>2.0.8</mybaitsplus.version>    </properties>
 
     <build>
-        <finalName>wechatService</finalName>
+        <finalName>dbcourses</finalName>
         <plugins>
             <!-- Maven插件 配置 -->
             <plugin>
