@@ -1,7 +1,7 @@
 
     function openSearchDialog(){
-        $("#dlg_search").dialog("open").dialog("setTitle", "查询");
-        $('#ss').next('span').find('input').focus();
+        $("#dlg_search").dialog("open").dialog("setTitle", "查询");//eassyui,open表示打开控件的命令，setTitle表示执行命令
+        $('#ss').next('span').find('input').focus();//获取焦点的方法
     }
 
     function closeSearchDialog() {

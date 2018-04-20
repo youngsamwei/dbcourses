@@ -35,23 +35,29 @@ public class KnowledgepointController extends BaseController {
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
     }else{
       /*错误处理*/
+
     }
     List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
     return ls;
   }
 
-
   @RequestMapping("/add")
   @ResponseBody
   public Object add(Knowledgepoint knowledgepoint) {
-    try {
-      knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
-      knowledgepointService.insert(knowledgepoint);
-      return renderSuccess("添加成功！");
-    } catch (Exception e) {
-      log.error(e.getMessage(), e);
-      return this.renderError(e.getLocalizedMessage());
+    if (knowledgepoint.getId() != null){
+      return knowledgepointService.selectById(knowledgepoint);
+    }else{
+      try {
+        knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
+        knowledgepointService.insert(knowledgepoint);
+        return renderSuccess("添加成功！");
+
+      } catch (Exception e) {
+        log.error(e.getMessage(), e);
+        return this.renderError(e.getLocalizedMessage());
+      }
     }
+
   }
   @RequestMapping("/edit")
   @ResponseBody
