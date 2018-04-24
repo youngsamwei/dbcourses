@@ -20,11 +20,20 @@
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
 
+  <!-- 删除一个段落时，需要指定段落位置，该位置后面的段落编号-1 -->
+  <update id="subtractParagraphOrder" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 1
+    where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
+
   <!-- 段落向上移动一个顺序-->
   <update id = "sortUp" parameterType="Paragraph">
     update paragraph
     set		paragraphOrder = paragraphOrder + 6
     where paragraphOrder = #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
+
+
 
 </mapper>

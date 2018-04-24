@@ -20,6 +20,13 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
     return super.insert(entity);
   }
 
+  /*删除一个知识点段落，需要将此段落后的所有顺序编号-1。*/
+
+  public boolean deleteById(Paragraph entity){
+    this.baseMapper.subtractParagraphOrder(entity);
+    return super.deleteById(entity);
+  }
+
   /*上移知识点段落*/
 
   public int sort(Paragraph entity){
