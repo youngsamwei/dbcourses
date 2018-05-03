@@ -4,7 +4,7 @@ function loadKnowledgepointParagraph (qid){
         $("#kbknowledgepoint").remove();
         $("#kbparagraph").remove();
 
-       $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+        $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
         $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
 
         qstr = "id=" + qid;
@@ -60,14 +60,14 @@ function loadKnowledgepointParagraph (qid){
     function displayTitle(result ){
         var knowledgepointId = result[0].id;
         var knowledgepointName = result[0].knowledgepointName;
-        var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
+        var button0 = "<a href='javascript:openKnowledgepointAddDialog(2)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
         /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加1111段落</a> ";
-        var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查1111询</a> ";
-        var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> bu收藏</a>";
-        var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用1111户</a>";
+        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 1)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
+        var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
+        var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
+        var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用户</a>";
         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-            button2, button1, button3, button0,button4,
+            button4, button2, button1, button3, button0,
             "<div  id='content_" + knowledgepointId + "'>",
            '<h1>',  knowledgepointName,'</h1>',
             "</div>",
@@ -91,11 +91,10 @@ function loadKnowledgepointParagraph (qid){
                         var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
                           : htmlDecode(element.paragraphContent);
                         var paragraphOrder = element.paragraphOrder + 1;
-                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
+                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\",1);' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
                         var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
                         var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
                         var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
-
                         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
                             button1, button4, button2, button3,
                             "<div class='content' id='content_" + element.id + "'>",
@@ -124,3 +123,139 @@ function htmlEncode(value){
 function htmlDecode(value){
  return $('<div/>').html(value).text();
 }
+
+//单个删除
+function getSelected(){
+    var row = $('#tt').datagrid('getSelected');
+    if (row){
+        alert('Item ID:'+row.nickName+"\nPrice:"+row.userName);
+    }
+}
+
+//编辑用户
+function getEditrow(){
+    var userId= $('#input_userId').val();
+    var userName= $('#input_userName').val();
+    var nickName =$('#input_nickName').val();
+    var remark =$('#input_remark').val();
+    var group= $('#input_userGroup').combobox('getText');
+    var power =$('#input_power').combobox('getValues');
+
+    var user ={
+        userId:userId,
+        userName:userName,
+        userGroup:group,
+        nickName:nickName,
+        power:power,
+        remark:remark
+    };
+    $.ajax({
+        type: "post",
+        url: "/user/update.do",
+        data: { user: JSON.stringify(user)},//非常重要的一步
+        datatype: "json",
+        success: function () {
+
+            alert("编辑成功");
+            doSearchUser();
+            $('#editButton').linkbutton({disabled:true});
+
+        },
+        error:function () {
+            alert("删除失败");
+            doSearchUser();
+            $('#editButton').linkbutton({disabled:true});
+        }
+
+    });
+}
+
+//批量删除
+function getSelections(){
+    var ids = [];
+    var rows = $('#tt').datagrid('getChecked');
+    for(var i=0; i<rows.length; i++){
+        ids.push(rows[i].userId);
+    }
+    alert(ids.join('\n'));
+}
+
+function getDelete(){
+
+    var ids = [];
+    var rows = $('#tt').datagrid('getChecked');
+    for(var i=0; i<rows.length; i++){
+        ids.push(rows[i].userId);
+    }
+
+    $.ajax({
+        type: "post",
+        url: "/user/delete.do",
+        data: { idlist: JSON.stringify(ids) },//非常重要的一步
+        datatype: "json",
+        success: function () {
+
+                alert("删除成功");
+                location.reload()
+
+        },
+        error:function () {
+              alert("删除失败");
+              location.reload()
+        }
+
+    });
+
+}
+
+function formatPrice() {
+    return '<a href="#" onclick="geteditrow(getRowIndex(target))">编辑</a> <a style="color:red;" href="/user/delete.do">刪除</a>';
+}
+ function notSelect (row) {
+    $(this).datagrid('unselectRow', row);
+}
+
+function closeUserDialog() {
+    $("#dlg_edit_user").dialog("close");
+}
+function buttonAble() {
+    $('#editButton').linkbutton({disabled:false});
+}
+function userLogout() {
+    $.ajax({
+        type: "post",
+        url: "/user/logout.do",
+        data: {  },//非常重要的一步
+        datatype: "json",
+        success: function () {
+
+            alert("注销成功");
+            location.reload()
+
+        },
+        error:function () {
+            alert("删除失败");
+            location.reload()
+        }
+
+    });
+}
+
+function getUserPower(powers){
+    var msg='请求失败';
+    $.ajax({
+        type: "post",
+        url: "/user/getpower.do",
+        data: { powers: powers },
+        dataType: "json",
+        async:false,
+        success: function (data) {
+            msg=data.msg;
+        },
+        error: function (data) {
+            msg = data.msg;
+        }
+    });
+    return msg;
+}
+

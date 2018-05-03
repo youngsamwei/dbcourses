@@ -109,9 +109,15 @@
 
     }
 
-    function openKnowledgepointAddDialog(){
+    function openKnowledgepointAddDialog(powers) {
+        var msg = getUserPower(powers);
+        if (msg == '获得权限') {
             $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
             $('#input_knowledgepoint').focus();
+        }
+        else{
+            alert(msg);
+        }
     }
 
     function closeKnowledgepointAddDialog(){
@@ -137,4 +143,5 @@
 
         });
     }
+
 

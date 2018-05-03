@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IUserDao">
+    <resultMap type="User" id="UserResult">
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="passWord" column="passWord"/>
+        <result property="nickName" column="nickName"/>
+        <result property="power" column="power"/>
+        <result property="remark" column="remark"/>
+        <result property="userGroup" column="userGroup"/>
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+
+
+    <select id="selectAllByName" resultType="User" parameterType="Map">
+        select userId, userName  , nickName, remark ,power ,userGroup
+        from USER
+        where userName like #{username}
+        GROUP BY userGroup
+    </select>
+
+    <select id="selectUserById" resultType="User" parameterType="Integer">
+        select userId, userName ,passWord , nickName, remark ,power ,userGroup
+        from USER
+        where userId= #{ userId }
+    </select>
+
+
+    <select id="selectCount" resultType="Integer" parameterType="Map">
+        select COUNT(userId) total
+        from USER
+        where 1=1
+        <if test="userName!=null">
+            and userName like #{userName}
+        </if>
+        <if test="nickName!=null">
+            and nickName like #{nickName}
+        </if>
+        <if test="userGroup!=null">
+            and userGroup =#{userGroup}
+        </if>
+    </select>
+
+    <select id="selectAll" resultType="User" parameterType="Map">
+        select userId, userName ,passWord , nickName, remark ,power ,userGroup
+        from USER
+        where 1=1
+        <if test="userName!=null">
+            and userName like #{userName}
+        </if>
+        <if test="nickName!=null">
+            and nickName like #{nickName}
+        </if>
+        <if test="userGroup!=null">
+            and userGroup =#{userGroup}
+        </if>
+        ORDER BY userGroup
+        limit #{min},#{max}
+    </select>
+
+    <select id="selectPassword" resultType="User" parameterType="String">
+        select userId, userName ,passWord,power
+        from USER
+        where userName = #{userName}
+    </select>
+
+    <delete id="deleteUsersBatch" parameterType="Integer">
+        DELETE FROM USER WHERE userId IN
+        <foreach item="list" collection="array" open="(" separator="," close=")">
+            #{list}
+        </foreach>
+    </delete>
+    <update id="updateUser"  parameterType="Map" >
+        UPDATE user SET nickName=#{nickName} ,power=#{power},userGroup=#{userGroup},remark=#{remark}
+        WHERE userId =#{userId}
+    </update>
+</mapper>

@@ -23,7 +23,7 @@ TODO: 支持输入时自动提示，每输入一个字或词，触发检索事�
             success: function (result) {
                 var kbhtml = "<div id='kp_inner'>";
                 $.each(result, function (index, element) {
-                    kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + element.knowledgepointName + "</a></div>";
+                    kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + element.knowledgepointName + ' ' +element.knowledgepointCreateDate +"</a></div>";
                 })
                 kbhtml += "</div>";
                 $("#kp_inner").remove();

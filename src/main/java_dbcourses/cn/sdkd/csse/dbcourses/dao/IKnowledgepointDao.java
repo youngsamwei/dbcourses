@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public interface IKnowledgepointDao extends BaseMapper<Knowledgepoint> {
 
+
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params);
 
 }

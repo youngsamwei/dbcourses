@@ -6,7 +6,6 @@ import cn.sdkd.csse.dbcourses.utils.DateUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
