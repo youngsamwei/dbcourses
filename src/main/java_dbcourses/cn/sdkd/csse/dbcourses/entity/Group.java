@@ -36,8 +36,10 @@ public class Group implements Serializable {
         final StringBuilder sb = new StringBuilder("{");
         sb.append("\"id\":")
                 .append(id);
-        sb.append(",\"name\":\"")
+        sb.append(",\"text\":\"")
                 .append(name).append('\"');
+        sb.append(",\"state\":\"")
+                .append("closed").append('\"');
         sb.append(",\"remark\":\"")
                 .append(remark).append('\"');
         sb.append('}');

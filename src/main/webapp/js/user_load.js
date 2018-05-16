@@ -1,41 +1,22 @@
-
 function loadKnowledgepointParagraph (qid){
 
-        $("#kbknowledgepoint").remove();
-        $("#kbparagraph").remove();
+    $("#kbknowledgepoint").remove();
+    $("#kbparagraph").remove();
 
-        $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
-        $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+    $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+    $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
 
-        qstr = "id=" + qid;
+    qstr = "id=" + qid;
 
-        $.ajax({
-            type: "POST",
-            url: "/knowledgepoint/list.do?" + qstr,
-            contentType: "application/json; charset=utf-8",
-            data: "{}",
-            dataType: "json",
-            success: function (result) {
-                if (result.length <=0)
-                {
-                     $.messager.show({
-                         title:'错误',
-                         msg:'没有查到知识点',
-                         showType:'fade',
-                         style:{
-                             right:'',
-                             bottom:''
-                         }
-                     });
-                }else{
-                    displayTitle(result);
-                    displayDescBlocks(result);
-                    /*如果是查询跳转过来的，则需要关闭查询窗口。*/
-                    closeSearchDialog();
-                }
-            },
-            "error": function (result) {
-                var response = result.responseText;
+    $.ajax({
+        type: "POST",
+        url: "/knowledgepoint/list.do?" + qstr,
+        contentType: "application/json; charset=utf-8",
+        data: "{}",
+        dataType: "json",
+        success: function (result) {
+            if (result.length <=0)
+            {
                 $.messager.show({
                     title:'错误',
                     msg:'没有查到知识点',
@@ -45,12 +26,29 @@ function loadKnowledgepointParagraph (qid){
                         bottom:''
                     }
                 });
+            }else{
+                displayTitle(result);
+                displayDescBlocks(result);
+                /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+                closeSearchDialog();
             }
-        });
+        },
+        "error": function (result) {
+            var response = result.responseText;
+            $.messager.show({
+                title:'错误',
+                msg:'没有查到知识点',
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
+        }
+    });
 }
 
-
-    function getQueryString(name) {
+function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
         if (r != null) return decodeURI(r[2]); return null;
@@ -162,7 +160,7 @@ function getEditrow(){
 
         },
         error:function () {
-            alert("删除失败");
+            alert("编辑失败");
             doSearchUser();
             $('#editButton').linkbutton({disabled:true});
         }
@@ -170,7 +168,7 @@ function getEditrow(){
     });
 }
 
-//批量删除
+
 function getSelections(){
     var ids = [];
     var rows = $('#tt').datagrid('getChecked');
@@ -258,4 +256,80 @@ function getUserPower(powers){
     });
     return msg;
 }
+var row = $('#tt').datagrid('getChecked');
+if (row) {
+    alert('Item ID:' + row.userId
+    );
+}
+function updateActions(index) {
+    $('#tt').datagrid('updateRow', {
+        index: index,
+        row: {}
+    });
+}
 
+function getRowIndex(target) {
+    var tr = $(target).closest('tr.datagrid-row');
+    return parseInt(tr.attr('datagrid-row-index'));
+}
+
+function editrow(target) {
+    $("#tt").datagrid("selectRow", getRowIndex(target));
+    var row = $("#tt").datagrid("getSelected");
+    if (row) {
+        $.ajax({
+            type: "POST",
+            url: "/user/selectbyid.do",
+            data: {userId: row.userId},
+            dataType: "json",
+            success: function (user) {
+                $("#dlg_edit_userinfo").dialog(
+                    {
+                        onOpen: function () {
+                            $("#input_userName").val(user.userName);
+                            $("#input_nickName").val(user.nickName);
+                            $("#input_remark").val(user.remark);
+                            $("#input_userId").val(row.userId);
+                            $('#input_userGroup').combobox('setValue', user.userGroup);
+
+                        }
+                    });
+                $("#dlg_edit_userinfo").dialog("open").dialog("setTitle", user.userName);
+
+            }
+        })
+    }
+}
+
+function deleterow(target) {
+    $.messager.confirm('Confirm', 'Are you sure?', function (r) {
+        if (r) {
+            $('#tt').datagrid('deleteRow', getRowIndex(target));
+        }
+    });
+}
+
+function saverow(target) {
+    $('#tt').datagrid('endEdit', getRowIndex(target));
+}
+
+function cancelrow(target) {
+    $('#tt').datagrid('cancelEdit', getRowIndex(target));
+}
+
+function insert() {
+    var row = $('#tt').datagrid('getSelected');
+    if (row) {
+        var index = $('#tt').datagrid('getRowIndex', row);
+    } else {
+        index = 0;
+    }
+    $('#tt').datagrid('insertRow', {
+        index: index,
+        row: {
+            status: 'P'
+        }
+    });
+    $('#tt').datagrid('selectRow', index);
+    $('#tt').datagrid('beginEdit', index);
+}

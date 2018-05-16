@@ -15,4 +15,7 @@ public interface IUserDao extends BaseMapper<User> {
     public boolean deleteUsersBatch(int[] idlist);
     public User selectUserById(int userId);
     public boolean updateUser(Map params);
+    public List<User> selectByUserpower(String powerCode);
+    public boolean insertUser(Map user);
+    public List<User> selectChildren(String usergroup,int[] ids);
 }

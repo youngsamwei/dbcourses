@@ -4,6 +4,7 @@ package cn.sdkd.csse.dbcourses.service.impl;
 import cn.sdkd.csse.dbcourses.dao.IUserDao;
 import cn.sdkd.csse.dbcourses.entity.User;
 import cn.sdkd.csse.dbcourses.service.IUserService;
+import cn.sdkd.csse.dbcourses.utils.UserUtils;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -28,14 +29,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, User> implements IUse
 
     @Override
     public boolean deleteUsersBatch(String idlist) {
-        StringBuilder id =new StringBuilder(idlist);
-        String ids[] =id.substring(1,id.length()-1).split(",");
-        int[] list =new int[ids.length];
-        int index =0;
-        for (String arr:ids) {
-            list[index]= Integer.parseInt(arr);
-            index++;
-        }
+        int[] list =UserUtils.spiltId(idlist);
         System.out.println(list);
         return this.baseMapper.deleteUsersBatch(list);
     }
@@ -44,4 +38,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, User> implements IUse
 
     public Integer selectCount(Map<String,Object> params){return this.baseMapper.selectCount(params);}
     public boolean updateUser(Map params){return this.baseMapper.updateUser(params);}
+    public boolean insertUser(Map user){return this.baseMapper.insertUser(user);}
+    public List<User> selectByUserpower(String powerCode){return this.baseMapper.selectByUserpower(powerCode);}
+    public List<User> selectChildren(String usergroup,int[] ids){return  this.baseMapper.selectChildren(usergroup,ids);}
 }

@@ -25,6 +25,12 @@ public class GroupController extends BaseController{
         System.out.println(groupService.selectAllGroup().toString());
         return groupService.selectAllGroup();
     }
-
+    @ResponseBody
+    @RequestMapping("/getgroup")
+    public String getGroup()
+    {
+        List<Group> ls=groupService.selectAllGroup();
+        return ls.toString();
+    }
 
 }

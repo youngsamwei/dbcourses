@@ -16,14 +16,16 @@ TODO: 支持输入时自动提示，每输入一个字或词，触发检索事�
     function doSearchUser(){
         var userName =$("#userName").val();
         var nickName =$("#nickName").val();
-        var userGroup= $('#userGroup').combobox('getText');
+        var userGroup= $('#userGroup').combobox('getValue');
+        if(userGroup=='')
+        {
+            userGroup='0';
+        }
         $('#tt').datagrid('reload',{
             userName:userName,
             nickName:nickName,
             userGroup:userGroup
         })
-
-
     }
 
     function loadUser (qid){

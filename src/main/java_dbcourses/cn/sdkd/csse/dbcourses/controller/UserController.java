@@ -60,13 +60,13 @@ public class UserController extends BaseController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public void register(HttpServletRequest req)
+    public void register(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("nickname") String nickname )
     {
-        User newuser=new User();
-        newuser.setUserName(req.getParameter("userName"));
-        newuser.setPassWord(req.getParameter("passWord"));
-
-        userService.insert(newuser);
+        HashMap<String,Object> user=new HashMap<>();
+        user.put("username",username);
+        user.put("password",password);
+        user.put("nickname",nickname);
+        userService.insertUser(user);
         System.out.println("zhuce chenggong");
     }
 
@@ -107,16 +107,27 @@ public class UserController extends BaseController {
         pages.put("userName","%"+userName+"%");
         pages.put("nickName","%"+nickName+"%");
         if(userGroup!=null) {
-            if (!userGroup.equals("所有")) {
+            if(!userGroup.equals("0"))
                 pages.put("userGroup", userGroup);
-            }
         }
         System.out.println(pages.toString());
         int total =userService.selectCount(pages);
         list =userService.selectAll(pages);
         System.out.println("---------{\"total\":"+total+",\"rows\":"+list.toString()+"} -------------");
         return "{\"total\":"+total+",\"rows\":"+list.toString()+"}";
-
+    }
+    @ResponseBody
+    @RequestMapping("/getchildren")
+    public String getGroupUser(@RequestParam("ids") String id,@RequestParam("id") String gid)
+    {
+        int[] ids=UserUtils.spiltId("'"+id+"'");
+        System.out.println("1111111111111111111111   "+gid);
+        for(int i=0;i<ids.length;i++)
+        {
+            System.out.println("1111111111111111111111 ids   "+ids[i]);
+        }
+        List<User>list =userService.selectChildren(gid,ids);
+        return list.toString().replace("userName","text").replace("userId","id");
     }
 
     @ResponseBody
@@ -174,26 +185,11 @@ public class UserController extends BaseController {
     }
 
     @ResponseBody
-    @RequestMapping("/getpower")
-    public Object getpower(@RequestParam("powers") String powers){
-
-        System.out.println("==============="+powers);
-        Object power= ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("power");
-        System.out.println("-----------------------------------"+power+"--------------");
-        if(power ==null)
-        {
-            return renderError("未登录");
-        }
-        else {
-            String msg = UserUtils.checkPower(powers, power);
-            {
-                System.out.println(msg);
-                if (msg.equals("success")) {
-                    return renderSuccess("获得权限");
-                } else {
-                    return renderSuccess("权限不足");
-                }
-            }
-        }
+    @RequestMapping("/powerCode")
+    public List<User> getPowerCodeUser(@RequestParam("powerCode") String powerCode)
+    {
+         List<User> ls =userService.selectByUserpower(powerCode);
+         return ls;
     }
+
 }

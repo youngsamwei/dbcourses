@@ -47,17 +47,8 @@
 </div>
 <div style="margin:20px 0;"></div>
 
-<div>
-
-    <script type="text/javascript">
-        var row = $('#tt').datagrid('getChecked');
-        if (row) {
-            alert('Item ID:' + row.userId
-            );
-        }
-    </script>
-</div>
 <script>
+
     $(function () {
         $('#tt').datagrid({
             title: '用户管理',
@@ -71,51 +62,15 @@
             url: '/user/init.do',
             columns: [[
                 {field: 'ck', checkbox: true},
-                {field: 'userId', title: 'userId', hidden: true, width: 150},
+                {field: 'id', title: 'userId', hidden: true},
                 {field: 'userGroup', title: '分组', width: 150},
                 {
                     field: 'userName',
-                    title: '用户名',
+                    title: '账号',
                     width: 150,
-                    align: 'right',
-                    editor: {type: 'numberbox', options: {precision: 1}}
+                    align: 'right'
                 },
                 {field: 'nickName', title: '昵称', width: 150, align: 'right', editor: 'numberbox'},
-                {
-                    field: 'power', title: '权限', width: 150, align: 'right'
-                    ,
-                    formatter: function (value) {
-                        if (value == 9) {
-                            return "管理";
-                        }
-                        else if (value == 0) {
-                            return "无权限";
-                        }
-                        else if (value == 1) {
-                            return "編輯";
-                        }
-                        else if (value == 2) {
-                            return "增加";
-                        }
-                        else if (value == 3) {
-                            return "增加,编辑";
-                        }
-                        else if (value == 4) {
-                            return "删除";
-                        }
-                        else if (value == 5) {
-                            return "删除,编辑";
-                        }
-                        else if (value == 6) {
-                            return "删除,增加";
-                        }
-                        else if (value == 7) {
-                            return "删除,增加,编辑";
-                        }
-
-                    }
-                },
-
                 {field: 'remark', title: '备注', width: 250, editor: 'text'},
                 {
                     field: 'action', title: 'Action', width: 150, align: 'center',
@@ -148,102 +103,11 @@
         });
     });
 
-    function updateActions(index) {
-        $('#tt').datagrid('updateRow', {
-            index: index,
-            row: {}
-        });
-    }
-
-    function getRowIndex(target) {
-        var tr = $(target).closest('tr.datagrid-row');
-        return parseInt(tr.attr('datagrid-row-index'));
-    }
-
-    function editrow(target) {
-        $("#tt").datagrid("selectRow", getRowIndex(target));
-        var row = $("#tt").datagrid("getSelected");
-        if (row) {
-            $.ajax({
-                type: "POST",
-                url: "/user/selectbyid.do",
-                data: {userId: row.userId},
-                dataType: "json",
-                success: function (user) {
-                    $("#dlg_edit_userinfo").dialog(
-                        {
-                            onOpen: function () {
-                                var mypower = new Array()
-                                if (user.power == 3) {
-
-                                    $('#input_power').combobox('setValues', '1,2'.split(','));
-                                }
-                                else if (user.power == 5) {
-                                    $('#input_power').combobox('setValues', '1,4'.split(','));
-                                }
-                                else if (user.power == 6) {
-                                    $('#input_power').combobox('setValues', '2,4'.split(','));
-                                }
-                                else if (user.power == 7) {
-                                    $('#input_power').combobox('setValues', '1,2,4'.split(','));
-                                }
-                                else {
-                                    $('#input_power').combobox('setValue', user.power);
-                                }
-
-                                $("#input_userName").val(user.userName);
-                                $("#input_nickName").val(user.nickName);
-                                $("#input_remark").val(user.remark);
-                                $("#input_userId").val(row.userId);
-                                $('#input_userGroup').combobox('setValue', user.userGroup);
-
-                            }
-                        });
-                    $("#dlg_edit_userinfo").dialog("open").dialog("setTitle", user.userName);
-
-                }
-            })
-        }
-    }
-
-    function deleterow(target) {
-        $.messager.confirm('Confirm', 'Are you sure?', function (r) {
-            if (r) {
-                $('#tt').datagrid('deleteRow', getRowIndex(target));
-            }
-        });
-    }
-
-    function saverow(target) {
-        $('#tt').datagrid('endEdit', getRowIndex(target));
-    }
-
-    function cancelrow(target) {
-        $('#tt').datagrid('cancelEdit', getRowIndex(target));
-    }
-
-    function insert() {
-        var row = $('#tt').datagrid('getSelected');
-        if (row) {
-            var index = $('#tt').datagrid('getRowIndex', row);
-        } else {
-            index = 0;
-        }
-        $('#tt').datagrid('insertRow', {
-            index: index,
-            row: {
-                status: 'P'
-            }
-        });
-        $('#tt').datagrid('selectRow', index);
-        $('#tt').datagrid('beginEdit', index);
-    }
 
 </script>
-</head>
 
 <div id="tb" style="padding:3px">
-    <span>用户名:</span>
+    <span>账号:</span>
     <input id="userName" class="easyui-textbox">
     <span>昵称:</span>
     <input id="nickName" class="easyui-textbox">
@@ -261,21 +125,12 @@
 <div id="dlg_edit_userinfo" class="easyui-dialog"
      style="width: 400px;height:500px;padding: 10px 20px;"
      closed="true" maximizable="false" closable="false" buttons="#dlg_edit_user_buttons" data-options="modal:true">
-    <p>用户名</p>
+    <p>账号</p>
     <input id="input_userName" name="input_userName" class="easyui-textbox" disabled="true" iconCls="icon-man"
            style="width:200px"></input>
     <p>昵称</p>
     <input id="input_nickName" name="input_nickName" class="easyui-textbox" data-options="iconCls:'icon-user'"
            onchange=buttonAble() style="width:200px"></input>
-    <p>权限</p>
-    <select id="input_power" class="easyui-combobox" name="dept" style="width:200px;" onchange=buttonAble()
-            data-options="multiple:true">
-        <option value="0">无权限</option>
-        <option value="1">编辑</option>
-        <option value="2">增加</option>
-        <option value="4">删除</option>
-        <option value="9">管理</option>
-    </select>
     <p>分组</p>
     <input id="input_userGroup" name="input_userGroup" class="easyui-combobox" onchange=buttonAble() style="width:200px"
            data-options="
@@ -299,7 +154,7 @@
     </div>
 </div>
 
-<table id="tt"></table>
+<table id="tt" ></table>
 <%
 } else {
 %>

@@ -52,7 +52,7 @@
     if(userpower==9)
     {
 %>
- <a href="alluserpage.jsp">  用户管理</a></p>
+ <a href="test2.jsp">  管理界面</a></p>
 <%
     }
     }else{
@@ -189,9 +189,6 @@
         }
         loadKnowledgepointParagraph(qid);
     })
-
-
-
 </script>
 
 </html>
