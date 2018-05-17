@@ -18,4 +18,15 @@
         FROM task
     </select>
 
+    <update id="updateTask" parameterType="Map">
+       UPDATE task
+       SET status=1,approver=#{userName}
+       WHERE id = #{taskid};
+    </update>
+    <update id="updateKnow" parameterType="Map">
+       UPDATE knowledgepoint
+       SET status=1
+       WHERE id = #{knowid};
+    </update>
+
 </mapper>

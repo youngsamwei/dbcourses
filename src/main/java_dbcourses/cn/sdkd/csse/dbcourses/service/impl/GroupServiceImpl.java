@@ -14,4 +14,5 @@ public class GroupServiceImpl extends ServiceImpl<IGroupDao,Group> implements IG
     public List<Group> selectAllGroup() {
         return this.baseMapper.selectAllGroup();
     }
+    public boolean insertuserGroup(String name){ return  this.baseMapper.insertuserGroup(name);}
 }

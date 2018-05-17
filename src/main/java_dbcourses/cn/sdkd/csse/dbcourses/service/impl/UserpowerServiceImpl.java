@@ -23,5 +23,8 @@ public class UserpowerServiceImpl extends ServiceImpl<IUserpowerDao,UserPower> i
        int ids[] =UserUtils.spiltId(idlist);
         return this.baseMapper.deleteUserpower(powerCode,ids);
     }
+    public String[] selectuserPower(Map params){
+        return this.baseMapper.selectuserPower(params);
+    }
 
 }

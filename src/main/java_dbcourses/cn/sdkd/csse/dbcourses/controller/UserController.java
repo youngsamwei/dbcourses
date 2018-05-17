@@ -148,19 +148,6 @@ public class UserController extends BaseController {
         System.out.println(userstr);
         JSONObject edit = JSONObject.fromObject(userstr);
         Map maps = (Map)JSON.parse(userstr);
-        System.out.println("------------------------"+maps.get("power"));
-        String str=maps.get("power").toString();
-        String[] list=str.substring(1, str.length()-1).replace("\"", "").split(",");
-        int power=0;
-        for(int i=0;i<list.length;i++)
-        {
-            power+=Integer.parseInt(list[i]);
-        }
-        if(power>=9)
-        {
-            power=9;
-        }
-        maps.put("power",power);
         userService.updateUser(maps);
         return renderSuccess("修改成功");
     }

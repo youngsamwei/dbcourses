@@ -10,4 +10,5 @@ import java.util.Map;
 public interface IUserpowerService extends IService<UserPower> {
     public boolean insertPower(List<UserPower> list);
     public boolean deleteUserpower(String powerCode,String idlist);
+    public String[] selectuserPower(Map params);
 }

@@ -185,7 +185,7 @@
 
         var qid = getQueryString("qid");
         if ((qid == null)||(qid == '')){
-            qid = 154;
+            qid = 1;
         }
         loadKnowledgepointParagraph(qid);
     })

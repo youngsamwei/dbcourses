@@ -18,4 +18,5 @@ public interface IUserDao extends BaseMapper<User> {
     public List<User> selectByUserpower(String powerCode);
     public boolean insertUser(Map user);
     public List<User> selectChildren(String usergroup,int[] ids);
+    public String selectadminPower(String userName);
 }

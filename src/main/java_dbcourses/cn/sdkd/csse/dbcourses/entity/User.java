@@ -8,7 +8,7 @@ public class User  implements Serializable {
     private String userName;
     private String passWord;
     private String nickName;
-    private int power;
+    private String power;
     private String remark;
     private String userGroup;
 
@@ -44,11 +44,11 @@ public class User  implements Serializable {
         this.nickName = nickName;
     }
 
-    public int getPower() {
+    public String getPower() {
         return power;
     }
 
-    public void setPower(int power) {
+    public void setPower(String power) {
         this.power = power;
     }
 

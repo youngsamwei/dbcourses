@@ -13,6 +13,11 @@
     <select id="selectAllGroup" resultType="Group" >
         SELECT  id ,name ,remark
         FROM usergroup
+        ORDER by id
     </select>
+    <insert id="insertuserGroup" parameterType="String">
+        INSERT INTO usergroup(name)
+        VALUE (#{name})
+    </insert>
 
 </mapper>

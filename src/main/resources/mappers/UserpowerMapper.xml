@@ -27,5 +27,12 @@
             (#{user.userId},#{user.powerCode})
         </foreach>
     </insert>
+    <select id="selectuserPower" parameterType="Map" resultType="String">
+       SELECT B.powercode
+       FROM USER A, userpower B
+       WHERE A.userId=B.userid
+       AND A.userName=#{userName}
+       AND (B.powercode='9999999' OR B.powercode=#{powerCode})
+    </select>
 
 </mapper>

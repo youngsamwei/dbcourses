@@ -56,9 +56,10 @@ function getQueryString(name) {
 
     /*获取并显示知识点的名字*/
     function displayTitle(result ){
+        //这里多一位是因为0开头字符串会被解析成八进制,多传一为让后台去正确处理
         var knowledgepointId = result[0].id;
         var knowledgepointName = result[0].knowledgepointName;
-        var button0 = "<a href='javascript:openKnowledgepointAddDialog(2)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
+        var button0 = "<a href='javascript:openKnowledgepointAddDialog("+10101012+")' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
         /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
         var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 1)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
         var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
@@ -107,7 +108,6 @@ function getQueryString(name) {
                     var response = result.responseText;
                     alert('errot');
                 }
-
             });
 
     }
@@ -137,14 +137,12 @@ function getEditrow(){
     var nickName =$('#input_nickName').val();
     var remark =$('#input_remark').val();
     var group= $('#input_userGroup').combobox('getText');
-    var power =$('#input_power').combobox('getValues');
 
     var user ={
         userId:userId,
         userName:userName,
         userGroup:group,
         nickName:nickName,
-        power:power,
         remark:remark
     };
     $.ajax({
@@ -157,6 +155,7 @@ function getEditrow(){
             alert("编辑成功");
             doSearchUser();
             $('#editButton').linkbutton({disabled:true});
+            $("#dlg_edit_user").dialog("close");
 
         },
         error:function () {
@@ -243,7 +242,7 @@ function getUserPower(powers){
     var msg='请求失败';
     $.ajax({
         type: "post",
-        url: "/user/getpower.do",
+        url: "/userpower/getpower.do",
         data: { powers: powers },
         dataType: "json",
         async:false,
@@ -251,9 +250,10 @@ function getUserPower(powers){
             msg=data.msg;
         },
         error: function (data) {
-            msg = data.msg;
+            msg=data.msg;
         }
     });
+   // alert(msg);
     return msg;
 }
 var row = $('#tt').datagrid('getChecked');

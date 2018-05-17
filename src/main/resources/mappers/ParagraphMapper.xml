@@ -20,4 +20,5 @@
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
 
+
 </mapper>

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -49,4 +51,25 @@ public class UserpowerController extends BaseController{
         userpowerService.deleteUserpower(powerCode,idlist);
         return  renderSuccess();
     }
+
+    @RequestMapping("/getpower")
+    @ResponseBody
+    public Object getUserpower(@RequestParam("powers") String powerCode)
+    {
+        String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+        HashMap<String,String> params=new HashMap<>();
+        params.put("userName",userName);
+        params.put("powerCode",powerCode.substring(1,powerCode.length()));
+        String[] power=userpowerService.selectuserPower(params);
+        String msg="权限不足";
+        for(int i=0;i<power.length;i++)
+        {
+            if(power[i].equals("9999999")||power[i].equals(powerCode))
+            {
+                msg="获得权限";
+            }
+        }
+        return renderSuccess(msg);
+    }
+
 }

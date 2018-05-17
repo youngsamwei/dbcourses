@@ -48,6 +48,38 @@
 <div style="margin:20px 0;"></div>
 
 <script>
+    function openGroupadd() {
+        $("#dlg_add_group").dialog("open").dialog("setTitle", '输入组名');
+    }
+    function closeGroupadd() {
+        $("#dlg_add_group").dialog("close");
+    }
+    function doaddGroup() {
+
+        var groupname =$("#groupname").val();
+        $.ajax({
+            type: "post",
+            url: "/group/add.do",
+            data: {
+                name:groupname
+            },
+            datatype: "json",
+            success: function () {
+                alert("添加成功");
+                //doSearchUser();
+                //$('#editButton').linkbutton({disabled:true});
+
+            },
+            error:function () {
+                alert("失败");
+                //  doSearchUser();
+                // $('#editButton').linkbutton({disabled:true});
+            }
+
+        });
+    }
+
+
 
     $(function () {
         $('#tt').datagrid({
@@ -55,7 +87,7 @@
             iconCls: 'icon-edit',
             rownumbers: true,
             pagination: true,
-            width: 1100,
+            width: 1000,
             height: 550,
             singleSelect: false,
             idField: 'userId',
@@ -75,15 +107,9 @@
                 {
                     field: 'action', title: 'Action', width: 150, align: 'center',
                     formatter: function (value, row, index) {
-                        if (row.editing) {
-                            var s = '<a href="#" onclick="saverow(this)">Save</a> ';
-                            var c = '<a href="#" onclick="cancelrow(this)">Cancel</a>';
-                            return s + c;
-                        } else {
+
                             var e = '<a href="#" onclick="editrow(this)">编辑</a> ';
-                            var d = '<a href="#" onclick="deleterow(this)">删除</a>';
-                            return e + d;
-                        }
+                            return e ;
                     }
                 }
             ]],
@@ -119,8 +145,22 @@
                               multiple:false,
                               panelHeight:'auto'"></input>
 
-    <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearchUser()">查找</a>
+    <button  class="easyui-linkbutton"  onclick="doSearchUser()" data-options="iconCls:'icon-search'">查找</button>
+   <button class="easyui-linkbutton" onclick="openGroupadd()" data-options="iconCls:'icon-add'">添加分组</button>
 </div>
+
+<div id="dlg_add_group" class="easyui-dialog"
+     style="width: 260px;height:130px;padding: 10px 20px; position: relative; z-index:1000;"
+     closed="true" maximizable="false" closable="false" buttons="#dlg_add_group_buttons"  data-options="modal:true">
+    <input id="groupname" name="groupname" class="easyui-textbox" style="width:200px" ></input>
+
+    <div id="dlg_add_group_buttons">
+        <a href="javascript:doaddGroup()" class="easyui-linkbutton"
+           iconCls="icon-ok">确定</a> <a href="javascript:closeGroupadd()"
+                                       class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+    </div>
+</div>
+
 
 <div id="dlg_edit_userinfo" class="easyui-dialog"
      style="width: 400px;height:500px;padding: 10px 20px;"

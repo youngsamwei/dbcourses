@@ -104,4 +104,11 @@
     insert into user(userName,passWord,nickName)
     VALUES (#{username},#{password},#{nickname})
     </insert>
+    <select id="selectadminPower" parameterType="String" resultType="String">
+         SELECT A.powercode
+         from userpower A,user B
+         WHERE A.userid=B.userId
+         AND B.userName=#{userName}
+         AND A.powercode='9999999'
+    </select>
 </mapper>

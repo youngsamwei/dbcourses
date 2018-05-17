@@ -7,11 +7,17 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class ITaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITaskService {
+public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITaskService {
     @Override
     public List<Task> getTasklist() {
         return this.baseMapper.selectAllTask();
+    }
+    public boolean updateTaskKnow(Map ids){
+        boolean flag=false;
+        flag=(this.baseMapper.updateTask(ids)&&this.baseMapper.updateKnow(ids));
+        return flag;
     }
 }

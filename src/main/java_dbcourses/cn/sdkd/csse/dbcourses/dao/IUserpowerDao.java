@@ -9,4 +9,5 @@ import java.util.Map;
 public interface IUserpowerDao extends BaseMapper<UserPower>{
     public boolean insertPower(List<UserPower> list);
     public boolean deleteUserpower(String powerCode,int[] idlist);
+    public String[] selectuserPower(Map params);
 }

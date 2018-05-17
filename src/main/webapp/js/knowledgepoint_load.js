@@ -62,10 +62,10 @@ function loadKnowledgepointParagraph (qid){
         var knowledgepointName = result[0].knowledgepointName;
         var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
         /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加1111段落</a> ";
-        var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查1111询</a> ";
-        var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> bu收藏</a>";
-        var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用1111户</a>";
+        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
+        var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
+        var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
+        var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用户</a>";
         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
             button2, button1, button3, button0,button4,
             "<div  id='content_" + knowledgepointId + "'>",

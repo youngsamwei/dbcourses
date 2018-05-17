@@ -33,9 +33,10 @@
     <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
 </head>
-<body>
-<h2>Tab Position</h2>
-<p>Click the 'position' drop-down list and select an item to change the tab position.</p>
+<body background="/images/thebg.jpg">
+<h1>管理界面</h1>
+<br>
+<br>
 <%--<div style="margin:20px 0;">--%>
     <%--<span>Position:</span>--%>
     <%--<select onchange="$('#tt').tabs({tabPosition:this.value})">--%>
@@ -45,16 +46,16 @@
         <%--<option value="right">Right</option>--%>
     <%--</select>--%>
 <%--</div>--%>
-<div id="tts" class="easyui-tabs" style="width:1550px;height:850px" tabPosition=left >
+<div id="tts" class="easyui-tabs" style="width:1300px;height:750px;margin:0 auto;"  tabPosition=left >
     <div title="用户管理" style="padding:10px" >
-        <div id="pu" class="easyui-panel"  style="width:1550px;height:800px;padding:10px;">
+        <div id="pu" class="easyui-panel"  style="width:auto;height:800px;padding:10px;">
         </div>
     </div>
     <div title="资源权限管理" style="padding:10px">
-        <div id="pr" class="easyui-panel"  style="width:1550px;height:800px;padding:10px;"></div>
+        <div id="pr" class="easyui-panel"  style="width:auto;height:800px;padding:10px;"></div>
     </div>
     <div title="任务审核"  style="padding:10px" >
-        <div id="pt" class="easyui-panel"  style="width:1550px;height:800px;padding:10px;"></div>
+        <div id="pt" class="easyui-panel"  style="width:auto;height:800px;padding:10px;"></div>
     </div>
 </div>
 <script type="text/javascript">

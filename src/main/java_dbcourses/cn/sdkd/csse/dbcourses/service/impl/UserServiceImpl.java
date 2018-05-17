@@ -19,7 +19,13 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, User> implements IUse
 
     @Override
     public User selectPassword(String username) {
-        return this.baseMapper.selectPassword(username);
+        User user= this.baseMapper.selectPassword(username);
+        String powerCode =this.baseMapper.selectadminPower(username);
+        if(powerCode.equals("9999999"))
+        {
+            user.setPower("9");
+        }
+        return user;
     }
 
     @Override

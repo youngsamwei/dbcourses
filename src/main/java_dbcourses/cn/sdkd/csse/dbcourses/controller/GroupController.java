@@ -5,6 +5,7 @@ import cn.sdkd.csse.dbcourses.service.IGroupService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -32,5 +33,14 @@ public class GroupController extends BaseController{
         List<Group> ls=groupService.selectAllGroup();
         return ls.toString();
     }
+
+    @ResponseBody
+    @RequestMapping("/add")
+    public Object addgroup(@RequestParam("name") String name)
+    {
+        groupService.insertuserGroup(name);
+        return renderSuccess();
+    }
+
 
 }

@@ -22,5 +22,13 @@
     where knowledgepointName like #{knowledgepointName}
     limit 8
   </select>
+  <insert id="insertKnow" parameterType="Knowledgepoint" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO knowledgepoint(knowledgepointName,addName)
+    VALUES(#{knowledgepointName},#{addName})
+  </insert>
+   <insert id="insertATask" parameterType="Map">
+     INSERT INTO TASK(mainid,submitter,type)
+     VALUE (#{mainid},#{userName},11)
+   </insert>
 
 </mapper>

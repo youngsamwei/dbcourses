@@ -109,15 +109,17 @@
 
     }
 
+    //知识点增加
     function openKnowledgepointAddDialog(powers) {
+       // alert(powers);
         var msg = getUserPower(powers);
-        if (msg == '获得权限') {
-            $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
-            $('#input_knowledgepoint').focus();
-        }
-        else{
+        if (msg != '获得权限') {
             alert(msg);
+            return;
         }
+        $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
+        $('#input_knowledgepoint').focus();
+
     }
 
     function closeKnowledgepointAddDialog(){
@@ -133,13 +135,16 @@
             data: "{}",
             dataType: "json",
             success: function (result) {
-               closeKnowledgepointAddDialog();
-               window.location.href='index.html?qname='+knowledgepointName;
-            },
-            "error": function (result) {
-                var response = result.responseText;
-                alert('errot');
+                if (result.msg == "添加成功") {
+                    alert("添加成功,!等待审核");
+                    closeKnowledgepointAddDialog();
+                }
+                else{
+                     alert("添加失败,或已存在相同知识点");
+                }
             }
+
+
 
         });
     }

@@ -12,4 +12,6 @@ import java.util.Map;
  */
 public interface IKnowledgepointService extends IService<Knowledgepoint> {
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params);
+    public boolean insert(Knowledgepoint knowledgepoint,Map params);
+    public boolean insertKnow(Knowledgepoint know,Map params);
 }

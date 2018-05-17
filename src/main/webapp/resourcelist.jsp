@@ -24,23 +24,21 @@
 <%--<button onclick="insertPower()">添加测试</button>--%>
 <%--<button onclick="deletePower()">刪除测试</button>--%>
 <div style="margin:20px 0 10px 0;"></div>
-<div class="easyui-panel"  style="width:1250px;height:700px;padding:10px;">
+<div class="easyui-panel"  style="width:1100px;height:700px;">
     <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'west',split:true" style="width:200px;padding:10px">
-            <div style="border:1px solid #ccc;width:150px;padding:10px">
+        <div data-options="region:'west',split:true" style="width:180px;">
             <ul id="MyTree"></ul>
-           </div>
             <%--<button onclick="getChecked()">获得选中值</button>--%>
             <%--<button onclick="checkedResource()">选中</button>--%>
         </div>
-        <div data-options="region:'east'" style="width:200px;padding:10px">
+        <div data-options="region:'east'" style="width:180px;">
             <button onclick="insertPower()">添加权限</button>
             <%--<button onclick="getSelected()">获得权限值</button>--%>
             <%--<button onclick="getUnChecked()">全不选</button>--%>
             <ul id="UserTree"></ul>
         </div>
 
-        <div data-options="region:'center'" style="padding:10px">
+        <div data-options="region:'center'" style="width:auto;">
             <button onclick="deletePower()">批量删除</button>
             <table id="ts"></table>
         </div>

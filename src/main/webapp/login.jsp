@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>登陆</title>
     <script type="text/javascript" charset="utf-8" src="/js/user_login.js"></script>
     <link rel="stylesheet" type="text/css"
           href="/jquery-easyui-1.3.3/themes/default/easyui.css">
@@ -20,14 +20,14 @@
             src="/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
     <script type="text/javascript"></script>
 </head>
-<body>
-<div class="easyui-dialog" title="管理员登录" data-options="closable:false,draggable:false"
+<body background="/images/thebg.jpg">
+<div class="easyui-dialog" title="登录" data-options="closable:false,draggable:false"
      style="width: 400px; height: 300px; padding: 10px;">
     <div style="margin-left: 50px; margin-top: 50px;">
         <div style="margin-bottom: 20px;">
             <div>
                 用户名:
-                <input name="username" class="easyui-textbox" data-options="required:true"
+                <input name="username" class="easyui-textbox" data-options="required:true prompt:'登录邮箱',iconCls:'icon-user',iconWidth:38"
                        style="width: 200px; height: 32px"  />
             </div>
         </div>

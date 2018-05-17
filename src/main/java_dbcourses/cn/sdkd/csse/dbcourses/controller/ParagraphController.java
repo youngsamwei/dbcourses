@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class ParagraphController extends BaseController {
   public Object add(@Valid Paragraph paragraph) {
 
     try {
+
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insert(paragraph);
       return renderSuccess("添加成功！");

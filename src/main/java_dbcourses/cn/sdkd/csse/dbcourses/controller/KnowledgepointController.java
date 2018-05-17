@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,6 +32,7 @@ public class KnowledgepointController extends BaseController {
   @RequestMapping("/list")
   public List<Knowledgepoint> list(Knowledgepoint knowledgepoint) {
     EntityWrapper ew = new EntityWrapper();
+    ew.eq("status","1");
     if (knowledgepoint.getId() != null) {
       ew.eq("id", knowledgepoint.getId());
     } else if (knowledgepoint.getKnowledgepointName() != null){
@@ -45,9 +49,13 @@ public class KnowledgepointController extends BaseController {
   @ResponseBody
   public Object add(Knowledgepoint knowledgepoint) {
     try {
+      HashMap<String,Object> params=new HashMap<>();
+      String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+      knowledgepoint.setAddName(userName);
+      params.put("userName",userName);
       knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
-      knowledgepointService.insert(knowledgepoint);
-      return renderSuccess("添加成功！");
+      knowledgepointService.insertKnow(knowledgepoint,params);
+      return renderSuccess("添加成功");
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       return this.renderError(e.getLocalizedMessage());
@@ -68,4 +76,11 @@ public class KnowledgepointController extends BaseController {
     return renderSuccess("删除成功！");
   }
 
+  @RequestMapping("/audit")
+  @ResponseBody
+  public Knowledgepoint getAudit(@RequestParam("id") String id) {
+    Knowledgepoint knowledgepoint=new Knowledgepoint();
+    knowledgepoint.setId(Integer.parseInt(id));
+    return knowledgepointService.selectById(knowledgepoint);
+  }
 }
