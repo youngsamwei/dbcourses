@@ -94,12 +94,11 @@ function loadKnowledgepointParagraph (qid){
                           : htmlDecode(element.paragraphContent);
                         var paragraphOrder = element.paragraphOrder + 1;
                         var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-                        var button2 = "<a href='javascript:deleteArticle(" + element.id +")' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
+                        var button2 = "<a href='javascript:deleteArticle("+ element.id +", "+ knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
                         var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
                         var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
-                        //var button5 = "<a href='javascript:sortUpOne(" + knowledgepointId +", " + paragraphOrder + ")' class='top_button fa fa-sort-up' title='向上移动段落'> 排序</a>";
-                        var button5 = "<a href='javascript:sortUpOne(" + element.id + ")' class='top_button fa fa-sort-up' title='向上移动段落'> 排序</a>";
-                        var button6 = "<a href='javascript:void(0)' class='top_button fa fa-sort-down' title='向下移动段落'> 排序</a>";
+                        var button5 = "<a href='javascript:sortUpOne(" + knowledgepointId +", " + paragraphOrder + ")' class='top_button fa fa-sort-up' title='向上移动段落'> 排序</a>";
+                        var button6 = "<a href='javascript:sortDownOne(" + knowledgepointId +", " + paragraphOrder + ")' class='top_button fa fa-sort-down' title='向下移动段落'> 排序</a>";
 
                         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
                             button5, button6,

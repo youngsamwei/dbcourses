@@ -5,13 +5,18 @@ import cn.sdkd.csse.dbcourses.service.IKnowledgepointService;
 import cn.sdkd.csse.dbcourses.utils.DateUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
+
+import cn.sdkd.csse.dbcourses.utils.solr;
+
 
 /**
  * Created by Sam on 2018/1/6.
@@ -36,7 +41,6 @@ public class KnowledgepointController extends BaseController {
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
     }else{
       /*错误处理*/
-
     }
     List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
     return ls;
@@ -75,4 +79,22 @@ public class KnowledgepointController extends BaseController {
     return renderSuccess("删除成功！");
   }
 
+
+  /**
+   * solr 内容搜索
+   * created by weihongwei
+   * 2018.5.7
+   */
+  @RequestMapping("/solr")
+  @ResponseBody
+  public SolrDocumentList solr(Knowledgepoint knowledgepoint) {
+    solr s = new solr();
+      SolrDocumentList result = null;
+    try {
+        s.solrDateImport();
+        result= s.querySolr(knowledgepoint.getKnowledgepointName());
+    }catch (Exception e) {
+    }
+      return result;
+  }
 }
