@@ -13,12 +13,25 @@
     <result property="addName" column="addName"/>
   </resultMap>
 
+  <insert id="insertPara" parameterType="Paragraph" useGeneratedKeys="true" keyProperty="id">
+    insert into paragraph(knowledgepointId,paragraphContent,paragraphCreateDate)
+    VALUE (#{knowledgepointId},#{paragraphContent},#{paragraphCreateDate})
+  </insert>
   <!-- 插入一个段落时，需要指定段落位置，该位置后面的段落编号+1 -->
   <update id="updateParagraphOrder" parameterType="Paragraph">
     update paragraph
     set		paragraphOrder = paragraphOrder + 1
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
-
+  <insert id="insertATaskP" parameterType="Map">
+    INSERT INTO TASK(mainid,submitter,type)
+    VALUE (#{mainid},#{userName},21)
+  </insert>
+  <select id="selectPkname" parameterType="Integer" resultType="String">
+  SELECT A.knowledgepointName
+  FROM knowledgepoint A,paragraph B
+  WHERE b.id=#{id}
+  AND B.knowledgepointId=A.id
+  </select>
 
 </mapper>

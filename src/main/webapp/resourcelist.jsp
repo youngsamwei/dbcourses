@@ -26,7 +26,7 @@
 <div style="margin:20px 0 10px 0;"></div>
 <div class="easyui-panel"  style="width:1100px;height:700px;">
     <div class="easyui-layout" data-options="fit:true">
-        <div data-options="region:'west',split:true" style="width:180px;">
+        <div data-options="region:'west'" style="width:180px;">
             <ul id="MyTree"></ul>
             <%--<button onclick="getChecked()">获得选中值</button>--%>
             <%--<button onclick="checkedResource()">选中</button>--%>
@@ -109,6 +109,7 @@
             for(var i=0; i<rows.length; i++) {
                 ids.push(rows[i].userId);
             }
+            ids.push(0)
             $(this).tree('options').url = "user/getchildren.do?ids="+ids.join(',');
         }
     });
@@ -124,6 +125,7 @@
         for (var i = 0; i < nodes.length; i++) {
             arr.push(nodes[i].id);
         }
+        arr.push(0);
         $.ajax({
             type: "post",
             url: "/userpower/add.do",
@@ -155,6 +157,7 @@
         for(var i=0; i<rows.length; i++){
             ids.push(rows[i].userId);
         }
+        ids.push(0);
         $.ajax({
             type: "post",
             url: "/userpower/delete.do",
@@ -216,7 +219,7 @@
 
     $(function () {
         $('#ts').datagrid({
-            title: '用户管理',
+            title: '有权限用户',
             iconCls: 'icon-edit',
             rownumbers: true,
             pagination: true,
@@ -238,20 +241,7 @@
                 },
                 {field: 'nickName', title: '昵称', width: 150, align: 'right', editor: 'numberbox'},
                 {field: 'remark', title: '备注', width: 250, editor: 'text'},
-//                {
-//                    field: 'action', title: 'Action', width: 150, align: 'center',
-//                    formatter: function (value, row, index) {
-//                        if (row.editing) {
-//                            var s = '<a href="#" onclick="saverow(this)">Save</a> ';
-//                            var c = '<a href="#" onclick="cancelrow(this)">Cancel</a>';
-//                            return s + c;
-//                        } else {
-//                            var e = '<a href="#" onclick="editrow(this)">编辑</a> ';
-//                            var d = '<a href="#" onclick="deleterow(this)">删除</a>';
-//                            return e + d;
-//                        }
-//                    }
-//                }
+//
             ]],
 
             onBeforeEdit: function (index, row) {

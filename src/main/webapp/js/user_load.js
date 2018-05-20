@@ -131,41 +131,7 @@ function getSelected(){
 }
 
 //编辑用户
-function getEditrow(){
-    var userId= $('#input_userId').val();
-    var userName= $('#input_userName').val();
-    var nickName =$('#input_nickName').val();
-    var remark =$('#input_remark').val();
-    var group= $('#input_userGroup').combobox('getText');
 
-    var user ={
-        userId:userId,
-        userName:userName,
-        userGroup:group,
-        nickName:nickName,
-        remark:remark
-    };
-    $.ajax({
-        type: "post",
-        url: "/user/update.do",
-        data: { user: JSON.stringify(user)},//非常重要的一步
-        datatype: "json",
-        success: function () {
-
-            alert("编辑成功");
-            doSearchUser();
-            $('#editButton').linkbutton({disabled:true});
-            $("#dlg_edit_user").dialog("close");
-
-        },
-        error:function () {
-            alert("编辑失败");
-            doSearchUser();
-            $('#editButton').linkbutton({disabled:true});
-        }
-
-    });
-}
 
 
 function getSelections(){
@@ -273,33 +239,7 @@ function getRowIndex(target) {
     return parseInt(tr.attr('datagrid-row-index'));
 }
 
-function editrow(target) {
-    $("#tt").datagrid("selectRow", getRowIndex(target));
-    var row = $("#tt").datagrid("getSelected");
-    if (row) {
-        $.ajax({
-            type: "POST",
-            url: "/user/selectbyid.do",
-            data: {userId: row.userId},
-            dataType: "json",
-            success: function (user) {
-                $("#dlg_edit_userinfo").dialog(
-                    {
-                        onOpen: function () {
-                            $("#input_userName").val(user.userName);
-                            $("#input_nickName").val(user.nickName);
-                            $("#input_remark").val(user.remark);
-                            $("#input_userId").val(row.userId);
-                            $('#input_userGroup').combobox('setValue', user.userGroup);
 
-                        }
-                    });
-                $("#dlg_edit_userinfo").dialog("open").dialog("setTitle", user.userName);
-
-            }
-        })
-    }
-}
 
 function deleterow(target) {
     $.messager.confirm('Confirm', 'Are you sure?', function (r) {

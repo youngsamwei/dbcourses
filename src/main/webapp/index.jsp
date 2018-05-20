@@ -52,7 +52,7 @@
     if(userpower==9)
     {
 %>
- <a href="test2.jsp">  管理界面</a></p>
+ <a href="Managerindex.jsp">  管理界面</a></p>
 <%
     }
     }else{
@@ -97,7 +97,6 @@
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
      closed="true" buttons="#dlg-search-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
     <div class="user_search">
-
         <input id="ssu" class="easyui-searchbox" style="width:400px" data-options="menu:'#box2'"></input>
         <div id="box2" style="width:120px">
             <div data-options="name:'user',iconCls:'icon-user'">用户</div>

@@ -107,7 +107,6 @@
                 var password = $("[name=input_password]").val();
                 var nickname = $("[name=input_nickname]").val();
                 var password2 =$("[name=input_password2]").val();
-                alert(password +"  "+password2)
                 if (username == '' || password == ''||nickname=='') {
                     $.messager.alert('错误', "用户名密码,或昵称为空！");
                     return;
@@ -124,18 +123,13 @@
                         "password" : password,
                         "nickname" : nickname
                     },
-                    dataType : "text",
-                    success : function(data) {
-                        if (data != null && data == 'index') {
+                    dataType : "json",
+                    success: function () {
 
-                            alert("注册成功");
-                            window.location.href = "/index.jsp";
-
-                        } else if (data != null && data == 'login') {
-
-                            $.messager.alert('错误', "注册失败");
-                            return;
-                        }
+                        alert("注册成功");
+                    },
+                    error:function () {
+                        alert("失败");
                     }
                 });
             }

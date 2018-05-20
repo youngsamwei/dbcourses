@@ -42,7 +42,7 @@
             ue.setContent(content);
             ue.focus();
         });
-        url = "/paragraph/edit.do?id="  + id;
+        url = "/task/editpara.do?id="  + id ;
 
     }
 
@@ -143,8 +143,6 @@
                      alert("添加失败,或已存在相同知识点");
                 }
             }
-
-
 
         });
     }

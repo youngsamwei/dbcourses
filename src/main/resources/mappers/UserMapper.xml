@@ -87,7 +87,9 @@
         FROM USER A,USERPOWER B,usergroup C
         WHERE A.USERID=B.USERID
         AND A.userGroup =C.id
-        AND B.powercode= #{powerCode}
+        AND (B.powercode= #{powerCode}
+        OR B.powercode='9999999')
+
     </select>
 
     <delete id="deleteUsersBatch" parameterType="Integer">
@@ -97,8 +99,9 @@
         </foreach>
     </delete>
     <update id="updateUser"  parameterType="Map" >
-        UPDATE user SET nickName=#{nickName} ,power=#{power},userGroup=#{userGroup},remark=#{remark}
-        WHERE userId =#{userId}
+        UPDATE user A ,usergroup B SET A.nickName=#{nickName} ,A.power=#{power},A.userGroup=b.id,A.remark=#{remark}
+        WHERE A.userId =#{userId}
+        AND B.NAME=#{userGroup}
     </update>
     <insert id="insertUser" parameterType="Map">
     insert into user(userName,passWord,nickName)

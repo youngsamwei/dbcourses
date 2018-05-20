@@ -9,4 +9,6 @@ import java.util.Map;
 public interface ITaskService extends IService<Task> {
     public List<Task> getTasklist();
     public boolean updateTaskKnow(Map ids);
+    public boolean updateParaEdit(Map params);
+    public boolean updateTaskPara(Map params);
 }

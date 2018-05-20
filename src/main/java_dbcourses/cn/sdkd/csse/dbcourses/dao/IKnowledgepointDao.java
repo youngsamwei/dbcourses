@@ -15,5 +15,4 @@ public interface IKnowledgepointDao extends BaseMapper<Knowledgepoint> {
     public boolean insertKnow(Knowledgepoint know);
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params);
 
-
 }

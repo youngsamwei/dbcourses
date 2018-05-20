@@ -10,5 +10,8 @@ import java.util.Map;
  */
 public interface IParagraphDao extends BaseMapper<Paragraph> {
   public int updateParagraphOrder(Paragraph paragraph);
-  public boolean insertATask(Map params);
+  public boolean insertATaskP(Map params);
+  public boolean insertPara(Paragraph paragraph);
+  public String  selectPkname(int id);
+
 }

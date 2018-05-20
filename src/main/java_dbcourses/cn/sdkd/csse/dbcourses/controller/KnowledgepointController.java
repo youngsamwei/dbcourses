@@ -37,6 +37,7 @@ public class KnowledgepointController extends BaseController {
       ew.eq("id", knowledgepoint.getId());
     } else if (knowledgepoint.getKnowledgepointName() != null){
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
+      ew.where("id!=1");
     }else{
       /*错误处理*/
     }
@@ -51,8 +52,8 @@ public class KnowledgepointController extends BaseController {
     try {
       HashMap<String,Object> params=new HashMap<>();
       String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
-      knowledgepoint.setAddName(userName);
       params.put("userName",userName);
+      knowledgepoint.setAddName(userName);
       knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
       knowledgepointService.insertKnow(knowledgepoint,params);
       return renderSuccess("添加成功");

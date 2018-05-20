@@ -9,5 +9,6 @@ import java.util.Map;
  * Created by Sam on 2018/1/6.
  */
 public interface IParagraphService extends IService<Paragraph> {
-    public boolean insert(Paragraph entity);
+    public boolean insertPara(Paragraph entity,Map params);
+    public String selectPkname(int id);
 }

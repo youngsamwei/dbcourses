@@ -26,7 +26,21 @@
     <update id="updateKnow" parameterType="Map">
        UPDATE knowledgepoint
        SET status=1
-       WHERE id = #{knowid};
+       WHERE id = #{mainid};
+    </update>
+    <update id="updatePara" parameterType="Map">
+        UPDATE paragraph
+        SET status=1
+        WHERE id = #{mainid};
+    </update>
+    <update id="updateParaEdit" parameterType="Map">
+       UPDATE paragraph A,task B ,(SELECT paragraph.paragraphContent buff
+       FROM paragraph
+       where paragraph.id=#{mainid}
+       ) C
+       SET a.paragraphContent=b.content,b.content=C.buff,b.status='1',b.approver=#{userName}
+       where a.id=#{mainid}
+       and B.id=#{taskid};
     </update>
 
 </mapper>

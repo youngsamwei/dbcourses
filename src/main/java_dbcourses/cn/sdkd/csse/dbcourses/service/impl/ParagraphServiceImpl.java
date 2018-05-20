@@ -16,8 +16,17 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
 
   /*增加一个知识点段落，需要指定一个位置编号，并将此编号后的所有顺序编号+1。*/
   @Override
-  public boolean insert(Paragraph entity){
+  public boolean insertPara(Paragraph entity,Map params){
     this.baseMapper.updateParagraphOrder(entity);
-    return super.insert(entity);
+    this.baseMapper.insertPara(entity);
+    int id =entity.getId();
+    System.out.println("11111111111111111111111111111"+id);
+    params.put("mainid",id);
+    return this.baseMapper.insertATaskP(params);
   }
+  public String selectPkname(int id)
+  {
+    return this.baseMapper.selectPkname(id);
+  }
+
 }
