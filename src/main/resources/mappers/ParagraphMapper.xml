@@ -24,8 +24,8 @@
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
   <insert id="insertATaskP" parameterType="Map">
-    INSERT INTO TASK(mainid,submitter,type)
-    VALUE (#{mainid},#{userName},21)
+      INSERT INTO TASK(mainid,submitter,type,createTime)
+     VALUE (#{mainid},#{userName},21,#{createTime})
   </insert>
   <select id="selectPkname" parameterType="Integer" resultType="String">
   SELECT A.knowledgepointName

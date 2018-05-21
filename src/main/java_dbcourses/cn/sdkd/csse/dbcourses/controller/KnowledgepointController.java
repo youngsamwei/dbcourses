@@ -53,6 +53,7 @@ public class KnowledgepointController extends BaseController {
       HashMap<String,Object> params=new HashMap<>();
       String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
       params.put("userName",userName);
+      params.put("createTime",DateUtil.getCurrentDateStr());
       knowledgepoint.setAddName(userName);
       knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
       knowledgepointService.insertKnow(knowledgepoint,params);

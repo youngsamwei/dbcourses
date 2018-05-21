@@ -8,11 +8,43 @@ public class Task implements Serializable {
     private String type;
     private String content;
     private String status;
+    private String createTime;
     private String approver;
     private String submitter;
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"mainid\":")
+                .append(mainid);
+        sb.append(",\"type\":\"")
+                .append(type).append('\"');
+        sb.append(",\"content\":\"")
+                .append(content).append('\"');
+        sb.append(",\"status\":\"")
+                .append(status).append('\"');
+        sb.append(",\"createTime\":\"")
+                .append(createTime).append('\"');
+        sb.append(",\"approver\":\"")
+                .append(approver).append('\"');
+        sb.append(",\"submitter\":\"")
+                .append(submitter).append('\"');
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public void setId(int id) {
@@ -67,24 +99,4 @@ public class Task implements Serializable {
         this.submitter = submitter;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"mainid\":")
-                .append(mainid);
-        sb.append(",\"type\":\"")
-                .append(type).append('\"');
-        sb.append(",\"content\":\"")
-                .append(content).append('\"');
-        sb.append(",\"status\":\"")
-                .append(status).append('\"');
-        sb.append(",\"approver\":\"")
-                .append(approver).append('\"');
-        sb.append(",\"submitter\":\"")
-                .append(submitter).append('\"');
-        sb.append('}');
-        return sb.toString();
-    }
 }

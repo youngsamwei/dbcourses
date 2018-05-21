@@ -51,6 +51,7 @@ public class ParagraphController extends BaseController {
       HashMap<String,Object> params=new HashMap<>();
       String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
       params.put("userName",userName);
+      params.put("createTime",DateUtil.getCurrentDateStr());
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insertPara(paragraph,params);
       return renderSuccess("添加成功！");

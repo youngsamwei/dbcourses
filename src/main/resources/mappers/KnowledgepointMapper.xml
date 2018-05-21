@@ -27,8 +27,8 @@
     VALUES(#{knowledgepointName},#{addName})
   </insert>
   <insert id="insertATask" parameterType="Map">
-     INSERT INTO TASK(mainid,submitter,type)
-     VALUE (#{mainid},#{userName},11)
+     INSERT INTO TASK(mainid,submitter,type,createTime)
+     VALUE (#{mainid},#{userName},11,#{createTime})
   </insert>
 
 </mapper>

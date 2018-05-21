@@ -11,10 +11,11 @@
         <result property="content" column="content"/>
         <result property="status" column="status"/>
         <result property="approver" column="approver"/>
+        <result property="createTime" column="createTime"/>
         <result property="submitter" column="submitter"/>
     </resultMap>
     <select id="selectAllTask" resultType="Task" >
-        SELECT  id ,mainid,type,content,status,approver,submitter
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
         FROM task
     </select>
 
