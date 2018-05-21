@@ -14,15 +14,11 @@
     <link rel="stylesheet" type="text/css"
           href="/jquery-easyui-1.3.3/themes/icon.css">
     <script type="text/javascript"
-            src="/jquery-easyui-1.3.3/jquery.min.js"></script>
+            src="/js/jquery-1.8.0.min.js"></script>
     <script type="text/javascript"
             src="/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
     <script type="text/javascript"
             src="/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
-
     <link rel="stylesheet" type="text/css"
           href="/font-awesome-4.7.0/css/font-awesome.min.css">
 
@@ -79,37 +75,6 @@
 
         });
     }
-    function openGroupadd() {
-        $("#dlg_add_group").dialog("open").dialog("setTitle", '输入组名');
-    }
-    function closeGroupadd() {
-        $("#dlg_add_group").dialog("close");
-    }
-    function doaddGroup() {
-
-        var groupname =$("#groupname").val();
-        $.ajax({
-            type: "post",
-            url: "/group/add.do",
-            data: {
-                name:groupname
-            },
-            datatype: "json",
-            success: function () {
-                alert("添加成功");
-                //doSearchUser();
-                //$('#editButton').linkbutton({disabled:true});
-
-            },
-            error:function () {
-                alert("失败");
-                //  doSearchUser();
-                // $('#editButton').linkbutton({disabled:true});
-            }
-
-        });
-    }
-
     function  doSearchUser(){
         var userName =$("#userName").val();
         var nickName =$("#nickName").val();
@@ -134,6 +99,9 @@
             pagination: true,
             width: 1000,
             height: 500,
+            striped:true,
+            resizeHandle:'both',
+            fitColumns:true,
             singleSelect: false,
             idField: 'userId',
             url: '/user/init.do',
@@ -145,13 +113,13 @@
                     field: 'userName',
                     title: '账号',
                     width: 150,
-                    align: 'right'
+                    align: 'right',
                 },
                 {field: 'nickName', title: '昵称', width: 150, align: 'right', editor: 'numberbox'},
                 {field: 'remark', title: '备注', width: 250, editor: 'text'},
                 {
                     field: 'action', title: 'Action', width: 150, align: 'center',
-                    formatter: function (value, row, index) {
+                    formatter: function () {
                         var e = '<a href="#" onclick="editrow(this)">编辑</a> ';
                         return e ;
                     }
@@ -205,19 +173,6 @@
     }
 
 </script>
-
-
-<div id="dlg_add_group" class="easyui-dialog"
-     style="width: 260px;height:130px;padding: 10px 20px; position: relative; z-index:1000;"
-     closed="true" maximizable="false" closable="false" buttons="#dlg_add_group_buttons"  data-options="modal:true">
-    <input id="groupname" name="groupname" class="easyui-textbox" style="width:200px" ></input>
-
-    <div id="dlg_add_group_buttons">
-        <a href="javascript:doaddGroup()" class="easyui-linkbutton"
-           iconCls="icon-ok">确定</a> <a href="javascript:closeGroupadd()"
-                                       class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
-    </div>
-</div>
 
 
 <div id="dlg_edit_userinfo" class="easyui-dialog"

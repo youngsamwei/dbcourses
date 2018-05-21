@@ -9,6 +9,7 @@ To change this template use File | Settings | File Templates.
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title>控制台</title>
     <link rel="stylesheet" type="text/css" href="css/wu.css" />
     <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
     <link rel="stylesheet" type="text/css"
@@ -32,6 +33,15 @@ To change this template use File | Settings | File Templates.
 
 </head>
 <style type="text/css">body {zoom:1.3;}</style>
+<%
+    if(session.getAttribute("user")!=null&&session.getAttribute("power")!=null){
+%>
+        <%
+    int userpower=0;
+    userpower=Integer.parseInt(session.getAttribute("power").toString());
+    if(userpower==9)
+    {
+%>
 <body class="easyui-layout">
 	<!-- begin of header -->
 	<div class="wu-header" data-options="region:'north',border:false,split:true" style="height: 100px">
@@ -41,7 +51,7 @@ To change this template use File | Settings | File Templates.
         </div>
         <div class="wu-header-right" style="height: auto">
         	<p><strong class="easyui-tooltip" title=""><%=session.getAttribute("user")%></strong>，欢迎您！</p>
-            <p><a href="index.jsp">网站首页</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
+            <p><a href="index.jsp">网站首页</a>|<a href="#">帮助中心</a>|<a href="javascript:userLogout()">安全退出</a></p>
         </div>
     </div>
     <!-- end of header -->
@@ -52,13 +62,13 @@ To change this template use File | Settings | File Templates.
                 <ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="resourcelist.jsp" iframe="0">权限管理</a></li>
                     <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/alluserpage.jsp" iframe="0">用户管理</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">分组管理</a></li>
+                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="grouppage.jsp" iframe="0">分组管理</a></li>
                     <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">操作日志</a></li>
                 </ul>
             </div>
             <div title="内容管理" data-options="iconCls:'icon-application-form-edit'" style="padding:5px;">
                 <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="taskaudit.jsp" iframe="0">知识点管理</a></li>
+                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="" iframe="0">知识点管理</a></li>
                     <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">段落管理</a></li>
                     <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题管理</a></li>
                     <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">学科管理</a></li>
@@ -69,7 +79,7 @@ To change this template use File | Settings | File Templates.
             <div title="审核管理" data-options="iconCls:'icon-creditcards'" style="padding:5px;">
                 <ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="taskaudit.jsp" iframe="0">知识点审核</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="taskaudit.jsp" iframe="0">段落审核</a></li>
+                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="taskaudit2.jsp" iframe="0">段落审核</a></li>
                     <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题审核</a></li>
                     <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
@@ -83,36 +93,6 @@ To change this template use File | Settings | File Templates.
                     <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="" iframe="0">导航标题</a></li>
                     <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="" iframe="0">导航标题</a></li>
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                </ul>
-            </div>
-            <div title="广告管理" data-options="iconCls:'icon-bricks'" style="padding:5px;">
-                <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                </ul>
-            </div>
-            <div title="报表中心" data-options="iconCls:'icon-chart-curve'" style="padding:5px;">
-                <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                </ul>
-            </div>
-            <div title="系统设置" data-options="iconCls:'icon-wrench'" style="padding:5px;">
-                <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
                     <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
                 </ul>
             </div>
@@ -221,5 +201,14 @@ To change this template use File | Settings | File Templates.
 			}
 		}
 	</script>
+<%
+    }
+}else{
+%>
+<p align="center" style="padding-left: 55%"> <a  href="login.jsp" style="align-content: center">前往登录</a></p>
+<%
+    }
+
+%>
 </body>
 </html>

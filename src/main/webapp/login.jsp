@@ -40,7 +40,7 @@
         </div>
         <div>
             <a id="login" class="easyui-linkbutton" iconCls="icon-ok" >登录</a>&emsp;&emsp;&emsp;&emsp;
-            <a id="register" class="easyui-linkbutton" iconCls="icon-ok" onclick="openRegister()">注册</a>
+            <a id="register" class="easyui-linkbutton" iconCls="icon-user" onclick="openRegister()">注册</a>
         </div>
         <script type="text/javascript">
             $(document).ready(function(e) {
@@ -125,7 +125,6 @@
                     },
                     dataType : "json",
                     success: function () {
-
                         alert("注册成功");
                     },
                     error:function () {

@@ -21,7 +21,7 @@ public class UserServiceImpl extends ServiceImpl<IUserDao, User> implements IUse
     public User selectPassword(String username) {
         User user= this.baseMapper.selectPassword(username);
         String powerCode =this.baseMapper.selectadminPower(username);
-        if(powerCode.equals("9999999"))
+        if(powerCode!=null&&powerCode.equals("9999999"))
         {
             user.setPower("9");
         }

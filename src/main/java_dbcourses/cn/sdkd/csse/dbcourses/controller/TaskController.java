@@ -26,8 +26,22 @@ public class TaskController extends BaseController {
     @ResponseBody
     public List<Task> getList()
     {
-        System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return taskService.getTasklist();
+    }
+    @RequestMapping("/listknow")
+    @ResponseBody
+    public List<Task> getListkonw()
+    {
+        // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        return taskService.getTasklistknow();
+    }
+    @RequestMapping("/listpara")
+    @ResponseBody
+    public List<Task> getListpara()
+    {
+        // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        return taskService.getTasklistpara();
     }
     @RequestMapping("/auditadd")
     @ResponseBody

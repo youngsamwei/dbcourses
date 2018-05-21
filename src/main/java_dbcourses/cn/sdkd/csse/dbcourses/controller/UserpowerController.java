@@ -30,15 +30,19 @@ public class UserpowerController extends BaseController{
     @ResponseBody
     public Object addPowerusers(@RequestParam("powerCode") String powerCode,@RequestParam("idlist") String idlist)
     {
+
         List<UserPower> list= new ArrayList<>();
         UserPower up;
+        System.out.println("111111111111111"+idlist);
         int[] ids = UserUtils.spiltId(idlist);
         for(int i=0;i<ids.length;i++)
         {
-            up=new UserPower();
-            up.setUserId(ids[i]);
-            up.setPowerCode(powerCode);
-            list.add(up);
+            if(ids[i]!=0) {
+                up = new UserPower();
+                up.setUserId(ids[i]);
+                up.setPowerCode(powerCode);
+                list.add(up);
+            }
         }
         userpowerService.insertPower(list);
         return renderSuccess();
@@ -57,19 +61,22 @@ public class UserpowerController extends BaseController{
     public Object getUserpower(@RequestParam("powers") String powerCode)
     {
         String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+        powerCode=powerCode.substring(1,powerCode.length());
         HashMap<String,String> params=new HashMap<>();
         params.put("userName",userName);
-        params.put("powerCode",powerCode.substring(1,powerCode.length()));
+        params.put("powerCode",powerCode);
         String[] power=userpowerService.selectuserPower(params);
         String msg="权限不足";
-        for(int i=0;i<power.length;i++)
-        {
-            if(power[i].equals("9999999")||power[i].equals(powerCode))
-            {
-                msg="获得权限";
+        if(power.length>=1) {
+            for (int i = 0; i < power.length; i++) {
+                if (power[i].equals("9999999") || power[i].equals(powerCode)) {
+                    msg = "获得权限";
+                }
             }
+            return renderSuccess(msg);
         }
-        return renderSuccess(msg);
+        else
+            return renderError(msg);
     }
 
 }

@@ -26,8 +26,12 @@
         });
     }
 
-    function openArticleModifyDialog(id, contentid) {
-
+    function openArticleModifyDialog(id, contentid,powers) {
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            alert(msg);
+            return;
+        }
         $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "编辑段落");
         $('#dlg_edit_paragraph').window('center');
 
@@ -50,7 +54,12 @@
         $("#dlg_edit_paragraph").dialog("close");
     }
 
-    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
+    function openArticleAddDialog(knowledgepointId, paragraphOrder,powers) {
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            alert(msg);
+            return;
+        }
         var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
         $('#editor').append(html);
 

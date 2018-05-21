@@ -60,14 +60,14 @@ public class UserController extends BaseController {
 
     @RequestMapping("/register")
     @ResponseBody
-    public void register(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("nickname") String nickname )
+    public Object register(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("nickname") String nickname )
     {
         HashMap<String,Object> user=new HashMap<>();
         user.put("username",username);
         user.put("password",password);
         user.put("nickname",nickname);
         userService.insertUser(user);
-        System.out.println("zhuce chenggong");
+        return renderSuccess();
     }
 
     @ResponseBody

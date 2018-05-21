@@ -61,7 +61,7 @@ function getQueryString(name) {
         var knowledgepointName = result[0].knowledgepointName;
         var button0 = "<a href='javascript:openKnowledgepointAddDialog("+10101012+")' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
         /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 1)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
+        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 1,"+10101022+")' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
         var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
         var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
         var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用户</a>";
@@ -90,10 +90,10 @@ function getQueryString(name) {
                         var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
                           : htmlDecode(element.paragraphContent);
                         var paragraphOrder = element.paragraphOrder + 1;
-                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\",1);' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
+                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\","+10101021+");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
                         var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
                         var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
-                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
+                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ","+10101022+")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
                         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
                             button1, button4, button2, button3,
                             "<div class='content' id='content_" + element.id + "'>",

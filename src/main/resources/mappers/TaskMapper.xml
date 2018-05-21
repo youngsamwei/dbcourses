@@ -18,6 +18,16 @@
         SELECT  id ,mainid,type,content,status,approver,submitter,createTime
         FROM task
     </select>
+    <select id="selectAllTaskknow" resultType="Task" >
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
+        FROM task
+        WHERE type like '1_'
+    </select>
+    <select id="selectAllTaskpara" resultType="Task" >
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
+        FROM task
+        WHERE type like '2_'
+    </select>
 
     <update id="updateTask" parameterType="Map">
        UPDATE task

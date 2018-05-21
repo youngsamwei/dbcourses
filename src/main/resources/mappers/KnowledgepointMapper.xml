@@ -23,8 +23,8 @@
     limit 8
   </select>
   <insert id="insertKnow" parameterType="Knowledgepoint" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO knowledgepoint(knowledgepointName,addName)
-    VALUES(#{knowledgepointName},#{addName})
+    INSERT INTO knowledgepoint(knowledgepointName,addName,knowledgepointCreateDate)
+    VALUES(#{knowledgepointName},#{addName},#{knowledgepointCreateDate})
   </insert>
   <insert id="insertATask" parameterType="Map">
      INSERT INTO TASK(mainid,submitter,type,createTime)

@@ -76,44 +76,44 @@ function loadKnowledgepointParagraph (qid){
         $(".kbknowledgepoint").append(itemHTML);
 
     }
-    /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/
-    function displayDescBlocks(result) {
-
-            var knowledgepointId = result[0].id;
-            $.ajax({
-                type: "POST",
-                url: "/paragraph/list.do?knowledgepointId=" + knowledgepointId,
-                contentType: "application/json; charset=utf-8",
-                data: "{}",
-                dataType: "json",
-                success: function (paragraphs) {
-                    $.each(paragraphs, function (index, element) {
-                        var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
-                          : htmlDecode(element.paragraphContent);
-                        var paragraphOrder = element.paragraphOrder + 1;
-                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-                        var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
-                        var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
-                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
-
-                        var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-                            button1, button4, button2, button3,
-                            "<div class='content' id='content_" + element.id + "'>",
-                            content,
-                            "</div>",
-                            "</div></P>"].join('\n');
-                        //console.log(itemHTML);
-                        $(".kbparagraph").append(itemHTML);
-                    })
-                },
-                "error": function (result) {
-                    var response = result.responseText;
-                    alert('errot');
-                }
-
-            });
-
-    }
+    // /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/
+    // function displayDescBlocks(result) {
+    //
+    //         var knowledgepointId = result[0].id;
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "/paragraph/list.do?knowledgepointId=" + knowledgepointId,
+    //             contentType: "application/json; charset=utf-8",
+    //             data: "{}",
+    //             dataType: "json",
+    //             success: function (paragraphs) {
+    //                 $.each(paragraphs, function (index, element) {
+    //                     var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
+    //                       : htmlDecode(element.paragraphContent);
+    //                     var paragraphOrder = element.paragraphOrder + 1;
+    //                     var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
+    //                     var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
+    //                     var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
+    //                     var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
+    //
+    //                     var itemHTML = ["<P ><div style='background: #F0F8FF'>",
+    //                         button1, button4, button2, button3,
+    //                         "<div class='content' id='content_" + element.id + "'>",
+    //                         content,
+    //                         "</div>",
+    //                         "</div></P>"].join('\n');
+    //                     //console.log(itemHTML);
+    //                     $(".kbparagraph").append(itemHTML);
+    //                 })
+    //             },
+    //             "error": function (result) {
+    //                 var response = result.responseText;
+    //                 alert('errot');
+    //             }
+    //
+    //         });
+    //
+    // }
 
 
 //Html编码获取Html转义实体

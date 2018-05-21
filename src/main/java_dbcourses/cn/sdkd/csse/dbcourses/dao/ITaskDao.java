@@ -8,6 +8,8 @@ import java.util.Map;
 
 public interface ITaskDao extends BaseMapper<Task>{
     public List<Task>  selectAllTask();
+    public List<Task>  selectAllTaskpara();
+    public List<Task>  selectAllTaskknow();
     public boolean updateTask(Map ids);
     public boolean updateKnow(Map ids);
     public boolean updateParaEdit(Map params);

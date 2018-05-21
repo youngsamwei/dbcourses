@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>任务审核</title>
+    <title>段落审核</title>
     <link rel="stylesheet" type="text/css"
           href="/jquery-easyui-1.3.3/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css"
@@ -31,83 +31,65 @@
 
 </head>
 <body>
-<table id="tabtask"></table>
-<div id="dlg_aduit_add" class="easyui-dialog"
-         style="width: 300px;height:200px;padding: 10px 20px;"
-     closed="true" maximizable="false" closable="true" buttons="#audit_add_button,#audit_add_close" data-options="modal:true,buttons: '#dlg-buttons'">
-    <p>内容</p>
-    <textarea id="pointname" readonly="true" rows="1" cols="20">
-    </textarea>
-    <input id="mainid" class="easyui-textbox" hidden="true">
-    <input id="taskid" class="easyui-textbox" hidden="true">
-    <div id="audit_add_button">
-    <a href="javascript:dotheaddAudit('know')" class="easyui-linkbutton"  id="aduitButton"
-       iconCls="icon-ok">通过</a> <a href="javascript:closeAduitwindow()"
-                                   class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
-    </div>
-    <div id="audit_add_close">
-         <a href="javascript:closeAduitwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
-    </div>
+<table id="tabtask2"></table>
 
+<div id="dlg_aduit_edit" class="easyui-dialog"
+     style="width: 700px;height:600px;padding: 10px 20px;"
+     closed="true" maximizable="false" closable="false" buttons="#audit_edit_button,#audit_edit_close" data-options="modal:true">
+    <input id="update_task_id" class="easyui-textbox" hidden="true">
+    <input id="para_edit_id" class="easyui-textbox" hidden="true">
+    <div id='editparagraph' class="editparagraph">
+        <h3>编辑前:</h3>
+        <div style='background: #F0F8FF'>
+        <div class='content' id='thebefore' style="height: 160px"></div>
+        </div>
+        <br>
+        <h3>编辑后:</h3>
+        <div style='background: #F0F8FF'>
+        <div class='content' id='theafter' style="height: 160px"></div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <input id="editid" class="easyui-textbox" hidden="true">
+    <input id="taskid2" class="easyui-textbox" hidden="true">
+
+    <div id="audit_edit_button">
+        <a href="javascript:dothePEAudit()" class="easyui-linkbutton"
+           iconCls="icon-ok">通过</a> <a href="javascript:closeAduiteditwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+    </div>
+    <div id="audit_edit_close">
+        <a href="javascript:closeAduiteditwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+    </div>
 </div>
-
-<%--<div id="dlg_aduit_edit" class="easyui-dialog"--%>
-     <%--style="width: 700px;height:600px;padding: 10px 20px;"--%>
-     <%--closed="true" maximizable="false" closable="false" buttons="#audit_edit_button,#audit_edit_close" data-options="modal:true">--%>
-    <%--<input id="update_task_id" class="easyui-textbox" hidden="true">--%>
-    <%--<input id="para_edit_id" class="easyui-textbox" hidden="true">--%>
-    <%--<div id='editparagraph' class="editparagraph">--%>
-        <%--<h3>编辑前:</h3>--%>
-        <%--<div style='background: #F0F8FF'>--%>
-        <%--<div class='content' id='thebefore' style="height: 160px"></div>--%>
-        <%--</div>--%>
-        <%--<br>--%>
-        <%--<h3>编辑后:</h3>--%>
-        <%--<div style='background: #F0F8FF'>--%>
-        <%--<div class='content' id='theafter' style="height: 160px"></div>--%>
-        <%--</div>--%>
-        <%--<br>--%>
-        <%--<br>--%>
-    <%--</div>--%>
-    <%--<input id="editid" class="easyui-textbox" hidden="true">--%>
-    <%--<input id="taskid2" class="easyui-textbox" hidden="true">--%>
-
-    <%--<div id="audit_edit_button">--%>
-        <%--<a href="javascript:dothePEAudit()" class="easyui-linkbutton"--%>
-           <%--iconCls="icon-ok">通过</a> <a href="javascript:closeAduiteditwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>--%>
-    <%--</div>--%>
-    <%--<div id="audit_edit_close">--%>
-        <%--<a href="javascript:closeAduiteditwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>--%>
-    <%--</div>--%>
-<%--</div>--%>
-<%--<div id="dlg_add_para" class="easyui-dialog"--%>
-     <%--style="width: 700px;height:400px;padding: 10px 20px;"--%>
-     <%--closed="true" maximizable="false" closable="false" buttons="#audit_addpara_button,#audit_addpara_close" data-options="modal:true">--%>
-    <%--<div >--%>
-        <%--<h3>知识点:</h3>--%>
-            <%--<div class='content' id='thetitle' style="height: 20px"></div>--%>
-        <%--<h3>添加段落:</h3>--%>
-        <%--<div style='background: #F0F8FF'>--%>
-            <%--<div class='content' id='thecontent' style="height: 160px"></div>--%>
-        <%--</div>--%>
-        <%--<input id="mainid2" class="easyui-textbox" hidden="true">--%>
-        <%--<input id="taskid_para" class="easyui-textbox" hidden="true">--%>
-    <%--</div>--%>
-    <%--<div id="audit_addpara_button">--%>
-        <%--<a href="javascript:dotheaddAudit('para')" class="easyui-linkbutton"--%>
-           <%--iconCls="icon-ok">确定</a> <a href="javascript:closeAduitaddparawindow()"--%>
-                                       <%--class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>--%>
-    <%--</div>--%>
-    <%--<div id="audit_addpara_close">--%>
-        <%--<a href="javascript:closeAduitaddparawindow()"--%>
-                                       <%--class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>--%>
-    <%--</div>--%>
-<%--</div>--%>
+<div id="dlg_add_para" class="easyui-dialog"
+     style="width: 700px;height:400px;padding: 10px 20px;"
+     closed="true" maximizable="false" closable="false" buttons="#audit_addpara_button,#audit_addpara_close" data-options="modal:true">
+    <div >
+        <h3>知识点:</h3>
+            <div class='content' id='thetitle' style="height: 20px"></div>
+        <h3>添加段落:</h3>
+        <div style='background: #F0F8FF'>
+            <div class='content' id='thecontent' style="height: 160px"></div>
+        </div>
+        <input id="mainid2" class="easyui-textbox" hidden="true">
+        <input id="taskid_para" class="easyui-textbox" hidden="true">
+    </div>
+    <div id="audit_addpara_button">
+        <a href="javascript:dotheaddAudit('para')" class="easyui-linkbutton"
+           iconCls="icon-ok">确定</a> <a href="javascript:closeAduitaddparawindow()"
+                                       class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
+    </div>
+    <div id="audit_addpara_close">
+        <a href="javascript:closeAduitaddparawindow()"
+                                       class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
+    </div>
+</div>
 
 
 <script type="text/javascript">
     $(function () {
-        $('#tabtask').datagrid({
+        $('#tabtask2').datagrid({
             title: '任务审核',
             iconCls: 'icon-edit',
             rownumbers: true,
@@ -116,7 +98,7 @@
             height: 550,
             singleSelect: false,
             idField: 'id',
-            url: '/task/listknow.do',
+            url: '/task/listpara.do',
             columns: [[
                 {field: 'ck', checkbox: true},
                 {field: 'id', title: 'userId', hidden: true},
@@ -207,7 +189,7 @@
                 else {
                     closeAduitaddparawindow()
                 }
-                $('#tabtask').datagrid('reload');
+                $('#tabtask2').datagrid('reload');
             },
             error:function () {
                 alert("失败");
@@ -224,7 +206,7 @@
     function dothePEAudit() {
         var themainid =$("#para_edit_id").val();
         var taskid=$("#update_task_id").val();
-        alert(themainid+"   111   "+taskid);
+       // alert(themainid+"   111   "+taskid);
         $.ajax({
             type: "POST",
             url: "/task/auditpe.do",
@@ -237,7 +219,7 @@
 
                 alert("审核成功");
                 closeAduiteditwindow();
-                $('#tabtask').datagrid('reload');
+                $('#tabtask2').datagrid('reload');
             },
             error:function () {
                 alert("失败");
@@ -250,8 +232,8 @@
 
     function audit(target) {
 
-        $("#tabtask").datagrid("selectRow", getRowIndex(target));
-        var row = $("#tabtask").datagrid("getSelected");
+        $("#tabtask2").datagrid("selectRow", getRowIndex(target));
+        var row = $("#tabtask2").datagrid("getSelected");
         if (row.type==11) {
             $.ajax({
                 type: "POST",
@@ -382,8 +364,13 @@
                 //  doSearchUser();
                 // $('#editButton').linkbutton({disabled:true});
             }
+
         });
+
     }
 </script>
+
+
+
 </body>
 </html>

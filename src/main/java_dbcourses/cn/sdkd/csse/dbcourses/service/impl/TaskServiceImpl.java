@@ -15,6 +15,13 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
     public List<Task> getTasklist() {
         return this.baseMapper.selectAllTask();
     }
+
+    public List<Task> getTasklistknow() {
+        return this.baseMapper.selectAllTaskknow();
+    }
+    public List<Task> getTasklistpara() {
+        return this.baseMapper.selectAllTaskpara();
+    }
     public boolean updateTaskKnow(Map ids){
         boolean flag=false;
         flag=(this.baseMapper.updateTask(ids)&&this.baseMapper.updateKnow(ids));
