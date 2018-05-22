@@ -48,15 +48,14 @@
 <div id="dlg_search" class="easyui-dialog"
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
      closed="true" buttons="#dlg-search-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
-  <div class="knowledgepoint_search" align="center">
-    <input id="ss" class="easyui-searchbox" style="width:400px; height:50px;" data-options="menu:'#box'"></input>
+  <div class="knowledgepoint_search">
+    <input id="ss" class=" " style="width:360px" data-options="menu:'#box'"></input>
 
-    <div id="box" style="width:200px">
+    <div id="box" style="width:120px">
       <div data-options="name:'knowledgepoint',iconCls:'icon-ok'">知识点</div>
       <div data-options="name:'exercise',iconCls:'icon-edit'">习题</div>
       <div data-options="name:'video',iconCls:'icon-advice'">视频</div>
       <div data-options="name:'literature',iconCls:'icon-school'">文献</div>
-      <div data-options="name:'solr',iconCls:'icon-search'">内容搜索</div>
     </div>
 
   </div>
@@ -66,6 +65,8 @@
     <!-- 在此显示查询结果-->
   </div>
   <div id="dlg-search-buttons">
+    <a href="javascript:shangyiye()"    class="easyui-linkbutton" >上一页</a>
+    <a href="javascript:xiayiye()"    class="easyui-linkbutton" >下一页</a>
     <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
   </div>
 </div>
@@ -113,10 +114,12 @@
         /*查询, 可以尝试增加自动补全功能。
         TODO:点击搜索按钮后弹出搜索对话框，支持实时查询数据库自动补全，点击搜索按钮后列出查询结果。
         */
+
+        
         $('#ss').searchbox({
-          searcher: function (value, name) {
-              //alert(value + ',' + name);
-              doSearchKnowledge(value, name);
+          searcher: function (value, name,page) {
+              //alert(value+";"+name);
+              doSearchKnowledge(value, name,0);
              /*window.location.href='index.html?qname='+value;*/
           },
           menu: '#box',
@@ -135,9 +138,7 @@
         if ((qid == null)||(qid == '')){
           qid = 154;
         }
-       loadKnowledgepointParagraph(qid);
-        //openSearchDialog();
-        //doSearchKnowledge("");
+        loadKnowledgepointParagraph(qid);
     })
 
 

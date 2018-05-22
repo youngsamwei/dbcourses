@@ -52,5 +52,4 @@
   <!-- 事务管理配置 -->
   <import resource="classpath:spring-mybatis-tx.xml"/>
 
-
 </beans>

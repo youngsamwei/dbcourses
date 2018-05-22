@@ -52,5 +52,4 @@ public interface IGenericDao<T> {
    * @return
    */
   public T getById(int id);
-
 }
