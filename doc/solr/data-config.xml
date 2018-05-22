@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+    <dataSource name="dbcourses"
+				type="JdbcDataSource"
+              driver="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/dbcourses"
+              user="root"
+              password="123456"/>
+    <document>
+        <entity name="knowledgepoint" dataSource="dbcourses" query="select id,knowledgepointName from knowledgepoint">
+			<!-- column：数据库的字段名；name：solr的字段名 -->
+		   <field column="id"    name="id"/>
+		   <field column="knowledgepointName"  name="knowledgepointName"/>
+			<entity name="paragraph" dataSource="dbcourses" query="select paragraphContent from paragraph where knowledgepointId='${knowledgepoint.id}'">
+				<!-- column：数据库的字段名；name：solr的字段名 -->
+			
+			   <field column="paragraphContent"  name="paragraphContent"/>
+			</entity>
+			
+		</entity>
+		
+    </document>
+</dataConfig>

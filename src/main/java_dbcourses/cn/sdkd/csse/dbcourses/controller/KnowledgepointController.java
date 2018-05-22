@@ -91,7 +91,6 @@ public class KnowledgepointController extends BaseController {
     solr s = new solr();
       SolrDocumentList result = null;
     try {
-        s.solrDateImport();
         result= s.querySolr(knowledgepoint.getKnowledgepointName());
     }catch (Exception e) {
     }

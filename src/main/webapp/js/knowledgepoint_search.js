@@ -54,8 +54,15 @@ created by weihongwei 2018/5/15
                             $.each(result ,function (index, element){
                                  var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
                                                           : htmlDecode(element.paragraphContent);
-                                 kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + element.knowledgepointName + "</a></div>";
-                                 kbhtml += "<div style='background: #F0F8FF'>" + content + "</div>";
+                                 var name = (( element.knowledgepointName == "")||( element.knowledgepointName == null))? '<P>&nbsp;</P>'
+                                                          : htmlDecode(element.knowledgepointName);
+                                 kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + name + "</a></div>";
+                                 kbhtml += "<div>" + content + "</div>";
+                                 kbhtml += "<div><P>&nbsp;</P></div>"
+                                 //console.log("id======" + element.id);
+                                 //console.log("name=====" + element.knowledgepointName);
+                                 //console.log("content======" + content);
+                                 //console.log("-------------------------------------------");
                             })
                             kbhtml += "</div>";
                             $("#kp_inner").remove();
