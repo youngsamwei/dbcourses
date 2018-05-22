@@ -1,7 +1,7 @@
 package cn.sdkd.csse.dbcourses.service;
 
 import cn.sdkd.csse.dbcourses.entity.Knowledgepoint;
-import cn.sdkd.csse.dbcourses.entity.Paragraph;
+
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;

@@ -413,6 +413,16 @@
         <version>2.2.4</version>
         <scope>provided</scope>
       </dependency>
+
+        <!--created by weihongwei-->
+        <!--2018.5.4-->
+        <!--solr客户端solrj的依赖-->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>7.3.0</version>
+        </dependency>
+        <!-- END:SOLR-->
     </dependencies>
 
 

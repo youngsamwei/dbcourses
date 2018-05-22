@@ -7,5 +7,10 @@ import com.baomidou.mybatisplus.service.IService;
  * Created by Sam on 2018/1/6.
  */
 public interface IParagraphService extends IService<Paragraph> {
-    public int sort(Paragraph entity);
+    /*删除一个知识点段落，需要指定一个位置编号，并将此编号后的所有顺序编号-1。*/
+    public boolean deleteParagraph(Paragraph entity);
+
+    public void sortup(Paragraph entity);
+    public void sortdown(Paragraph entity);
+
 }
