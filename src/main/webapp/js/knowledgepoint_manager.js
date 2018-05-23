@@ -43,7 +43,6 @@
             ue.focus();
         });
         url = "/paragraph/edit.do?id="  + id;
-
     }
 
     function closeArticleDialog() {

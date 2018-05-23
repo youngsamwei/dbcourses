@@ -8,4 +8,6 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IParagraphService extends IService<Paragraph> {
     public int sort(Paragraph entity);
+    //public Paragraph UpdateContent(Paragraph entity);
+//    public boolean insert( Paragraph entity);
 }

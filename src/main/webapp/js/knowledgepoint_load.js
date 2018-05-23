@@ -31,6 +31,8 @@ function loadKnowledgepointParagraph (qid){
                     displayTitle(result);
                     displayDescBlocks(result);
                     /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+
+                    //新添加相关查询此处需要修改
                     closeSearchDialog();
                 }
             },
@@ -48,6 +50,59 @@ function loadKnowledgepointParagraph (qid){
             }
         });
 }
+//南宁：关联查询加载知识段落
+function loadRelateKnowledgepointParagraph (qid){
+
+    $("#kbknowledgepoint").remove();
+    $("#kbparagraph").remove();
+
+    $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+    $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+
+    qstr = "id=" + qid;
+
+    $.ajax({
+        type: "POST",
+        url: "/knowledgepoint/list.do?" + qstr,
+        contentType: "application/json; charset=utf-8",
+        data: "{}",
+        dataType: "json",
+        success: function (result) {
+            if (result.length <=0)
+            {
+                $.messager.show({
+                    title:'错误',
+                    msg:'没有查到知识点',
+                    showType:'fade',
+                    style:{
+                        right:'',
+                        bottom:''
+                    }
+                });
+            }else{
+                displayTitle(result);
+                displayDescBlocks(result);
+                /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+
+                //新添加相关查询此处需要修改
+                closeRelateSearchDialog()
+            }
+        },
+        "error": function (result) {
+            var response = result.responseText;
+            $.messager.show({
+                title:'错误',
+                msg:'没有查到知识点',
+                showType:'fade',
+                style:{
+                    right:'',
+                    bottom:''
+                }
+            });
+        }
+    });
+}
+
 
 
     function getQueryString(name) {
@@ -66,10 +121,10 @@ function loadKnowledgepointParagraph (qid){
         var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
         var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
         var button4 = "<a href='javascript:deleteKnowledgepoint(" + knowledgepointId + ")' class='middle_button top_button fa fa-minus-square-o' title='删除这条知识点'> 删除</a> ";
-
+        var button5 = "<a href='javascript:openRelateSearchDialog()' class='middle_button top_button fa fa-search' title='查询相关知识点'> 查询</a>";
 
         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-            button2, button1, button3, button4, button0,
+            button2, button1, button3, button4, button0,button5,
             "<div  id='content_" + knowledgepointId + "'>",
            '<h1>',  knowledgepointName,'</h1>',
             "</div>",

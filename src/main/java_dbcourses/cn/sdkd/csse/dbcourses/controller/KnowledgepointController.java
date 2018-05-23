@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sam on 2018/1/6.
@@ -35,12 +37,42 @@ public class KnowledgepointController extends BaseController {
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
     }else{
       /*错误处理*/
-
     }
     List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
+    System.out.println("xiangguan");
     return ls;
   }
 
+  @ResponseBody
+  @RequestMapping("/lists")
+  public  List<Knowledgepoint> listKnow(Knowledgepoint knowledgepoint)
+  {
+    HashMap<String,Object> params =new HashMap<>();
+    params.put("id",knowledgepoint.getId());
+    return knowledgepointService.selectKnowList(params);
+  }
+
+  @ResponseBody
+  @RequestMapping("/list1")
+  public List<Knowledgepoint> list1(Knowledgepoint knowledgepoint) {
+//    EntityWrapper ew = new EntityWrapper();
+//    if (knowledgepoint.getId() != null) {
+//      ew.eq("id", knowledgepoint.getId());
+//    } else if (knowledgepoint.getKnowledgepointName() != null){
+//      ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
+//    }else{
+//      /*错误处理*/
+//
+//    }
+//    List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
+//    System.out.println("xiangguan");
+//    return ls;
+    Map<String, Object> params = new HashMap<String, Object>();
+    params.put("knowledgepointName", knowledgepoint.getKnowledgepointName());
+    List<Knowledgepoint> ls = knowledgepointService.selectByName(params);
+    //System.out.println("tianjia");
+    return ls;
+  }
   @RequestMapping("/add")
   @ResponseBody
   public Object add(Knowledgepoint knowledgepoint) {

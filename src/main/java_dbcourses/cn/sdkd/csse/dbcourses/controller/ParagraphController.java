@@ -57,10 +57,15 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/edit")
   @ResponseBody
   public Object edit(@Valid Paragraph paragraph) {
-    paragraphService.updateAllColumnById(paragraph);
+//    Paragraph p;
+      //System.out.println("编辑编辑");
+//    p=paragraphService.UpdateContent(paragraph);
+//    System.out.println("修改成功--");
+    //paragraph.setParagraphContent(p.getParagraphContent());//注释之后还是不行，只能调用一次Service吗
+    paragraphService.updateById(paragraph);
+    //System.out.println("编辑成功++");
     return renderSuccess("编辑成功！");
   }
-
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
