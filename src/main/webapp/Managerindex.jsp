@@ -28,8 +28,7 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
     <script type="text/javascript" charset="utf-8" src="/js/user_load.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/user_search.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/user_manager.js"></script>
 
 </head>
 <style type="text/css">body {zoom:1.3;}</style>

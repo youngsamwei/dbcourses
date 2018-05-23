@@ -37,8 +37,7 @@
     <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
     <script type="text/javascript" charset="utf-8" src="/js/user_load.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/user_search.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/user_manager.js"></script>
 
 </head>
 <body>

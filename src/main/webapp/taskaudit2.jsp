@@ -26,8 +26,7 @@
     <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
     <script type="text/javascript" charset="utf-8" src="/js/user_load.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/user_search.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/user_manager.js"></script>
 
 </head>
 <body>
@@ -45,7 +44,7 @@
     </select>
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="SearchTask2()" plain="true">查找</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>
-    <input type="checkbox" id="taskstatus" value="0">只看未审核的任务
+    <input type="checkbox" id="taskstatus2" value="0">只看未审核的任务
     <br>
     提交时间:
     <span>开始时间:</span><input class="easyui-datetimebox" id="beforetime2"
