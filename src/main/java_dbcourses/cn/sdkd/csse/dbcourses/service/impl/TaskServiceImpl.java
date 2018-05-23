@@ -16,11 +16,11 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
         return this.baseMapper.selectAllTask();
     }
 
-    public List<Task> getTasklistknow() {
-        return this.baseMapper.selectAllTaskknow();
+    public List<Task> getTasklistknow(Map params) {
+        return this.baseMapper.selectAllTaskknow(params);
     }
-    public List<Task> getTasklistpara() {
-        return this.baseMapper.selectAllTaskpara();
+    public List<Task> getTasklistpara(Map params) {
+        return this.baseMapper.selectAllTaskpara(params);
     }
     public boolean updateTaskKnow(Map ids){
         boolean flag=false;
@@ -34,6 +34,11 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
     {
         boolean flag=false;
         flag=(this.baseMapper.updateTask(params)&&this.baseMapper.updatePara(params));
+        return flag;
+    }
+    public boolean deleteParaAudit(Map params){
+        boolean flag=false;
+        flag=(this.baseMapper.deletePbyid(params)&&this.baseMapper.updateTask(params));
         return flag;
     }
 }

@@ -23,7 +23,7 @@ public class GroupController extends BaseController{
     @RequestMapping("/list")
     public List<Group> list()
     {
-        System.out.println(groupService.selectAllGroup().toString());
+        //System.out.println(groupService.selectAllGroup().toString());
         return groupService.selectAllGroup();
     }
     @ResponseBody
@@ -33,6 +33,13 @@ public class GroupController extends BaseController{
         List<Group> ls=groupService.selectAllGroup();
         return ls.toString();
     }
+    @ResponseBody
+    @RequestMapping("/somegroup")
+    public List<Group> getSomeGroup()
+    {
+
+        return groupService.selectSomeGroup();
+    }
 
     @ResponseBody
     @RequestMapping("/add")
@@ -41,6 +48,4 @@ public class GroupController extends BaseController{
         groupService.insertuserGroup(name);
         return renderSuccess();
     }
-
-
 }

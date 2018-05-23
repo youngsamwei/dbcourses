@@ -11,32 +11,19 @@ public class Task implements Serializable {
     private String createTime;
     private String approver;
     private String submitter;
+    private String approverTime;
+
+    public String getApproverTime() {
+        return approverTime;
+    }
+
+
+    public void setApproverTime(String approverTime) {
+        this.approverTime = approverTime;
+    }
 
     public int getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("{");
-        sb.append("\"id\":")
-                .append(id);
-        sb.append(",\"mainid\":")
-                .append(mainid);
-        sb.append(",\"type\":\"")
-                .append(type).append('\"');
-        sb.append(",\"content\":\"")
-                .append(content).append('\"');
-        sb.append(",\"status\":\"")
-                .append(status).append('\"');
-        sb.append(",\"createTime\":\"")
-                .append(createTime).append('\"');
-        sb.append(",\"approver\":\"")
-                .append(approver).append('\"');
-        sb.append(",\"submitter\":\"")
-                .append(submitter).append('\"');
-        sb.append('}');
-        return sb.toString();
     }
 
     public String getCreateTime() {
@@ -97,6 +84,38 @@ public class Task implements Serializable {
 
     public void setSubmitter(String submitter) {
         this.submitter = submitter;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"id\":")
+                .append(id);
+        sb.append(",\"mainid\":")
+                .append(mainid);
+        sb.append(",\"type\":\"")
+                .append(type).append('\"');
+        sb.append(",\"content\":\"")
+                .append(content).append('\"');
+        sb.append(",\"status\":\"")
+                .append(status).append('\"');
+        if(createTime!=null) {
+            sb.append(",\"createTime\":\"")
+                    .append(createTime.replace(".0","")).append('\"');
+        }
+        if(approver!=null) {
+            sb.append(",\"approver\":\"")
+                    .append(approver).append('\"');
+        }
+        sb.append(",\"submitter\":\"")
+                .append(submitter).append('\"');
+
+        if(approverTime!=null) {
+            sb.append(",\"approverTime\":\"")
+                    .append(approverTime.replace(".0","")).append('\"');
+        }
+        sb.append('}');
+        return sb.toString();
     }
 
 }

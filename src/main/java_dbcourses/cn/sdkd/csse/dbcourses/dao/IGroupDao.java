@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IGroupDao extends BaseMapper<Group> {
        public List<Group> selectAllGroup();
+       public List<Group> selectSomeGroup();
        public boolean insertuserGroup(String name);
 }

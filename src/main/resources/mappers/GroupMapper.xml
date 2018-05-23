@@ -15,6 +15,12 @@
         FROM usergroup
         ORDER by id
     </select>
+    <select id="selectSomeGroup" resultType="Group" >
+        SELECT  id ,name ,remark
+        FROM usergroup
+        where id >1
+        ORDER by id
+    </select>
     <insert id="insertuserGroup" parameterType="String">
         INSERT INTO usergroup(name)
         VALUE (#{name})

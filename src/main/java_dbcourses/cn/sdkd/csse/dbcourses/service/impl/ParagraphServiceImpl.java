@@ -28,5 +28,10 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
   {
     return this.baseMapper.selectPkname(id);
   }
+//  public boolean deleteById(Paragraph paragraph)
+//  {
+//    super.deleteById(paragraph);
+//    return this.baseMapper
+//  }
 
 }

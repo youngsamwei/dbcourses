@@ -104,8 +104,12 @@ public class UserController extends BaseController {
         HashMap<String,Object> pages=new HashMap<>();
         pages.put("min",(min-1)*row);
         pages.put("max",min*row);
-        pages.put("userName","%"+userName+"%");
-        pages.put("nickName","%"+nickName+"%");
+        if(userName!=null) {
+            pages.put("userName", "%" + userName + "%");
+        }
+        if(nickName!=null) {
+            pages.put("nickName", "%" + nickName + "%");
+        }
         if(userGroup!=null) {
             if(!userGroup.equals("0"))
                 pages.put("userGroup", userGroup);

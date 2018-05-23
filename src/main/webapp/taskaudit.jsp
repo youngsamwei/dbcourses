@@ -31,6 +31,28 @@
 
 </head>
 <body>
+<div class="wu-toolbar-button">
+    <span>提交人:</span>
+    <input id="submitter" class="easyui-textbox">
+    <span>审核人:</span>
+    <input id="approver" class="easyui-textbox">
+    类型:
+    <select id="tasktype" class="easyui-combobox" name="dept" style="width:50px;">
+        <option value=null selected="true">所有</option>
+        <option value="12">编辑</option>
+        <option value="11">增加</option>
+        <option value="13">删除</option>
+    </select>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="SearchTask()" plain="true">查找</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>
+    <input type="checkbox" id="taskstatus" value="0">只看未审核的任务
+    <br>
+    提交时间:
+    <span>开始时间:</span><input class="easyui-datetimebox" id="beforetime"
+           data-options="showSeconds:false"  style="width:150px">
+    <span> 结束时间:</span><input class="easyui-datetimebox" id="aftertime"
+                             data-options="showSeconds:false"  style="width:150px">
+</div>
 <table id="tabtask"></table>
 <div id="dlg_aduit_add" class="easyui-dialog"
          style="width: 300px;height:200px;padding: 10px 20px;"
@@ -112,7 +134,7 @@
             iconCls: 'icon-edit',
             rownumbers: true,
             pagination: true,
-            width: 800,
+            width: 1200,
             height: 550,
             singleSelect: false,
             idField: 'id',
@@ -146,8 +168,10 @@
                     }
                 },
                 {field: 'status', title: '状态', width: 150,hidden:true},
-                {field: 'submitter', title: '提交人', width: 150,  editor: 'numberbox'},
-                {field: 'approver', title: '审核人', width: 250, editor: 'text'},
+                {field: 'submitter', title: '提交人', width: 150},
+                {field: 'createTime', title: '提交时间', width: 200},
+                {field: 'approver', title: '审核人', width: 150},
+                {field: 'approverTime', title: '审核时间', width: 200},
                 {
                     field: 'action', title: '审核', width: 150, align: 'center',
                     formatter: function (value, row) {
@@ -177,6 +201,27 @@
             }
         });
     });
+    function SearchTask() {
+        if($("#taskstatus").is(":checked"))
+        {
+            var taskstatus=$("#taskstatus").val();
+        }
+        var beforetime=$("#beforetime").datebox('getValue');
+        var aftertime=$("#aftertime").datebox('getValue');
+        var approver =$("#approver").val();
+        var submitter =$("#submitter").val();
+        var type =$('#tasktype').combobox('getValue');
+       // alert(type);
+        $('#tabtask').datagrid('reload',{
+            beforetime:beforetime,
+            aftertime:aftertime,
+            approver:approver,
+            submitter:submitter,
+            type:type,
+            taskstatus:taskstatus
+        })
+
+    }
     function dotheaddAudit(thetype) {
         var themainid;
         var theid;

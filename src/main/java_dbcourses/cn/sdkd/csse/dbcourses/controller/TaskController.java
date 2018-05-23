@@ -3,6 +3,7 @@ package cn.sdkd.csse.dbcourses.controller;
 import cn.sdkd.csse.dbcourses.entity.Paragraph;
 import cn.sdkd.csse.dbcourses.entity.Task;
 import cn.sdkd.csse.dbcourses.service.ITaskService;
+import cn.sdkd.csse.dbcourses.utils.DateUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -24,24 +26,90 @@ public class TaskController extends BaseController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public List<Task> getList()
+    public String getList()
     {
        // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return taskService.getTasklist();
+        return taskService.getTasklist().toString();
     }
     @RequestMapping("/listknow")
     @ResponseBody
-    public List<Task> getListkonw()
+    public String getListkonw(@RequestParam("page") String page, @RequestParam("rows") String rows, HttpServletRequest req)
     {
+        String approver =req.getParameter("approver");
+        String beforetime =req.getParameter("beforetime");
+        String aftertime =req.getParameter("aftertime");
+        String submitter =req.getParameter("submitter");
+        String type =req.getParameter("type");
+        String status =req.getParameter("taskstatus");
+        System.out.println("----------------------------------------------------");
+        System.out.println("1"+approver+"1");
+        System.out.println(beforetime);
+        System.out.println(aftertime);
+        System.out.println(submitter);
+        System.out.println(type);
+        int min =Integer.parseInt(page);
+        int row =Integer.parseInt(rows);
+        HashMap<String,Object> pages=new HashMap<>();
+        if(approver!=null&&!approver.equals("")){
+            pages.put("approver", "%"+approver+"%");
+        }
+        if(submitter!=null&&!submitter.equals("")){
+            pages.put("submitter", "%"+submitter+"%");
+        }
+        if(type!=null&&!type.equals("null")){
+            pages.put("type",type);
+        }
+        if(beforetime!=null&&!beforetime.equals("")) {
+            pages.put("beforetime", beforetime);
+        }
+        if(aftertime!=null&&!aftertime.equals("")) {
+            pages.put("aftertime", aftertime);
+        }
+        pages.put("status",status);
+        pages.put("min",(min-1)*row);
+        pages.put("max",min*row);
         // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return taskService.getTasklistknow();
+        return taskService.getTasklistknow(pages).toString();
     }
     @RequestMapping("/listpara")
     @ResponseBody
-    public List<Task> getListpara()
+    public String getListpara(@RequestParam("page") String page, @RequestParam("rows") String rows, HttpServletRequest req)
     {
+        String approver =req.getParameter("approver");
+        String beforetime =req.getParameter("beforetime");
+        String aftertime =req.getParameter("aftertime");
+        String submitter =req.getParameter("submitter");
+        String type =req.getParameter("type");
+        String status =req.getParameter("taskstatus");
+        System.out.println("----------------------------------------------------");
+        System.out.println(approver);
+        System.out.println(beforetime);
+        System.out.println(aftertime);
+        System.out.println(submitter);
+        System.out.println(type);
+        int min =Integer.parseInt(page);
+        int row =Integer.parseInt(rows);
+        HashMap<String,Object> pages=new HashMap<>();
+        if(approver!=null&&!approver.equals("")){
+            pages.put("approver", "%"+approver+"%");
+        }
+        if(submitter!=null&&!submitter.equals("")){
+            pages.put("submitter", "%"+submitter+"%");
+        }
+        if(type!=null&&!type.equals("null")){
+            pages.put("type",type);
+        }
+        if(beforetime!=null&&!beforetime.equals("")) {
+            pages.put("beforetime", beforetime);
+        }
+        if(aftertime!=null&&!aftertime.equals("")) {
+            pages.put("aftertime", aftertime);
+        }
+        pages.put("status",status);
+        pages.put("min",(min-1)*row);
+        pages.put("max",min*row);
         // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return taskService.getTasklistpara();
+        return taskService.getTasklistpara(pages).toString();
     }
     @RequestMapping("/auditadd")
     @ResponseBody
@@ -52,6 +120,11 @@ public class TaskController extends BaseController {
         ids.put("mainid",mainid);
         ids.put("taskid",taskid);
         ids.put("userName",userName);
+        try {
+            ids.put("approverTime", DateUtil.getCurrentDateStr());
+        }catch (Exception e){
+            return renderError("错误");
+        }
         System.out.println("pppppppppppp"+type);
         if(type.equals("know")) {
             taskService.updateTaskKnow(ids);
@@ -87,8 +160,37 @@ public class TaskController extends BaseController {
         params.put("mainid",mainid);
         params.put("taskid",taskid);
         params.put("userName",userName);
+        try {
+            params.put("approverTime", DateUtil.getCurrentDateStr());
+        }catch (Exception e){
+            return renderError("错误");
+        }
         taskService.updateParaEdit(params);
         return  renderSuccess();
     }
+    @RequestMapping("/paradelete")
+    @ResponseBody
+    public Object paradelete(@Valid Task task)
+    {
+        task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+        taskService.insert(task);
+        return renderSuccess();
+    }
 
+    @ResponseBody
+    @RequestMapping("/auditdp")
+    public Object auditdeletepara(@RequestParam("mainid")String mainid,@RequestParam("taskid") String taskid){
+        String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+        HashMap<String,Object> params= new HashMap<>();
+        params.put("mainid",mainid);
+        params.put("taskid",taskid);
+        params.put("userName",userName);
+        try {
+            params.put("approverTime", DateUtil.getCurrentDateStr());
+        }catch (Exception e){
+            return renderError("错误");
+        }
+        taskService.deleteParaAudit(params);
+        return renderSuccess();
+    }
 }

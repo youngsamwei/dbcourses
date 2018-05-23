@@ -71,7 +71,7 @@
                 height: 500,
                 singleSelect: false,
                 idField: 'groupId',
-                url: '/group/list.do',
+                url: '/group/somegroup.do',
                 columns: [[
                     {field: 'ck', checkbox: true},
                     {field: 'id', title: 'groupId', hidden: true},

@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IGroupService extends IService<Group>{
      public List<Group> selectAllGroup();
+     public List<Group> selectSomeGroup();
      public boolean insertuserGroup(String name);
 }

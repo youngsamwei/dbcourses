@@ -31,6 +31,28 @@
 
 </head>
 <body>
+<div class="wu-toolbar-button">
+    <span>提交人:</span>
+    <input id="submitter2" class="easyui-textbox">
+    <span>审核人:</span>
+    <input id="approver2" class="easyui-textbox">
+    类型:
+    <select id="tasktype2" class="easyui-combobox" name="dept" style="width:50px;">
+        <option value=null selected="true">所有</option>
+        <option value="22">编辑</option>
+        <option value="21">增加</option>
+        <option value="23">删除</option>
+    </select>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="SearchTask2()" plain="true">查找</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>
+    <input type="checkbox" id="taskstatus" value="0">只看未审核的任务
+    <br>
+    提交时间:
+    <span>开始时间:</span><input class="easyui-datetimebox" id="beforetime2"
+                             data-options="showSeconds:false"  style="width:150px">
+    <span> 结束时间:</span><input class="easyui-datetimebox" id="aftertime2"
+                              data-options="showSeconds:false"  style="width:150px">
+</div>
 <table id="tabtask2"></table>
 
 <div id="dlg_aduit_edit" class="easyui-dialog"
@@ -64,11 +86,11 @@
 </div>
 <div id="dlg_add_para" class="easyui-dialog"
      style="width: 700px;height:400px;padding: 10px 20px;"
-     closed="true" maximizable="false" closable="false" buttons="#audit_addpara_button,#audit_addpara_close" data-options="modal:true">
+     closed="true" maximizable="false" closable="false" buttons="#audit_addpara_button,#audit_addpara_close,#audit_delepara_button" data-options="modal:true">
     <div >
         <h3>知识点:</h3>
             <div class='content' id='thetitle' style="height: 20px"></div>
-        <h3>添加段落:</h3>
+        <h3>段落:</h3>
         <div style='background: #F0F8FF'>
             <div class='content' id='thecontent' style="height: 160px"></div>
         </div>
@@ -77,6 +99,11 @@
     </div>
     <div id="audit_addpara_button">
         <a href="javascript:dotheaddAudit('para')" class="easyui-linkbutton"
+           iconCls="icon-ok">确定</a> <a href="javascript:closeAduitaddparawindow()"
+                                       class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
+    </div>
+    <div id="audit_delepara_button">
+        <a href="javascript:dothedeleteAudit()" class="easyui-linkbutton"
            iconCls="icon-ok">确定</a> <a href="javascript:closeAduitaddparawindow()"
                                        class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
     </div>
@@ -94,7 +121,7 @@
             iconCls: 'icon-edit',
             rownumbers: true,
             pagination: true,
-            width: 800,
+            width: 1200,
             height: 550,
             singleSelect: false,
             idField: 'id',
@@ -128,18 +155,20 @@
                     }
                 },
                 {field: 'status', title: '状态', width: 150,hidden:true},
-                {field: 'submitter', title: '提交人', width: 150,  editor: 'numberbox'},
-                {field: 'approver', title: '审核人', width: 250, editor: 'text'},
+                {field: 'submitter', title: '提交人', width: 150},
+                {field: 'createTime', title: '提交时间', width: 200},
+                {field: 'approver', title: '审核人', width: 150},
+                {field: 'approverTime', title: '审核时间', width: 200},
                 {
                     field: 'action', title: '审核', width: 150, align: 'center',
                     formatter: function (value, row) {
                         if (row.status=='0') {
-                            var e = '<a href="#" onclick="audit(this)">审核</a> ';
+                            var e = '<a href="#" onclick="audits(this)">审核</a> ';
                             return e;
                         }
                         else
                         {
-                            var s ='<a href="#" onclick="audit(this)">已审核</a> '
+                            var s ='<a href="#" onclick="audits(this)">已审核</a> '
                             return s;
                         }
                     }
@@ -159,6 +188,29 @@
             }
         });
     });
+
+    function SearchTask2() {
+        if($("#taskstatus2").is(":checked"))
+        {
+            var taskstatus=$("#taskstatus2").val();
+        }
+        var beforetime=$("#beforetime2").datebox('getValue');
+        var aftertime=$("#aftertime2").datebox('getValue');
+        var approver =$("#approver2").val();
+        var submitter =$("#submitter2").val();
+        var type =$('#tasktype2').combobox('getValue');
+        // alert(type);
+        $('#tabtask2').datagrid('reload',{
+            beforetime:beforetime,
+            aftertime:aftertime,
+            approver:approver,
+            submitter:submitter,
+            type:type,
+            taskstatus:taskstatus
+        })
+
+    }
+
     function dotheaddAudit(thetype) {
         var themainid;
         var theid;
@@ -182,7 +234,7 @@
             dataType: "json",
             success: function () {
 
-                alert("审核成功");
+                $.messager.alert("系统提示","审核成功").window('resize',{top: 100,left:400});
                 if(thetype=='know') {
                     closeAduitwindow();
                 }
@@ -192,7 +244,7 @@
                 $('#tabtask2').datagrid('reload');
             },
             error:function () {
-                alert("失败");
+                $.messager.alert("系统提示","失败").window('resize',{top: 100,left:400});
                 if(thetype=='know') {
                     closeAduitwindow();
                 }
@@ -203,6 +255,30 @@
             }
         })
     }
+    function dothedeleteAudit() {
+        var themainid=themainid=$("#mainid2").val();
+        var theid=$("#taskid_para").val();
+        $.ajax({
+            type: "POST",
+            url: "/task//auditdp.do",
+            data: {
+                mainid : themainid,
+                taskid:  theid
+            },
+            dataType: "json",
+            success: function () {
+
+                $.messager.alert("系统提示","删除审核成功");
+                closeAduitaddparawindow()
+                $('#tabtask2').datagrid('reload');
+            },
+            error:function () {
+                $.messager.alert("系统提示","失败");
+                closeAduitaddparawindow()
+            }
+        })
+    }
+
     function dothePEAudit() {
         var themainid =$("#para_edit_id").val();
         var taskid=$("#update_task_id").val();
@@ -217,12 +293,12 @@
             dataType: "json",
             success: function () {
 
-                alert("审核成功");
+                $.messager.alert("系统提示","编辑审核成功");
                 closeAduiteditwindow();
                 $('#tabtask2').datagrid('reload');
             },
             error:function () {
-                alert("失败");
+                $.messager.alert("系统提示","失败");
                 closeAduiteditwindow();
 
             }
@@ -230,43 +306,12 @@
     }
 
 
-    function audit(target) {
+    function audits(target) {
 
         $("#tabtask2").datagrid("selectRow", getRowIndex(target));
         var row = $("#tabtask2").datagrid("getSelected");
-        if (row.type==11) {
-            $.ajax({
-                type: "POST",
-                url: "/knowledgepoint/audit.do",
-                data: {id : row.mainid},
-                dataType: "json",
-                success: function (know) {
-                    $("#dlg_aduit_add").dialog(
-                        {
-                            onOpen: function () {
-                                $("#pointname").val(know.knowledgepointName);
-                                $("#mainid").val(row.mainid);
-                                $("#taskid").val(row.id);
-                                if(row.status==1)
-                                {
-                                    $("#audit_add_button").hide();
-                                    $("#audit_add_close").show();
-                                }
-                                else
-                                {
-                                    $("#audit_add_button").show();
-                                    $("#audit_add_close").hide();
-                                }
-                            }
-                        }
-                    );
-                    $("#dlg_aduit_add").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:200});
-                }
-            })
-        }
-        else if(row.type=='22')
+        if(row.type=='22')
         {
-
             $.ajax({
                 type: "POST",
                 url: "/paragraph/selectbyid.do",
@@ -322,19 +367,54 @@
 
                                     $("#audit_addpara_button").hide();
                                     $("#audit_addpara_close").show();
+                                    $("#audit_delepara_button").hide();
                                 }
                                 else
                                 {
                                     $("#audit_addpara_button").show();
                                     $("#audit_addpara_close").hide();
+                                    $("#audit_delepara_button").hide();
                                 }
                             }
                         }
                     );
-                    $("#dlg_add_para").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:400});
+                    $("#dlg_add_para").dialog("open").dialog("setTitle", '添加审核').window('resize',{top: 100,left:400});
                 }
             })
-            $("#dlg_add_para").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:400});
+        }
+        else if(row.type=='23')
+        {
+            $.ajax({
+                type: "POST",
+                url: "/paragraph/selectbyid.do",
+                data: {mainid : row.mainid},
+                dataType: "json",
+                success: function (paragraphs) {
+                    $("#dlg_add_para").dialog(
+                        {
+                            onOpen: function () {
+                                $("#thetitle").html(paragraphs.paragraphTitle);
+                                $("#thecontent").html(htmlDecode(paragraphs.paragraphContent));
+                                $("#mainid2").val(paragraphs.id);
+                                $("#taskid_para").val(row.id);
+                                if(row.status==1)
+                                {
+
+                                    $("#audit_addpara_button").hide();
+                                    $("#audit_addpara_close").show();
+                                    $("#audit_delepara_button").hide();
+                                }
+                                else
+                                {   $("#audit_delepara_button").show();
+                                    $("#audit_addpara_button").hide();
+                                    $("#audit_addpara_close").hide();
+                                }
+                            }
+                        }
+                    );
+                    $("#dlg_add_para").dialog("open").dialog("setTitle", '删除审核').window('resize',{top: 100,left:400});
+                }
+            })
         }
     }
     function closeAduitwindow() {
@@ -354,13 +434,13 @@
             },
             datatype: "json",
             success: function () {
-                alert("审核成功");
+                $.messager.alert("系统提示","审核成功");
                 //doSearchUser();
                 //$('#editButton').linkbutton({disabled:true});
 
             },
             error:function () {
-                alert("失败");
+                $.messager.alert("系统提示","失败");
                 //  doSearchUser();
                 // $('#editButton').linkbutton({disabled:true});
             }

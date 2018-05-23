@@ -13,25 +13,69 @@
         <result property="approver" column="approver"/>
         <result property="createTime" column="createTime"/>
         <result property="submitter" column="submitter"/>
+        <result property="approverTime" column="approverTime"/>
     </resultMap>
     <select id="selectAllTask" resultType="Task" >
-        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime,approverTime
         FROM task
     </select>
-    <select id="selectAllTaskknow" resultType="Task" >
-        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
+    <select id="selectAllTaskknow" resultType="Task" parameterType="Map">
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime,approverTime
         FROM task
-        WHERE type like '1_'
+        WHERE 1=1
+        and type like '1_'
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="approver!=null">
+            and approver like #{approver}
+        </if>
+        <if test="submitter!=null">
+            and submitter like #{submitter}
+        </if>
+        <if test="beforetime!=null">
+            and createTime  &gt;  #{beforetime}
+        </if>
+        <if test="aftertime!=null">
+            and createTime  &lt;  #{aftertime}
+        </if>
+        <if test="min!=null">
+            <if test="max!=null">limit #{min},#{max}</if>
+        </if>
     </select>
     <select id="selectAllTaskpara" resultType="Task" >
-        SELECT  id ,mainid,type,content,status,approver,submitter,createTime
+        SELECT  id ,mainid,type,content,status,approver,submitter,createTime,approverTime
         FROM task
         WHERE type like '2_'
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="approver!=null">
+            and approver like #{approver}
+        </if>
+        <if test="submitter!=null">
+            and submitter like #{submitter}
+        </if>
+        <if test="beforetime!=null">
+            and createTime  &gt;  #{beforetime}
+        </if>
+        <if test="aftertime!=null">
+            and createTime  &lt;  #{aftertime}
+        </if>
+        <if test="min!=null">
+            <if test="max!=null">limit #{min},#{max}</if>
+        </if>
     </select>
 
     <update id="updateTask" parameterType="Map">
        UPDATE task
-       SET status=1,approver=#{userName}
+       SET status=1,approver=#{userName},approverTime=#{approverTime}
        WHERE id = #{taskid};
     </update>
     <update id="updateKnow" parameterType="Map">
@@ -49,9 +93,11 @@
        FROM paragraph
        where paragraph.id=#{mainid}
        ) C
-       SET a.paragraphContent=b.content,b.content=C.buff,b.status='1',b.approver=#{userName}
+       SET a.paragraphContent=b.content,b.content=C.buff,b.status='1',b.approver=#{userName},b.approverTime=#{approverTime}
        where a.id=#{mainid}
        and B.id=#{taskid};
     </update>
-
+    <delete id="deletePbyid" parameterType="Map">
+        UPDATE paragraph SET status=2 where id=#{mainid}
+    </delete>
 </mapper>

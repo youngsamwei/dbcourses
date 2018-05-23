@@ -86,20 +86,25 @@
         });
     }
 
-    function deleteArticle(paragraphId) {
+    function deleteArticle(paragraphId,powers) {
 
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert(msg);
+            return;
+        }
         $.messager
                 .confirm(
                         "系统提示",
-                        "您确认要删除这<font color=red>" + paragraphId
-                        + "</font>吗？",
+                        "您确认要删除该段落吗？",
                         function (r) {
                             if (r) {
                                 $
                                         .post(
-                                                "/paragraph/delete.do",
+                                                "/task/paradelete.do",
                                                 {
-                                                    id: paragraphId
+                                                    mainid: paragraphId,
+                                                    type: '23'
                                                 },
                                                 function (result) {
                                                     if (result.success) {
@@ -123,7 +128,7 @@
        // alert(powers);
         var msg = getUserPower(powers);
         if (msg != '获得权限') {
-            alert(msg);
+            $.messager.alert("系统提示",msg);
             return;
         }
         $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
@@ -145,11 +150,11 @@
             dataType: "json",
             success: function (result) {
                 if (result.msg == "添加成功") {
-                    alert("添加成功,!等待审核");
+                    $.messager.alert("系统提示","添加成功,!等待审核");
                     closeKnowledgepointAddDialog();
                 }
                 else{
-                     alert("添加失败,或已存在相同知识点");
+                    $.messager.alert("系统提示","添加失败,或已存在相同知识点");
                 }
             }
 
