@@ -12,5 +12,17 @@ import java.util.Map;
  */
 public interface IParagraphDao extends BaseMapper<Paragraph> {
   public int updateParagraphOrder(Paragraph paragraph);
-  public int sortUp(Paragraph paragraph);
+
+  public int sortUp1(Paragraph paragraph);
+  public int sortUp2(Paragraph paragraph);
+  public int sortUp3(Paragraph paragraph);
+  public int sortUp4(Paragraph paragraph);
+
+  public int sortDown1(Paragraph paragraph);
+  public int sortDown2(Paragraph paragraph);
+  public int sortDown3(Paragraph paragraph);
+
+  public int subParagraphOrder(Paragraph paragraph);
+
+  public List getParagraphsByKid(Integer kid);
 }

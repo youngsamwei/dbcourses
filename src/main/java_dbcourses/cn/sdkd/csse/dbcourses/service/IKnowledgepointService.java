@@ -13,5 +13,8 @@ import java.util.Map;
 public interface IKnowledgepointService extends IService<Knowledgepoint> {
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params);
     public List<Knowledgepoint>  selectByName(Map<String, Object> params);
-    public List<Knowledgepoint>  selectKnowList(Map params);
+    //public List<Knowledgepoint>  selectKnowList(Map params);
+    public Knowledgepoint selectKnowledgepointByName(String name);
+//    public List<Knowledgepoint> getListCheckBySemester(String likeSem,int epage, int pagesize);
+    //public List<Knowledgepoint> getKnowledgePointByLike(String name);
 }

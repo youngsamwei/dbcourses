@@ -1,6 +1,7 @@
 package cn.sdkd.csse.dbcourses.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Sam on 2018/1/6.
@@ -11,6 +12,7 @@ public class Knowledgepoint  implements Serializable {
   private String knowledgepointCreateDate;//创建日期
   private String addName;//添加者
   private Integer xiangguandu;//临时记录相关度
+
 
   public Integer getId() {
     return id;

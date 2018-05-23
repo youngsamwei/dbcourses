@@ -46,7 +46,6 @@ public class ParagraphController extends BaseController {
     try {
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insert(paragraph);
-      //System.out.println(paragraph.getParagraphContent()+"======================");
       return renderSuccess("添加成功！");
     } catch (Exception e) {
       log.error(e.getMessage(), e);
@@ -57,31 +56,33 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/edit")
   @ResponseBody
   public Object edit(@Valid Paragraph paragraph) {
-//    Paragraph p;
-      //System.out.println("编辑编辑");
-//    p=paragraphService.UpdateContent(paragraph);
-//    System.out.println("修改成功--");
-    //paragraph.setParagraphContent(p.getParagraphContent());//注释之后还是不行，只能调用一次Service吗
     paragraphService.updateById(paragraph);
-    //System.out.println("编辑成功++");
     return renderSuccess("编辑成功！");
   }
+
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-    paragraphService.deleteById(paragraph);
+    paragraphService.deleteParagraph(paragraph);
     return renderSuccess("删除成功！");
   }
-  @RequestMapping("/test")
+
+  /**
+   * created by weihongwei 2018/5/15
+   * 段落排序。上下移动
+   * @param paragraph
+   * @return
+   */
+  @RequestMapping("/sortup")
   @ResponseBody
-  public Object test(@Valid Paragraph paragraph) {
+  public Object sortup(@Valid Paragraph paragraph) {
+    paragraphService.sortup(paragraph);
     return renderSuccess("添加成功！");
   }
-  @RequestMapping("/sort")
+  @RequestMapping("/sortdown")
   @ResponseBody
-  public Object sort(@Valid Paragraph paragraph) {
-      paragraphService.sort(paragraph);
-      return renderSuccess("添加成功！");
+  public Object sortdown(@Valid Paragraph paragraph) {
+    paragraphService.sortdown(paragraph);
+    return renderSuccess("添加成功！");
   }
-
 }

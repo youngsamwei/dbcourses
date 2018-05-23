@@ -2,12 +2,17 @@ package cn.sdkd.csse.dbcourses.service.impl;
 
 import cn.sdkd.csse.dbcourses.dao.IKnowledgepointDao;
 import cn.sdkd.csse.dbcourses.entity.Knowledgepoint;
+import cn.sdkd.csse.dbcourses.entity.Paragraph;
 import cn.sdkd.csse.dbcourses.service.IKnowledgepointService;
 import cn.sdkd.csse.dbcourses.utils.Word2VEC;
 import cn.sdkd.csse.dbcourses.utils.WordEntry;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
+
+import java.util.List;
+import java.util.Map;
 
 import java.io.IOException;
 import java.util.*;
@@ -20,9 +25,9 @@ public class KnowledgepointServiceImpl  extends ServiceImpl<IKnowledgepointDao, 
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params){
         return this.baseMapper.selectTopTenByName(params);
     }
-    public List<Knowledgepoint>  selectKnowList(Map params){
-        return this.baseMapper.selectByKid(params);
-    }
+//    public List<Knowledgepoint>  selectKnowList(Map params){
+//        return this.baseMapper.selectByKid(params);
+//    }
     public List<Knowledgepoint>  selectByName(Map<String, Object> params) {
       //  ArrayList<String> list=new ArrayList<String>();
         List<Knowledgepoint> ls=new ArrayList<>();
@@ -63,5 +68,8 @@ public class KnowledgepointServiceImpl  extends ServiceImpl<IKnowledgepointDao, 
             System.out.println("名称"+ls.get(j).getKnowledgepointName());
         }
         return ls;
+    }
+    public  Knowledgepoint selectKnowledgepointByName(String name){
+        return this.baseMapper.selectKnowledgepointByName(name);
     }
 };
