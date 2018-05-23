@@ -14,7 +14,7 @@
   </resultMap>
 
   <!-- 插入一个段落时，需要指定段落位置，该位置后面的段落编号+1 -->
-  <update id="updateParagraphOrder" parameterType="Paragraph">
+  <update id="updateParagraphOrder" parameterType="cn.sdkd.csse.dbcourses.entity.Paragraph">
     update paragraph
     set		paragraphOrder = paragraphOrder + 1
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
@@ -22,9 +22,9 @@
 
   <!-- 删除一个段落时，需要指定段落位置，该位置后面的段落编号-1 -->
   <update id="subParagraphOrder" parameterType="Paragraph">
-      update paragraph
-      set		paragraphOrder = paragraphOrder - 1
-      where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 1
+    where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
 
   <!-- 段落向上移动一个顺序-->
@@ -33,38 +33,42 @@
     set		paragraphOrder = paragraphOrder + 1
     where paragraphOrder > #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
-    <update id = "sortUp2" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder + 2
-        where paragraphOrder = (#{paragraphOrder}-1) and knowledgepointId = #{knowledgepointId}
-    </update>
-    <update id = "sortUp3" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder - 1
-        where paragraphOrder = #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
-    </update>
-    <update id = "sortUp4" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder - 1
-        where paragraphOrder > #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
-    </update>
+  <update id = "sortUp2" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder + 2
+    where paragraphOrder = (#{paragraphOrder}-1) and knowledgepointId = #{knowledgepointId}
+  </update>
+  <update id = "sortUp3" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 1
+    where paragraphOrder = #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
+  <update id = "sortUp4" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 1
+    where paragraphOrder > #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
 
-    <!-- 段落向下移动一个顺序-->
-    <update id = "sortDown1" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder + 1
-        where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
-    </update>
-    <update id = "sortDown2" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder - 2
-        where paragraphOrder = (#{paragraphOrder}+2) and knowledgepointId = #{knowledgepointId}
-    </update>
-    <update id = "sortDown3" parameterType="Paragraph">
-        update paragraph
-        set		paragraphOrder = paragraphOrder - 1
-        where paragraphOrder >= (#{paragraphOrder}+3) and knowledgepointId = #{knowledgepointId}
-    </update>
+  <!-- 段落向下移动一个顺序-->
+  <update id = "sortDown1" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder + 1
+    where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
+  </update>
+  <update id = "sortDown2" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 2
+    where paragraphOrder = (#{paragraphOrder}+2) and knowledgepointId = #{knowledgepointId}
+  </update>
+  <update id = "sortDown3" parameterType="Paragraph">
+    update paragraph
+    set		paragraphOrder = paragraphOrder - 1
+    where paragraphOrder >= (#{paragraphOrder}+3) and knowledgepointId = #{knowledgepointId}
+  </update>
 
+
+  <select id="getParagraphsByKid" resultMap="ParagraphResult">
+    SELECT  * from paragraph where knowledgepointId = #{kid}
+  </select>
 
 </mapper>

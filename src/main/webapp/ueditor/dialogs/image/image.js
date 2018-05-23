@@ -986,7 +986,7 @@
             domUtils.on($G('searchReset'), 'click', function(){
                 $G('searchTxt').value = lang.searchRemind;
                 $G('searchListUl').innerHTML = '';
-                //$G('searchType').selectedIndex = 0;
+                $G('searchType').selectedIndex = 0;
             });
             /* 搜索框聚焦 */
             domUtils.on($G('searchTxt'), 'focus', function(){
@@ -1053,18 +1053,14 @@
         getImageData: function(){
             var _this = this,
                 key = $G('searchTxt').value,
-                //type = $G('searchType').value,
+                type = $G('searchType').value,
                 keepOriginName = editor.options.keepOriginName ? "1" : "0",
-                //url = "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" + _this.encodeToGb2312(key) + type + "&keeporiginname=" + keepOriginName + "&" + +new Date;
-                //url = "http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ct=201326592&is=&fp=result&queryWord=" + _this.encodeToGb2312(key) + "&cl=2&lm=-1&ie=utf-8&oe=utf-8&adpicid=&st=-1&z=&ic=0&word=" + _this.encodeToGb2312(key) + "&s=&se=&tab=&width=&height=&face=0&istype=2&qc=&nc=1&fr=&pn=308&rn=308&gsm=1000000001e&1486375820481=";
-                //url = "https://image.baidu.com/search/index?tn=baiduimage&ipn=r&ct=201326592&cl=2&lm=-1&st=-1&fm=index&fr=&hs=0&xthttps=111111&sf=1&fmq=&pv=&ic=0&nc=1&z=&se=1&showtab=0&fb=0&width=&height=&face=0&istype=2&ie=utf-8&word=" + _this.encodeToGb2312(key);
-                url = "http://image.baidu.com/search/acjson?tn=resultjson_com&ipn=rj&ct=201326592&is=&fp=result&queryWord=" + key + "&cl=2&lm=-1&ie=utf-8&oe=utf-8&adpicid=&st=-1&z=&ic=0&word=" + key + "&s=&se=&tab=&width=&height=&face=0&istype=2&qc=&nc=1&fr=&pn=60&rn=30&gsm=1000000001e&1486375820481= "
+                url = "http://image.baidu.com/i?ct=201326592&cl=2&lm=-1&st=-1&tn=baiduimagejson&istype=2&rn=32&fm=index&pv=&word=" + _this.encodeToGb2312(key) + type + "&keeporiginname=" + keepOriginName + "&" + +new Date;
 
             $G('searchListUl').innerHTML = lang.searchLoading;
             ajax.request(url, {
                 'dataType': 'jsonp',
-                //'charset': 'GB18030',
-                'charset': 'UTF-8',
+                'charset': 'GB18030',
                 'onsuccess':function(json){
                     var list = [];
                     if(json && json.data) {

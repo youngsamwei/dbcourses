@@ -61,7 +61,7 @@
         //,theme:'default'
         //,themePath:URL +"themes/"
 
-        ,zIndex : 10000  //编辑器层级的基数,默认是900
+        ,zIndex : 10000     //编辑器层级的基数,默认是900
 
         //针对getAllHtml方法，会在对应的head标签中增加该编码设置。
         //,charset:"utf-8"
@@ -201,15 +201,15 @@
 
         //rowspacingtop
         //段间距 值和显示的名字相同
-        ,'rowspacingtop':['5', '10', '15', '20', '25']
+        //,'rowspacingtop':['5', '10', '15', '20', '25']
 
         //rowspacingBottom
         //段间距 值和显示的名字相同
-        ,'rowspacingbottom':['5', '10', '15', '20', '25']
+        //,'rowspacingbottom':['5', '10', '15', '20', '25']
 
         //lineheight
         //行内间距 值和显示的名字相同
-        ,'lineheight':['1', '1.5','1.75','2', '3', '4', '5']
+        //,'lineheight':['1', '1.5','1.75','2', '3', '4', '5']
 
         //customstyle
         //自定义样式，不支持国际化，此处配置值即可最后显示值

@@ -5,7 +5,6 @@ import cn.sdkd.csse.dbcourses.entity.Paragraph;
 
 import cn.sdkd.csse.dbcourses.service.IParagraphService;
 import cn.sdkd.csse.dbcourses.utils.DateUtil;
-import cn.sdkd.csse.dbcourses.utils.solr;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -43,6 +42,7 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/add")
   @ResponseBody
   public Object add(@Valid Paragraph paragraph) {
+
     try {
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insert(paragraph);
@@ -63,13 +63,9 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-    //System.out.println("comtroller层：");
-    //System.out.println("paragraphId="+ paragraph.getId() +"     knowledgepointId=" + paragraph.getKnowledgepointId() + "   paragraphOrder=" + paragraph.getParagraphOrder());
-    //paragraphService.deleteById(paragraph.getId());
     paragraphService.deleteParagraph(paragraph);
     return renderSuccess("删除成功！");
   }
-
 
   /**
    * created by weihongwei 2018/5/15
@@ -80,17 +76,14 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/sortup")
   @ResponseBody
   public Object sortup(@Valid Paragraph paragraph) {
-    //System.out.println("comtroller层：");
-    //System.out.println("knowledgepointId=" + paragraph.getKnowledgepointId() + "   paragraphOrder=" + paragraph.getParagraphOrder());
     paragraphService.sortup(paragraph);
     return renderSuccess("添加成功！");
   }
   @RequestMapping("/sortdown")
   @ResponseBody
   public Object sortdown(@Valid Paragraph paragraph) {
-    //System.out.println("comtroller层：");
-    //System.out.println("knowledgepointId=" + paragraph.getKnowledgepointId() + "   paragraphOrder=" + paragraph.getParagraphOrder());
     paragraphService.sortdown(paragraph);
     return renderSuccess("添加成功！");
   }
 }
+

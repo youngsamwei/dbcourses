@@ -42,7 +42,7 @@
             ue.setContent(content);
             ue.focus();
         });
-        url = "/paragraph/edit.do?id=" + id;
+        url = "/paragraph/edit.do?id="  + id;
 
     }
 
@@ -124,21 +124,40 @@
         var knowledgepointName = $('#input_knowledgepoint').val();
         $.ajax({
             type: "POST",
-            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,
+            url: "/knowledgepoint/add.do?k" +
+            "nowledgepointName=" + knowledgepointName,
             contentType: "application/json; charset=utf-8",
             data: "{}",
             dataType: "json",
             success: function (result) {
                closeKnowledgepointAddDialog();
-               window.location.href='index.html?qname='+knowledgepointName;
+              if("添加成功！"==(result.msg))
+              {
+                   alert("添加成功");
+
+              }
+              else{
+                  alert("知识点已存在");
+                  loadKnowledgepointParagraph1(result.id);
+                  // loadKnowledgepointParagraph(result.id);
+                 // window.location.href='index.html?qname='+result.knowledgepointName;
+
+                  // $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+                  // $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+                  //
+                  // displayTitle(result);
+                  // displayDescBlocks(result);
+              }
+
             },
             "error": function (result) {
                 var response = result.responseText;
-                alert('errot');
+                alert('error');
             }
 
         });
     }
+
 /*
 移动知识点段落。缺点是数据库操作数据可能过大。遍历移动
 */
@@ -185,8 +204,7 @@
         $.messager
                         .confirm(
                                 "系统提示",
-                                "您确认要删除知识点<font color=red>" + knowledgepointId
-                                + "</font>吗？",
+                                "您确认要删除知识点吗？",
                                 function (r) {
                                     if (r) {
                                         $
@@ -205,7 +223,59 @@
                                                                         "系统提示",
                                                                         "知识点删除失败！");
                                                             }
+                                                             location.reload();
                                                         }, "json");
                                     }
                                 });
+    }
+
+    function loadKnowledgepointParagraph1 (qid){
+
+        $("#kbknowledgepoint").remove();
+        $("#kbparagraph").remove();
+
+        $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+        $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+
+        qstr = "id=" + qid;
+
+        $.ajax({
+            type: "POST",
+            url: "/knowledgepoint/list.do?" + qstr,
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            dataType: "json",
+            success: function (result) {
+                if (result.length <=0)
+                {
+                    $.messager.show({
+                        title:'错误',
+                        msg:'没有查到知识点',
+                        showType:'fade',
+                        style:{
+                            right:'',
+                            bottom:''
+                        }
+                    });
+                }else{
+                    displayTitle(result);
+                    displayDescBlocks(result);
+
+                    /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+                    closeSearchDialog();
+                }
+            },
+            "error": function (result) {
+                var response = result.responseText;
+                $.messager.show({
+                    title:'错误',
+                    msg:'没有查到知识点',
+                    showType:'fade',
+                    style:{
+                        right:'',
+                        bottom:''
+                    }
+                });
+            }
+        });
     }
