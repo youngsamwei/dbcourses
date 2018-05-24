@@ -14,6 +14,10 @@ import java.text.MessageFormat;
 import java.util.List;
 
 /**
+ * @author weihongwei 20180304
+ * @author
+ * @author
+ *
  * Created by Sam on 2018/1/6.
  */
 @Controller
@@ -26,6 +30,11 @@ public class KnowledgepointController extends BaseController {
   private static final long serialVersionUID = 1L;
   private static final Logger log = Logger.getLogger(KnowledgepointController.class);// 日志文件
 
+  /**
+   * @author
+   * @param knowledgepoint
+   * @return
+   */
   @ResponseBody
   @RequestMapping("/list")
   public List<Knowledgepoint> list(Knowledgepoint knowledgepoint) {
