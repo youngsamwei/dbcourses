@@ -31,6 +31,8 @@ function loadKnowledgepointParagraph (qid){
                     displayTitle(result);
                     displayDescBlocks(result);
                     /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+
+                    //新添加相关查询此处需要修改
                     closeSearchDialog();
                 }
             },
@@ -60,14 +62,14 @@ function loadKnowledgepointParagraph (qid){
     function displayTitle(result ){
         var knowledgepointId = result[0].id;
         var knowledgepointName = result[0].knowledgepointName;
-        var button0 = "<a href='javascript:openKnowledgepointAddDialog(0)' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
+        var button0 = "<a href='javascript:openKnowledgepointAddDialog("+10101011+")' class='left_button top_button fa fa-plus-square-o' title='增加知识点'> 增加知识点</a> ";
         /*TODO:在所有段落的最后增加，需要特殊处理该段落的顺序编号*/
-        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0)' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
+        var button1 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId + ", 0,"+10101021+")' class='middle_button top_button fa fa-plus' title='在最前增加一个段落'> 增加段落</a> ";
         var button3 = "<a href='javascript:openSearchDialog()' class='middle_button top_button fa fa-search' title='查询'> 查询</a> ";
-        var button2 = "<a href='javascript:void(0)' class='middle_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
-        var button4 = "<a href='javascript:openUserSearchDialog()' class='right_button top_button fa fa-search' title='用户管理'> 用户</a>";
+        var button2 = "<a href='javascript:void(0)' class='right_button top_button fa fa-star-o' title='收藏，收藏一下'> 收藏</a>";
+        var button4 = "<a href='javascript:deleteKnowledgepoint(" + knowledgepointId + ","+10101013+")' class='middle_button top_button fa fa-minus-square-o' title='删除这条知识点'> 删除</a> ";
         var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-            button2, button1, button3, button0,button4,
+            button2, button1, button3, button4, button0,
             "<div  id='content_" + knowledgepointId + "'>",
            '<h1>',  knowledgepointName,'</h1>',
             "</div>",
@@ -76,44 +78,47 @@ function loadKnowledgepointParagraph (qid){
         $(".kbknowledgepoint").append(itemHTML);
 
     }
-    // /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/
-    // function displayDescBlocks(result) {
-    //
-    //         var knowledgepointId = result[0].id;
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "/paragraph/list.do?knowledgepointId=" + knowledgepointId,
-    //             contentType: "application/json; charset=utf-8",
-    //             data: "{}",
-    //             dataType: "json",
-    //             success: function (paragraphs) {
-    //                 $.each(paragraphs, function (index, element) {
-    //                     var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
-    //                       : htmlDecode(element.paragraphContent);
-    //                     var paragraphOrder = element.paragraphOrder + 1;
-    //                     var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
-    //                     var button2 = "<a href='javascript:void(0)' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
-    //                     var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
-    //                     var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
-    //
-    //                     var itemHTML = ["<P ><div style='background: #F0F8FF'>",
-    //                         button1, button4, button2, button3,
-    //                         "<div class='content' id='content_" + element.id + "'>",
-    //                         content,
-    //                         "</div>",
-    //                         "</div></P>"].join('\n');
-    //                     //console.log(itemHTML);
-    //                     $(".kbparagraph").append(itemHTML);
-    //                 })
-    //             },
-    //             "error": function (result) {
-    //                 var response = result.responseText;
-    //                 alert('errot');
-    //             }
-    //
-    //         });
-    //
-    // }
+    /*显示文本块，并在文本块的右上角显示删除，编辑，纠错按钮*/
+    function displayDescBlocks(result) {
+
+            var knowledgepointId = result[0].id;
+            $.ajax({
+                type: "POST",
+                url: "/paragraph/list.do?knowledgepointId=" + knowledgepointId,
+                contentType: "application/json; charset=utf-8",
+                data: "{}",
+                dataType: "json",
+                success: function (paragraphs) {
+                    $.each(paragraphs, function (index, element) {
+                        var content  = (( element.paragraphContent == "")||( element.paragraphContent == null))? '<P>&nbsp;</P>'
+                          : htmlDecode(element.paragraphContent);
+                        var paragraphOrder = element.paragraphOrder + 1;
+                        var button1 = "<a href='javascript:openArticleModifyDialog(\"" + element.id + "\",\"content_" + element.id + "\","+10101022+");' class='right_button fa fa-edit' title='编辑，贡献一下'> 编辑</a>";
+                        var button2 = "<a href='javascript:deleteArticle("+ element.id +","+10101023+")' class='middle_button fa fa-trash-o' title='删除此段落'> 删除</a> ";
+                        var button3 = "<a href='javascript:void(0)' class='left_button fa fa-bug' title='纠错，较真一下'> 纠错</a>";
+                        var button4 = "<a href='javascript:openArticleAddDialog(" + knowledgepointId +", " + paragraphOrder + ","+10101021+")' class='middle_button fa fa-plus' title='在此段落后增加'> 增加</a> ";
+                        var button5 = "<a href='javascript:sortUpOne(" + knowledgepointId +", " + paragraphOrder + ")' class='top_button fa fa-sort-up' title='向上移动段落'> 排序</a>";
+                        var button6 = "<a href='javascript:sortDownOne(" + knowledgepointId +", " + paragraphOrder + ")' class='top_button fa fa-sort-down' title='向下移动段落'> 排序</a>";
+
+                        var itemHTML = ["<P ><div style='background: #F0F8FF'>",
+                            button5, button6,
+                            button1, button4, button2, button3,
+                            "<div class='content' id='content_" + element.id + "'>",
+                            content,
+                            "</div>",
+                            "</div></P>"].join('\n');
+                        //console.log(itemHTML);
+                        $(".kbparagraph").append(itemHTML);
+                    })
+                },
+                "error": function (result) {
+                    var response = result.responseText;
+                    alert('errot');
+                }
+
+            });
+
+    }
 
 
 //Html编码获取Html转义实体
@@ -123,4 +128,42 @@ function htmlEncode(value){
 //Html解码获取Html实体
 function htmlDecode(value){
  return $('<div/>').html(value).text();
+}
+
+function getUserPower(powers){
+    var msg='请求失败';
+    $.ajax({
+        type: "post",
+        url: "/userpower/getpower.do",
+        data: { powers: powers },
+        dataType: "json",
+        async:false,
+        success: function (data) {
+            msg=data.msg;
+        },
+        error: function (data) {
+            msg=data.msg;
+        }
+    });
+    // alert(msg);
+    return msg;
+}
+function userLogout() {
+    $.ajax({
+        type: "post",
+        url: "/user/logout.do",
+        data: {  },//非常重要的一步
+        datatype: "json",
+        success: function () {
+
+            alert("注销成功");
+            location.reload()
+
+        },
+        error:function () {
+            alert("删除失败");
+            location.reload()
+        }
+
+    });
 }

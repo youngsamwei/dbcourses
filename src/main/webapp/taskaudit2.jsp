@@ -102,7 +102,7 @@
                                        class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
     </div>
     <div id="audit_delepara_button">
-        <a href="javascript:dothedeleteAudit()" class="easyui-linkbutton"
+        <a href="javascript:dothedeleteAudit2()" class="easyui-linkbutton"
            iconCls="icon-ok">确定</a> <a href="javascript:closeAduitaddparawindow()"
                                        class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
     </div>
@@ -254,7 +254,7 @@
             }
         })
     }
-    function dothedeleteAudit() {
+    function dothedeleteAudit2() {
         var themainid=themainid=$("#mainid2").val();
         var theid=$("#taskid_para").val();
         $.ajax({
@@ -306,7 +306,6 @@
 
 
     function audits(target) {
-
         $("#tabtask2").datagrid("selectRow", getRowIndex(target));
         var row = $("#tabtask2").datagrid("getSelected");
         if(row.type=='22')

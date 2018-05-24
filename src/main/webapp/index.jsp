@@ -33,11 +33,10 @@
 
     <link rel="stylesheet" type="text/css"
           href="/font-awesome-4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
-    <script type="text/javascript" charset="utf-8" src="/js/user_load.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/user_search.js"></script>
-    <script type="text/javascript" charset="utf-8" src="/js/user_manager.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_load.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
 
 </head>
 <body>
@@ -69,48 +68,33 @@
 
 <div id="dlg_search" class="easyui-dialog"
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
-     closed="true" buttons="#dlg-search-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
+     closed="true" buttons="#dlg-search-buttons1"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
     <div class="knowledgepoint_search">
-
-        <input id="ss" class="easyui-searchbox" style="width:400px" data-options="menu:'#box'"></input>
+        <input id="ss" class="easyui-searchbox" style="width:360px" data-options="menu:'#box'"></input>
 
         <div id="box" style="width:120px">
             <div data-options="name:'knowledgepoint',iconCls:'icon-ok'">知识点</div>
             <div data-options="name:'exercise',iconCls:'icon-edit'">习题</div>
             <div data-options="name:'video',iconCls:'icon-advice'">视频</div>
             <div data-options="name:'literature',iconCls:'icon-school'">文献</div>
+            <div data-options="name:'solr',iconCls:'icon-search'">内容搜索</div>
+            <div data-options="name:'relatesearch',iconCls:'icon-search'">关联查询</div>
         </div>
-
     </div>
 
     <div id="search_result">
         <div id='kp_inner'></div>
         <!-- 在此显示查询结果-->
     </div>
-    <div id="dlg-search-buttons">
+    <div id="dlg-search-buttons1">
+        <div id="upAndDownButton">
+            <a href="javascript:shangyiye()"    class="easyui-linkbutton" >上一页</a>
+            <a href="javascript:xiayiye()"    class="easyui-linkbutton" >下一页</a>
+        </div>
         <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
     </div>
 </div>
 
-<div id="dlg_user_search" class="easyui-dialog"
-     style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
-     closed="true" buttons="#dlg-search-buttons"  data-options="iconCls:'icon-close',resizable:true,modal:true, maximizable:true, maximized:true ">
-    <div class="user_search">
-        <input id="ssu" class="easyui-searchbox" style="width:400px" data-options="menu:'#box2'"></input>
-        <div id="box2" style="width:120px">
-            <div data-options="name:'user',iconCls:'icon-user'">用户</div>
-        </div>
-
-    </div>
-
-    <div id="search_results">
-        <div id='kp_inneruser'></div>
-        <!-- 在此显示查询结果-->
-    </div>
-    <div id="dlg-usersearch-buttons">
-        <a href="javascript:closeUserSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-    </div>
-</div>
 
 <div id="dlg_add_knowledgepoint" class="easyui-dialog"
      style="width: 260px;height:130px;padding: 10px 20px; position: relative; z-index:1000;"
@@ -156,22 +140,14 @@
         */
         $('#ss').searchbox({
             searcher: function (value, name) {
-                doSearchKnowledge(value, name);
+                doSearchKnowledge(value, name,0);
                 /*window.location.href='index.html?qname='+value;*/
             },
             menu: '#box',
             prompt: '请输入内容',
         });
         /*查找用户
-        */
-        $('#ssu').searchbox({
-            searcher: function (value, name) {
-                doSearchUser(value,name);
-                /*window.location.href='index.html?qname='+value;*/
-            },
-            menu: '#box',
-            prompt: '请输入内容',
-        });
+
 
         /*为增加知识点的文本框增加回车事件。*/
         $('#input_knowledgepoint').bind('keypress',function(event){

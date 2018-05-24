@@ -15,5 +15,6 @@ public interface ITaskDao extends BaseMapper<Task>{
     public boolean updateParaEdit(Map params);
     public boolean updatePara(Map params);
     public boolean deletePbyid(Map params);
+    public boolean deleteKbyid(Map params);
 }
 

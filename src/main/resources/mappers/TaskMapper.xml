@@ -100,4 +100,7 @@
     <delete id="deletePbyid" parameterType="Map">
         UPDATE paragraph SET status=2 where id=#{mainid}
     </delete>
+    <delete id="deleteKbyid" parameterType="Map">
+        UPDATE knowledgepoint SET status=2 where id=#{mainid}
+    </delete>
 </mapper>

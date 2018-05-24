@@ -16,7 +16,7 @@ h1 {
 
 .middle_button{
     float: right;
-    width:55px;
+    width:45px;
     text-align: center;
     margin:1px auto;
     height: 20px;
@@ -88,4 +88,23 @@ h1 {
 
 .kbknowledgepoint{max-width:800px; margin:0 auto;}  /* 最大宽度，居中 */
 .kbparagraph{max-width:800px; margin:0 auto;}
-.editparagraph{max-width:800px; margin:0 auto;}
+
+.recordcode {
+    position: absolute;
+    bottom:0;
+    right:0;
+    padding-top: 6px;
+    height: 10px;
+    line-height: 16px;
+    font-size: 6pt;
+}
+
+body{
+    margin:0;
+    padding:0;
+
+    position:absolute;
+    width:100%;
+    min-height:100%;
+
+}

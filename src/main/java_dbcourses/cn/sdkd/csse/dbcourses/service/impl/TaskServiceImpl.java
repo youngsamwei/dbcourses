@@ -41,4 +41,9 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
         flag=(this.baseMapper.deletePbyid(params)&&this.baseMapper.updateTask(params));
         return flag;
     }
+    public boolean deleteKnowAudit(Map params){
+        boolean flag=false;
+        flag=(this.baseMapper.deleteKbyid(params)&&this.baseMapper.updateTask(params));
+        return flag;
+    }
 }

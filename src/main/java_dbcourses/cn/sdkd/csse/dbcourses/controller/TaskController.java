@@ -176,6 +176,14 @@ public class TaskController extends BaseController {
         taskService.insert(task);
         return renderSuccess();
     }
+    @RequestMapping("/knowdelete")
+    @ResponseBody
+    public Object knowdelete(@Valid Task task)
+    {
+        task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+        taskService.insert(task);
+        return renderSuccess();
+    }
 
     @ResponseBody
     @RequestMapping("/auditdp")
@@ -193,4 +201,22 @@ public class TaskController extends BaseController {
         taskService.deleteParaAudit(params);
         return renderSuccess();
     }
+
+    @ResponseBody
+    @RequestMapping("/auditdk")
+    public Object auditdeleteknow(@RequestParam("mainid")String mainid,@RequestParam("taskid") String taskid){
+        String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+        HashMap<String,Object> params= new HashMap<>();
+        params.put("mainid",mainid);
+        params.put("taskid",taskid);
+        params.put("userName",userName);
+        try {
+            params.put("approverTime", DateUtil.getCurrentDateStr());
+        }catch (Exception e){
+            return renderError("错误");
+        }
+        taskService.deleteKnowAudit(params);
+        return renderSuccess();
+    }
+
 }

@@ -55,7 +55,7 @@
 <table id="tabtask"></table>
 <div id="dlg_aduit_add" class="easyui-dialog"
          style="width: 300px;height:200px;padding: 10px 20px;"
-     closed="true" maximizable="false" closable="true" buttons="#audit_add_button,#audit_add_close" data-options="modal:true,buttons: '#dlg-buttons'">
+     closed="true" maximizable="false" closable="true" buttons="#audit_add_button,#audit_add_close,#audit_deleknow_button" data-options="modal:true,buttons: '#dlg-buttons'">
     <p>内容</p>
     <textarea id="pointname" readonly="true" rows="1" cols="20">
     </textarea>
@@ -68,6 +68,11 @@
     </div>
     <div id="audit_add_close">
          <a href="javascript:closeAduitwindow()" class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+    </div>
+    <div id="audit_deleknow_button">
+        <a href="javascript:dothedeleteAudit()" class="easyui-linkbutton"
+           iconCls="icon-ok">确定</a> <a href="javascript:closeAduitwindow()"
+                                       class="easyui-linkbutton" iconCls="icon-cancel" >取消</a>
     </div>
 
 </div>
@@ -221,6 +226,30 @@
         })
 
     }
+
+    function dothedeleteAudit() {
+        var themainid=$("#mainid").val();
+        var theid=$("#taskid").val();
+        $.ajax({
+            type: "POST",
+            url: "/task/auditdk.do",
+            data: {
+                mainid : themainid,
+                taskid:  theid
+            },
+            dataType: "json",
+            success: function () {
+
+                $.messager.alert("系统提示","删除审核成功");
+                closeAduitwindow();
+                $('#tabtask').datagrid('reload');
+            },
+            error:function () {
+                $.messager.alert("系统提示","失败");
+                closeAduitwindow();
+            }
+        })
+    }
     function dotheaddAudit(thetype) {
         var themainid;
         var theid;
@@ -313,54 +342,57 @@
                                 {
                                     $("#audit_add_button").hide();
                                     $("#audit_add_close").show();
+                                    $("#audit_deleknow_button").hide();
                                 }
                                 else
                                 {
                                     $("#audit_add_button").show();
                                     $("#audit_add_close").hide();
+                                    $("#audit_deleknow_button").hide();
                                 }
                             }
                         }
                     );
                     $("#dlg_aduit_add").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:200});
-                }
+                },
+                error:function () {
+                    alert("获取信息失败");}
             })
         }
-        else if(row.type=='22')
+        else if(row.type=='13')
         {
 
             $.ajax({
                 type: "POST",
-                url: "/paragraph/selectbyid.do",
-                data: {mainid : row.mainid},
+                url: "/knowledgepoint/audit.do",
+                data: { id  : row.mainid},
                 dataType: "json",
-                success: function (paragraphs) {
-                    $("#dlg_aduit_edit").dialog(
+                success: function (know) {
+                    $("#dlg_aduit_add").dialog(
                         {
                             onOpen: function () {
-                                $("#update_task_id").val(row.id);
-                                $("#para_edit_id").val(paragraphs.id);
+                                $("#pointname").val(know.knowledgepointName);
+                                $("#mainid").val(row.mainid);
+                                $("#taskid").val(row.id);
                                 if(row.status==1)
                                 {
-                                    $("#thebefore").html(htmlDecode(row.content));
-                                    $("#theafter").html(htmlDecode(paragraphs.paragraphContent));
-                                    $("#audit_edit_button").hide();
-                                    $("#audit_edit_close").show();
+                                    $("#audit_add_button").hide();
+                                    $("#audit_deleknow_button").hide();
+                                    $("#audit_add_close").show();
                                 }
                                 else
                                 {
-                                    $("#thebefore").html(htmlDecode(paragraphs.paragraphContent));
-                                    $("#theafter").html(htmlDecode(row.content));
-                                    $("#audit_edit_button").show();
-                                    $("#audit_edit_close").hide();
+                                    $("#audit_deleknow_button").show();
+                                    $("#audit_add_button").hide();
+                                    $("#audit_add_close").hide();
                                 }
                             }
                         }
                     );
-                    $("#thebefore").html(htmlDecode(paragraphs.paragraphContent));
-                    $("#theafter").html(htmlDecode(row.content));
-                    $("#dlg_aduit_edit").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:400});
-                }
+                    $("#dlg_aduit_add").dialog("open").dialog("setTitle", '删除审核').window('resize',{top: 100,left:200});
+                },
+                error:function () {
+                    alert("获取信息失败");}
             })
 
         }
@@ -394,7 +426,9 @@
                         }
                     );
                     $("#dlg_add_para").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:400});
-                }
+                },
+                error:function () {
+                    alert("获取信息失败");}
             })
             $("#dlg_add_para").dialog("open").dialog("setTitle", '审核').window('resize',{top: 100,left:400});
         }
