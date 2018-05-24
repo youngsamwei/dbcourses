@@ -46,7 +46,7 @@ public class ParagraphController extends BaseController {
     try {
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insert(paragraph);
-      return renderSuccess("添加成功！");
+      return renderSuccess("添加成功！ ");
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       return this.renderError(e.getLocalizedMessage());
@@ -63,7 +63,7 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-    paragraphService.deleteById(paragraph.getId());
-    return renderSuccess("删除成功！");
+     paragraphService.deleteById(paragraph.getId());
+    return renderSuccess("删除成功");
   }
 }

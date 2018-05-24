@@ -97,6 +97,7 @@
                                                         $.messager.alert(
                                                                 "系统提示",
                                                                 "数据已成功删除！");
+                                                        window.location.href='index.html';
 
                                                     } else {
                                                         $.messager.alert(
@@ -132,7 +133,7 @@
             },
             "error": function (result) {
                 var response = result.responseText;
-                alert('errot');
+                alert('error');
             }
 
         });
