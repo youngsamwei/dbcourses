@@ -46,7 +46,7 @@ public class ParagraphController extends BaseController {
     try {
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
       paragraphService.insert(paragraph);
-      return renderSuccess("添加成功！ ");
+      return renderSuccess("添加成功！");
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       return this.renderError(e.getLocalizedMessage());
@@ -63,7 +63,26 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-     paragraphService.deleteById(paragraph.getId());
-    return renderSuccess("删除成功");
+    paragraphService.deleteParagraph(paragraph);
+    return renderSuccess("删除成功！");
+  }
+
+  /**
+   * created by weihongwei 2018/5/15
+   * 段落排序。上下移动
+   * @param paragraph
+   * @return
+   */
+  @RequestMapping("/sortup")
+  @ResponseBody
+  public Object sortup(@Valid Paragraph paragraph) {
+    paragraphService.sortup(paragraph);
+    return renderSuccess("添加成功！");
+  }
+  @RequestMapping("/sortdown")
+  @ResponseBody
+  public Object sortdown(@Valid Paragraph paragraph) {
+    paragraphService.sortdown(paragraph);
+    return renderSuccess("添加成功！");
   }
 }

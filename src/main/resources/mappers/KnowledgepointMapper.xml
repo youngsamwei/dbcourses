@@ -8,19 +8,64 @@
     <result property="knowledgepointName" column="knowledgepointName"/>
     <result property="knowledgepointCreateDate" column="knowledgepointCreateDate"/>
     <result property="addName" column="addName"/>
+    <result property="xiangguandu" column="xiangguandu"/>
   </resultMap>
 
+ <!-- <resultMap type="Knowledgepoint" id="KnowledgepointResult2">
+    <result property="id" column="id"/>
+    <result property="knowledgepointName" column="knowledgepointName"/>
+    <result property="knowledgepointCreateDate" column="knowledgepointCreateDate"/>
+    <result property="addName" column="addName"/>
+    <collection property="paragraphlist" javaType="Paragraph">
+      <result column="id" property="id"/>
+      <result column="knowledgepointId" property="knowledgepointId"/>
+      <result column="paragraphOrder" property="paragraphOrder"/>
+      <result column="paragraphTitle" property="paragraphTitle"/>
+      <result column="paragraphContent" property="paragraphContent"/>
+      <result column="paragraphCreateDate" property="paragraphCreateDate"/>
+      <result column="addName" property="addName"/>
+    </collection>
+  </resultMap>
+-->
   <!-- 通用查询结果列-->
   <sql id="Base_Column_List">
     id, knowledgepointName, knowledgepointCreateDate, addName
   </sql>
 
   <!--  微信ArticleCount限制，说明为10， 但只能设置为8，否则微信会报服务器出现故障的错误 -->
+  <!--不完全匹配，加入查询时不区分大小写-->
   <select id="selectTopTenByName" resultType="Knowledgepoint" parameterType="Map">
-    select id, knowledgepointName, knowledgepointCreateDate, addName
+    select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
     from Knowledgepoint
-    where knowledgepointName like #{knowledgepointName}
+    where Upper(knowledgepointName) like #{knowledgepointName}
     limit 8
   </select>
 
+ <!-- 为了检查知识点添加时是否存在，加入的完全匹配的搜索-->
+  <select id="selectKnowledgepointByName" resultType="Knowledgepoint" >
+    select id, knowledgepointName, knowledgepointCreateDate, addName
+    from Knowledgepoint
+    where knowledgepointName = #{name}
+  </select>
+
+ <!-- <select id="getKnowledgePointByLike" resultMap="KnowledgepointResult2">
+    select k.id,k.addName,k.knowledgepointCreateDate,k.knowledgepointName,p.id,p.paragraphContent,p.knowledgepointId,p.paragraphCreateDate,p.paragraphOrder,p.paragraphTitle,p.addName
+    from knowledgepoint k , paragraph p
+    where k.id = p.knowledgepointId
+     <if test="#{name}!=null">
+       and k.knowledgepointName like "%"#{name}"%"
+     </if>
+  </select>-->
+    <!--南宁添加相关查询-->
+    <select id="selectByName" resultType="Knowledgepoint" parameterType="Map">
+        select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
+        from Knowledgepoint
+        where knowledgepointName = #{knowledgepointName}
+        limit 1
+    </select>
+    <select id="selectByKid" resultType="Knowledgepoint" parameterType="Map">
+        select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
+        from Knowledgepoint
+        where id=#{id}
+    </select>
 </mapper>
