@@ -56,6 +56,8 @@
       <div data-options="name:'exercise',iconCls:'icon-edit'">习题</div>
       <div data-options="name:'video',iconCls:'icon-advice'">视频</div>
       <div data-options="name:'literature',iconCls:'icon-school'">文献</div>
+      <div data-options="name:'solr',iconCls:'icon-search'">内容搜索</div>
+      <div data-options="name:'relatesearch',iconCls:'icon-search'">关联查询</div>
     </div>
 
   </div>
@@ -65,6 +67,12 @@
     <!-- 在此显示查询结果-->
   </div>
   <div id="dlg-search-buttons">
+    <!--<a href="javascript:shangyiye()"    class="easyui-linkbutton" >上一页</a>
+    <a href="javascript:xiayiye()"    class="easyui-linkbutton" >下一页</a>-->
+    <div id="upAndDownButton">
+      <a href="javascript:shangyiye()"    class="easyui-linkbutton" >上一页</a>
+      <a href="javascript:xiayiye()"    class="easyui-linkbutton" >下一页</a>
+    </div>
     <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
   </div>
 </div>
@@ -112,14 +120,18 @@
         /*查询, 可以尝试增加自动补全功能。
         TODO:点击搜索按钮后弹出搜索对话框，支持实时查询数据库自动补全，点击搜索按钮后列出查询结果。
         */
+
+
         $('#ss').searchbox({
-          searcher: function (value, name) {
-              doSearchKnowledge(value, name);
+          searcher: function (value, name,page) {
+              //alert(value+";"+name);
+              doSearchKnowledge(value, name,0);
              /*window.location.href='index.html?qname='+value;*/
           },
           menu: '#box',
           prompt: '请输入内容',
          });
+//        南宁添加相关查询
 
          /*为增加知识点的文本框增加回车事件。*/
          $('#input_knowledgepoint').bind('keypress',function(event){
@@ -131,7 +143,7 @@
 
         var qid = getQueryString("qid");
         if ((qid == null)||(qid == '')){
-          qid = 154;
+          qid = 144;
         }
         loadKnowledgepointParagraph(qid);
     })

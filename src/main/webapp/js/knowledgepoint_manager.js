@@ -77,12 +77,12 @@
         });
     }
 
-    function deleteArticle(paragraphId) {
+    function deleteArticle(paragraphId,knowledgepointId,paragraphOrder) {
 
         $.messager
                 .confirm(
                         "系统提示",
-                        "您确认要删除这<font color=red>" + paragraphId
+                        "您确认要删除段落<font color=red>" + paragraphOrder
                         + "</font>吗？",
                         function (r) {
                             if (r) {
@@ -90,14 +90,16 @@
                                         .post(
                                                 "/paragraph/delete.do",
                                                 {
-                                                    id: paragraphId
+                                                    id: paragraphId,
+                                                    knowledgepointId: knowledgepointId,
+                                                    paragraphOrder: paragraphOrder
                                                 },
                                                 function (result) {
                                                     if (result.success) {
                                                         $.messager.alert(
                                                                 "系统提示",
                                                                 "段落已成功删除！");
-                                                        window.location.href = window.location.href;
+                                                        window.location.href = 'index.html?qid='+knowledgepointId;
                                                     } else {
                                                         $.messager.alert(
                                                                 "系统提示",
@@ -122,84 +124,87 @@
         var knowledgepointName = $('#input_knowledgepoint').val();
         $.ajax({
             type: "POST",
-            url: "/knowledgepoint/add.do?knowledgepointName=" + knowledgepointName,
+            url: "/knowledgepoint/add.do?k" +
+            "nowledgepointName=" + knowledgepointName,
             contentType: "application/json; charset=utf-8",
             data: "{}",
             dataType: "json",
             success: function (result) {
                closeKnowledgepointAddDialog();
-               window.location.href='index.html?qname='+knowledgepointName;
+              if("添加成功！"==(result.msg))
+              {
+                   alert("添加成功");
+
+              }
+              else{
+                  alert("知识点已存在");
+                  loadKnowledgepointParagraph1(result.id);
+                  // loadKnowledgepointParagraph(result.id);
+                 // window.location.href='index.html?qname='+result.knowledgepointName;
+
+                  // $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+                  // $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+                  //
+                  // displayTitle(result);
+                  // displayDescBlocks(result);
+              }
+
             },
             "error": function (result) {
                 var response = result.responseText;
-                alert('errot');
+                alert('error');
             }
 
         });
     }
 
-    function sortUpOne(paragraphId){
-/**
+/*
+移动知识点段落。缺点是数据库操作数据可能过大。遍历移动
+*/
+    function sortUpOne(knowledgepointId, paragraphOrder){
+        var correctParagraphOrder = paragraphOrder -1;
        $.ajax({
-                   type: "POST",
-                   async: false,
-                   //url: "/paragraph/sort.do",
-                   //data: {"knowledgepointId": knowledgepointId, "paragraphOrder": paragraphOrder },
-                   url: "/paragraph/sort.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder,
-                   data: {},
-                   contentType: "application/json; charset=utf-8",
+                   type:"POST",
+                   async:false,
+                   url:"/paragraph/sortup.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + correctParagraphOrder,
+                   data:{},
+                   contentType:"application/json; charset=utf-8",
                    dataType: "json",
                    success: function (result) {
-                      window.location.href='index.html';
+                       //console.log("knowledgepointId=" + knowledgepointId + "paragraphOrder=" + correctParagraphOrder);
+                      window.location.href='index.html?qid='+knowledgepointId;
                    },
                    "error": function (result) {
                        var response = result.responseText;
-                       alert('errot3');
+                       alert('errot');
                    }
                });
-**/
-            //   url = "/paragraph/sort.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + paragraphOrder;
-            //   window.location.href='index.html';
-
-
-              $.messager
-                                      .confirm(
-                                              "系统提示",
-                                              "您确认要上移段落<font color=red>" + paragraphId
-                                              + "</font>吗？",
-                                              function (r) {
-                                                  if (r) {
-                                                      $
-                                                              .post(
-                                                                      "/paragraph/sort.do",
-                                                                      {
-                                                                      id: paragraphId
-                                                                     //      knowledgepointId: knowledgepointId,
-                                                                     //      paragraphOrder: paragraphOrder
-                                                                      },
-
-                                                                      function (result) {
-                                                                          if (result.success) {
-                                                                              $.messager.alert(
-                                                                                      "系统提示",
-                                                                                      "上移成功！");
-                                                                          } else {
-                                                                              $.messager.alert(
-                                                                                      "系统提示",
-                                                                                      "上移失败！");
-                                                                          }
-                                                                      }, "json");
-                                                  }
-                                              });
-
     }
+        function sortDownOne(knowledgepointId, paragraphOrder){
+            var correctParagraphOrder = paragraphOrder -1;
+           $.ajax({
+                       type:"POST",
+                       async:false,
+                       url:"/paragraph/sortdown.do?knowledgepointId=" + knowledgepointId + "&paragraphOrder=" + correctParagraphOrder,
+                       data:{},
+                       contentType:"application/json; charset=utf-8",
+                       dataType: "json",
+                       success: function (result) {
+                           //console.log("knowledgepointId=" + knowledgepointId + "paragraphOrder=" + correctParagraphOrder);
+                          window.location.href='index.html?qid='+knowledgepointId;
+                       },
+                       "error": function (result) {
+                           var response = result.responseText;
+                           alert('errot3');
+                       }
+                   });
+        }
 
     function deleteKnowledgepoint(knowledgepointId){
         $.messager
                         .confirm(
                                 "系统提示",
-                                "您确认要删除知识点<font color=red>" + knowledgepointId
-                                + "</font>吗？",
+                                "您确认要删除知识点吗？",
                                 function (r) {
                                     if (r) {
                                         $
@@ -218,7 +223,59 @@
                                                                         "系统提示",
                                                                         "知识点删除失败！");
                                                             }
+                                                             location.reload();
                                                         }, "json");
                                     }
                                 });
+    }
+
+    function loadKnowledgepointParagraph1 (qid){
+
+        $("#kbknowledgepoint").remove();
+        $("#kbparagraph").remove();
+
+        $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+        $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+
+        qstr = "id=" + qid;
+
+        $.ajax({
+            type: "POST",
+            url: "/knowledgepoint/list.do?" + qstr,
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            dataType: "json",
+            success: function (result) {
+                if (result.length <=0)
+                {
+                    $.messager.show({
+                        title:'错误',
+                        msg:'没有查到知识点',
+                        showType:'fade',
+                        style:{
+                            right:'',
+                            bottom:''
+                        }
+                    });
+                }else{
+                    displayTitle(result);
+                    displayDescBlocks(result);
+
+                    /*如果是查询跳转过来的，则需要关闭查询窗口。*/
+                    closeSearchDialog();
+                }
+            },
+            "error": function (result) {
+                var response = result.responseText;
+                $.messager.show({
+                    title:'错误',
+                    msg:'没有查到知识点',
+                    showType:'fade',
+                    style:{
+                        right:'',
+                        bottom:''
+                    }
+                });
+            }
+        });
     }

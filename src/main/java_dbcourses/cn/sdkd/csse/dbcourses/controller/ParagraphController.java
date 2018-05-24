@@ -56,21 +56,33 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/edit")
   @ResponseBody
   public Object edit(@Valid Paragraph paragraph) {
-    paragraphService.updateAllColumnById(paragraph);
+    paragraphService.updateById(paragraph);
     return renderSuccess("编辑成功！");
   }
 
   @RequestMapping("/delete")
   @ResponseBody
   public Object delete(@Valid Paragraph paragraph) {
-    paragraphService.deleteById(paragraph);
+    paragraphService.deleteParagraph(paragraph);
     return renderSuccess("删除成功！");
   }
 
-  @RequestMapping("/sort")
+  /**
+   * created by weihongwei 2018/5/15
+   * 段落排序。上下移动
+   * @param paragraph
+   * @return
+   */
+  @RequestMapping("/sortup")
   @ResponseBody
-  public Object sort(@Valid Paragraph paragraph) {
-      paragraphService.sort(paragraph);
-      return renderSuccess("添加成功！");
+  public Object sortup(@Valid Paragraph paragraph) {
+    paragraphService.sortup(paragraph);
+    return renderSuccess("添加成功！");
+  }
+  @RequestMapping("/sortdown")
+  @ResponseBody
+  public Object sortdown(@Valid Paragraph paragraph) {
+    paragraphService.sortdown(paragraph);
+    return renderSuccess("添加成功！");
   }
 }
