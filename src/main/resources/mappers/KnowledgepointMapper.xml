@@ -40,6 +40,14 @@
     where Upper(knowledgepointName) like #{knowledgepointName}
     limit 8
   </select>
+  <insert id="insertKnow" parameterType="Knowledgepoint" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO knowledgepoint(knowledgepointName,addName,knowledgepointCreateDate)
+    VALUES(#{knowledgepointName},#{addName},#{knowledgepointCreateDate})
+  </insert>
+  <insert id="insertATask" parameterType="Map">
+     INSERT INTO TASK(mainid,submitter,type,createTime)
+     VALUE (#{mainid},#{userName},11,#{createTime})
+  </insert>
 
  <!-- 为了检查知识点添加时是否存在，加入的完全匹配的搜索-->
   <select id="selectKnowledgepointByName" resultType="Knowledgepoint" >

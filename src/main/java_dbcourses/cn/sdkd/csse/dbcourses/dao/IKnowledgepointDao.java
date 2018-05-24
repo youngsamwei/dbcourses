@@ -12,10 +12,11 @@ import java.util.Map;
  */
 public interface IKnowledgepointDao extends BaseMapper<Knowledgepoint> {
 
+    public boolean insertATask(Map params);
+    public boolean insertKnow(Knowledgepoint know);
     public List<Knowledgepoint>  selectTopTenByName(Map<String, Object> params);
     public List<Knowledgepoint> selectByName(Map<String, Object> params);
-    //public List<Knowledgepoint> selectByKid(Map params);
-
+    public List<Knowledgepoint> selectByKid(Map params);
     public Knowledgepoint selectKnowledgepointByName(String name);
-  //  public List<Knowledgepoint> getKnowledgePointByLike(String name);
+    public List<Knowledgepoint> getKnowledgePointByLike(String name);
 }

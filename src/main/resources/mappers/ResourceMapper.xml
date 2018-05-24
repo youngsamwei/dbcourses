@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IResourceDao">
+<resultMap type="Resource" id="ResourceResult">
+    <result property="id" column="id"/>
+    <result property="number" column="number"/>
+    <result property="text" column="text"/>
+    <result property="parent" column="parent"/>
+    <result property="state" column="state"/>
+    <result property="remark" column="remark"/>
+</resultMap>
+<select id="selectAllResource" resultType="Resource" parameterType="Integer">
+       SELECT  id ,number ,text,parent, remark,case state when 0 then 'open' else 'closed' end as state
+    FROM resource
+    WHERE parent = #{id}
+    AND id >0
+</select>
+
+</mapper>

@@ -17,7 +17,7 @@ public class Word2VEC {
     public static Set<WordEntry> word2vec(String str)throws IOException{
         Word2VEC vec = new Word2VEC();
         //ArrayList<String> list=new ArrayList<String>();
-        vec.loadJavaModel("F://github//dbcourses//src//nannning//model");
+        vec.loadJavaModel("src/nannning/model");
         Set<WordEntry> set= vec.distance(str);
 //        for (WordEntry s:set){
 //            list.add(s.name);
