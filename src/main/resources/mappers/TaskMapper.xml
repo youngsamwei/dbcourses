@@ -98,7 +98,10 @@
        and B.id=#{taskid};
     </update>
     <delete id="deletePbyid" parameterType="Map">
-        UPDATE paragraph SET status=2 where id=#{mainid}
+    update paragraph A, (SELECT paragraphOrder,knowledgepointId FROM PARAGRAPH WHERE id=#{mainid}) B
+    set		A.paragraphOrder = A.paragraphOrder - 1
+    where A.paragraphOrder > B.paragraphOrder
+    and A.knowledgepointId = B.knowledgepointId
     </delete>
     <delete id="deleteKbyid" parameterType="Map">
         UPDATE knowledgepoint SET status=2 where id=#{mainid}
