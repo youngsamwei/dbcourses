@@ -4,6 +4,7 @@ import cn.sdkd.csse.dbcourses.entity.Paragraph;
 import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sam on 2018/1/6.
@@ -11,10 +12,12 @@ import java.util.List;
 public interface IParagraphService extends IService<Paragraph> {
     /*删除一个知识点段落，需要指定一个位置编号，并将此编号后的所有顺序编号-1。*/
     public boolean deleteParagraph(Paragraph entity);
-
+    public boolean insertPara(Paragraph entity,Map params);
+    public boolean insert(Paragraph entity,Map params);
     public void sortup(Paragraph entity);
     public void sortdown(Paragraph entity);
 
     public List<Paragraph> getParagraphsByKid(Integer kid);
 
+    public String selectPkname(int id);
 }

@@ -29,14 +29,14 @@
         href="/font-awesome-4.7.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" type="text/css" href="/css/knowledgepoint.css">
-
   <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_load.js"></script>
-
   <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_manager.js"></script>
   <script type="text/javascript" charset="utf-8" src="/js/knowledgepoint_search.js"></script>
 
+
 </head>
 <body>
+<a href="login.html">登录</a>
 
 <div id='kbknowledgepoint' class='kbknowledgepoint'>
 
@@ -57,6 +57,7 @@
       <div data-options="name:'video',iconCls:'icon-advice'">视频</div>
       <div data-options="name:'literature',iconCls:'icon-school'">文献</div>
       <div data-options="name:'solr',iconCls:'icon-search'">内容搜索</div>
+      <div data-options="name:'relatesearch',iconCls:'icon-search'">关联查询</div>
     </div>
 
   </div>
@@ -87,6 +88,8 @@
                                    class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
   </div>
 </div>
+
+
 
 <div id="dlg_edit_paragraph" class="easyui-dialog"
      style="width: 850px;height:555px;padding: 10px 20px; position: relative; z-index:1000;"
@@ -120,7 +123,7 @@
         TODO:点击搜索按钮后弹出搜索对话框，支持实时查询数据库自动补全，点击搜索按钮后列出查询结果。
         */
 
-        
+
         $('#ss').searchbox({
           searcher: function (value, name,page) {
               //alert(value+";"+name);
@@ -130,6 +133,7 @@
           menu: '#box',
           prompt: '请输入内容',
          });
+//        南宁添加相关查询
 
          /*为增加知识点的文本框增加回车事件。*/
          $('#input_knowledgepoint').bind('keypress',function(event){
@@ -141,7 +145,7 @@
 
         var qid = getQueryString("qid");
         if ((qid == null)||(qid == '')){
-          qid = 154;
+          qid = 144;
         }
         loadKnowledgepointParagraph(qid);
     })

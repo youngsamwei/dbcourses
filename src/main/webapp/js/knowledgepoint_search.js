@@ -8,6 +8,7 @@
     function closeSearchDialog() {
         $("#dlg_search").dialog("close");
     }
+    //南宁添加相关查询
     //知识点搜索分页上一页
     function shangyiye(){
         var value = $('#ssvalue').val();
@@ -37,7 +38,7 @@ created by weihongwei 2018/5/15
 
     function doSearchKnowledge(value, name, page){
        if(name == "knowledgepoint"){
-       document.getElementById("upAndDownButton").style.display="inline";
+        document.getElementById("upAndDownButton").style.display="inline";
             $.ajax({
                 type: "POST",
                 url: "/knowledgepoint/list.do?knowledgepointName="+value+"&page="+page,
@@ -98,6 +99,29 @@ created by weihongwei 2018/5/15
                             alert('errot');
                         }
                     });
+       }else if (name == "relatesearch"){
+           document.getElementById("upAndDownButton").style.display="none";
+           $.ajax({
+               type: "POST",
+               url: "/knowledgepoint/list1.do?knowledgepointName="+value,
+               contentType: "application/json; charset=utf-8",
+               data: "{}",
+               dataType: "json",
+               success: function (result) {
+                   var kbhtml = "<div id='kp_inner'>";
+                   $.each(result, function (index, element) {
+                       kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + element.knowledgepointName +"(相关度: "+ element.xiangguandu +"% )" +"</a></div>";
+                   })
+                   kbhtml += "</div>";
+                   $("#kp_inner").remove();
+                   $('#search_result').append(kbhtml);
+
+               },
+               "error": function (result) {
+                   var response = result.responseText;
+                   alert('errot');
+               }
+           });
        }else if(name == "video"){
 
        }else if(name == "literature"){
@@ -137,3 +161,28 @@ created by weihongwei 2018/5/15
                 return str;
             }
         }
+
+    //    //南宁添加相关查询
+    // function doRelateSearchKnowledge(value, name){
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/knowledgepoint/list1.do?knowledgepointName="+value,
+    //         contentType: "application/json; charset=utf-8",
+    //         data: "{}",
+    //         dataType: "json",
+    //         success: function (result) {
+    //             var kbhtml = "<div id='relate_kp_inner'>";
+    //             $.each(result, function (index, element) {
+    //                 kbhtml += "<div><a href='javascript:loadRelateKnowledgepointParagraph(" + element.id + ")'>" + element.knowledgepointName +"(相关度: "+ element.xiangguandu +"% )" +"</a></div>";
+    //             })
+    //             kbhtml += "</div>";
+    //             $("#relate_kp_inner").remove();
+    //             $('#search_relateresult').append(kbhtml);
+    //
+    //         },
+    //         "error": function (result) {
+    //             var response = result.responseText;
+    //             alert('errot');
+    //         }
+    //     });
+    // }

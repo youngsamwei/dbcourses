@@ -65,6 +65,11 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-install-plugin</artifactId>-->
+                <!--<version>${plugin.maven-compiler}</version>-->
+            <!--</plugin>-->
           <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -166,8 +171,6 @@
             <artifactId>weixin-java-pay</artifactId>
             <version>${weixin-java-tools.version}</version>
         </dependency>
-
-
 
       <dependency>
         <groupId>com.alibaba</groupId>
@@ -424,30 +427,28 @@
       </dependency>
 
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>3.6.4</version>
-        </dependency>
-      <!--  <dependency>
-            <groupId>com.github.miemiedev</groupId>
-            <artifactId>mybatis.paginator</artifactId>
-            <version>${mybatis.paginator.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
-        </dependency>-->
-
-        <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>7.3.0</version>
         </dependency>
+        <dependency>
+          <groupId>com.huaban</groupId>
+          <artifactId>jieba-analysis</artifactId>
+          <version>1.0.2</version>
+        </dependency>
 
+        <dependency>
+        <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>3.6.4</version>
+        </dependency>
     </dependencies>
-
 
 
 </project>

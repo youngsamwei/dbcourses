@@ -9,7 +9,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -33,7 +36,7 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/list")
   public List<Paragraph> list(Paragraph paragraph) {
     EntityWrapper ew = new EntityWrapper();
-    ew.eq("knowledgepointId", paragraph.getKnowledgepointId())
+    ew.eq("knowledgepointId", paragraph.getKnowledgepointId()).where("status=1")
     .orderBy("paragraphOrder");
     List<Paragraph> ls = paragraphService.selectList(ew);
     return ls;
@@ -42,10 +45,13 @@ public class ParagraphController extends BaseController {
   @RequestMapping("/add")
   @ResponseBody
   public Object add(@Valid Paragraph paragraph) {
-
     try {
+      HashMap<String,Object> params=new HashMap<>();
+      String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+      params.put("userName",userName);
+      params.put("createTime",DateUtil.getCurrentDateStr());
       paragraph.setParagraphCreateDate(DateUtil.getCurrentDateStr());
-      paragraphService.insert(paragraph);
+      paragraphService.insert(paragraph,params);
       return renderSuccess("添加成功！");
     } catch (Exception e) {
       log.error(e.getMessage(), e);
@@ -85,5 +91,18 @@ public class ParagraphController extends BaseController {
     paragraphService.sortdown(paragraph);
     return renderSuccess("添加成功！");
   }
-}
+  @RequestMapping("/selectbyid")
+  @ResponseBody
+  public Object selectByid(@RequestParam("mainid")String id)
+  {
+    System.out.println("1111111111111111111111    "+id);
+    Paragraph paragraph=new Paragraph();
+    paragraph.setId(Integer.parseInt(id));
+    paragraph= paragraphService.selectById(paragraph);
+    String title=paragraphService.selectPkname(Integer.parseInt(id));
+    System.out.println("``````````````````"+title);
+    paragraph.setParagraphTitle(title);
+    return paragraph;
+  }
 
+}

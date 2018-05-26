@@ -18,13 +18,21 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map;
 import java.util.*;
 import cn.sdkd.csse.dbcourses.utils.solr;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 /**
+ * @author weihongwei 20180304
+ * @author
+ * @author
+ *
  * Created by Sam on 2018/1/6.
  */
 @Controller
@@ -39,6 +47,11 @@ public class KnowledgepointController extends BaseController {
   private static final long serialVersionUID = 1L;
   private static final Logger log = Logger.getLogger(KnowledgepointController.class);// 日志文件
 
+  /**
+   * @author
+   * @param knowledgepoint
+   * @return
+   */
   @ResponseBody
   @RequestMapping("/list")
   public List<KnowledegointVo> list(Knowledgepoint knowledgepoint, HttpServletRequest request) {
@@ -60,6 +73,7 @@ public class KnowledgepointController extends BaseController {
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName().toUpperCase()));
 
       //这里可以动态设置每页显示知识点的条数；
+        ew.where("status=1");
       Page<Knowledgepoint> page = new Page<>(a,10);
       Page<Map<String, Object>> map = knowledgepointService.selectMapsPage(page,ew);
       List list = map.getRecords();
@@ -73,40 +87,67 @@ public class KnowledgepointController extends BaseController {
         ls.add(kw);
       }
     }else{
-      //错误处理
+      /*错误处理*/
+
     }
     return copyKnowledgepiintListToVo(ls,a);
   }
 
+    @ResponseBody
+    @RequestMapping("/list1")
+    public List<Knowledgepoint> list1(Knowledgepoint knowledgepoint) {
+//    EntityWrapper ew = new EntityWrapper();
+//    if (knowledgepoint.getId() != null) {
+//      ew.eq("id", knowledgepoint.getId());
+//    } else if (knowledgepoint.getKnowledgepointName() != null){
+//      ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
+//    }else{
+//      /*错误处理*/
+//
+//    }
+//    List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
+//    System.out.println("xiangguan");
+//    return ls;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("knowledgepointName", knowledgepoint.getKnowledgepointName());
+        List<Knowledgepoint> ls = knowledgepointService.selectByName(params);
+        //System.out.println("tianjia");
+        return ls;
+    }
 
-/*  @ResponseBody
-  @RequestMapping("/byname")
-  public List<Knowledgepoint> getListByName(Knowledgepoint knowledgepoint) {
 
-    String name =  knowledgepoint.getKnowledgepointName();
-
-    return knowledgepointService.getKnowledgePointByLike(name);
-  }*/
-
-
+//    @ResponseBody
+//    @RequestMapping("/ljxlist")
+//    public List<Knowledgepoint> list(Knowledgepoint knowledgepoint) {
+//        EntityWrapper ew = new EntityWrapper();
+//        ew.eq("status","1");
+//        if (knowledgepoint.getId() != null) {
+//            ew.eq("id", knowledgepoint.getId());
+//        } else if (knowledgepoint.getKnowledgepointName() != null){
+//            ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName()));
+//            ew.where("id!=1");
+//        }else{
+//      /*错误处理*/
+//        }
+//        List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
+//        return ls;
+//    }
   @RequestMapping("/add")
   @ResponseBody
   public Object add(Knowledgepoint knowledgepoint) {
-    Knowledgepoint find = knowledgepointService.selectKnowledgepointByName(knowledgepoint.getKnowledgepointName());
-
-    if (find!=null){
-      return find;
-    }else{
       try {
-        knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
-        knowledgepointService.insert(knowledgepoint);
-        return renderSuccess("添加成功！");
-
+          HashMap<String,Object> params=new HashMap<>();
+          String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+          params.put("userName",userName);
+          params.put("createTime",DateUtil.getCurrentDateStr());
+          knowledgepoint.setAddName(userName);
+          knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
+          knowledgepointService.insertKnow(knowledgepoint,params);
+          return renderSuccess("添加成功");
       } catch (Exception e) {
-        log.error(e.getMessage(), e);
-        return this.renderError(e.getLocalizedMessage());
+          log.error(e.getMessage(), e);
+          return this.renderError(e.getLocalizedMessage());
       }
-    }
 
   }
 
@@ -142,7 +183,6 @@ public class KnowledgepointController extends BaseController {
       return result;
   }
 
-
     private List<KnowledegointVo> copyKnowledgepiintListToVo(List<Knowledgepoint> ls,Integer a){
         List<KnowledegointVo> vos = null;
         if(ls!=null && ls.size()>0){
@@ -161,5 +201,13 @@ public class KnowledgepointController extends BaseController {
         }
         return vos;
     }
-}
 
+
+    @RequestMapping("/audit")
+    @ResponseBody
+    public Knowledgepoint getAudit(@RequestParam("id") String id) {
+        Knowledgepoint knowledgepoint=new Knowledgepoint();
+        knowledgepoint.setId(Integer.parseInt(id));
+        return knowledgepointService.selectById(knowledgepoint);
+    }
+}
