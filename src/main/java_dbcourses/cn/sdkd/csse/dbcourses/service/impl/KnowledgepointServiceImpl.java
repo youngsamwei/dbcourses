@@ -7,9 +7,9 @@ import cn.sdkd.csse.dbcourses.service.IKnowledgepointService;
 import cn.sdkd.csse.dbcourses.utils.Word2VEC;
 import cn.sdkd.csse.dbcourses.utils.WordEntry;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
+//import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -69,7 +69,20 @@ public class KnowledgepointServiceImpl  extends ServiceImpl<IKnowledgepointDao, 
         }
         return ls;
     }
+
+
     public  Knowledgepoint selectKnowledgepointByName(String name){
         return this.baseMapper.selectKnowledgepointByName(name);
+    }
+    public boolean insert(Knowledgepoint knowledgepoint,Map params){
+        super.insert(knowledgepoint);
+        return this.baseMapper.insertATask(params);
+    }
+    public boolean insertKnow(Knowledgepoint know,Map params)
+    {
+        this.baseMapper.insertKnow(know);
+        int id =know.getId();
+        params.put("mainid",id);
+        return this.baseMapper.insertATask(params);
     }
 };

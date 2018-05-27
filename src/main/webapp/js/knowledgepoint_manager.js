@@ -26,7 +26,12 @@
         });
     }
 
-    function openArticleModifyDialog(id, contentid) {
+    function openArticleModifyDialog(id, contentid,powers) {
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert("系统提示",msg);
+            return;
+        }
 
         $("#dlg_edit_paragraph").dialog("open").dialog("setTitle", "编辑段落");
         $('#dlg_edit_paragraph').window('center');
@@ -42,7 +47,7 @@
             ue.setContent(content);
             ue.focus();
         });
-        url = "/paragraph/edit.do?id="  + id;
+        url = "/task/editpara.do?id="  + id ;
 
     }
 
@@ -50,7 +55,13 @@
         $("#dlg_edit_paragraph").dialog("close");
     }
 
-    function openArticleAddDialog(knowledgepointId, paragraphOrder) {
+    function openArticleAddDialog(knowledgepointId, paragraphOrder,powers) {
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert("系统提示",msg);
+            return;
+        }
+
         var html = '<div id="myEditor" style="width:100%; height:100%;" name="paragraphContent"></div>';
         $('#editor').append(html);
 
@@ -77,41 +88,49 @@
         });
     }
 
-    function deleteArticle(paragraphId,knowledgepointId,paragraphOrder) {
+    function deleteArticle(paragraphId,powers) {
 
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert("系统提示",msg);
+            return;
+        }
         $.messager
-                .confirm(
-                        "系统提示",
-                        "您确认要删除段落<font color=red>" + paragraphOrder
-                        + "</font>吗？",
-                        function (r) {
-                            if (r) {
-                                $
-                                        .post(
-                                                "/paragraph/delete.do",
-                                                {
-                                                    id: paragraphId,
-                                                    knowledgepointId: knowledgepointId,
-                                                    paragraphOrder: paragraphOrder
-                                                },
-                                                function (result) {
-                                                    if (result.success) {
-                                                        $.messager.alert(
-                                                                "系统提示",
-                                                                "段落已成功删除！");
-                                                        window.location.href = 'index.html?qid='+knowledgepointId;
-                                                    } else {
-                                                        $.messager.alert(
-                                                                "系统提示",
-                                                                "段落删除失败！");
-                                                    }
-                                                }, "json");
-                            }
-                        });
+            .confirm(
+                "系统提示",
+                "您确认要删除该段落吗？",
+                function (r) {
+                    if (r) {
+                        $
+                            .post(
+                                "/task/paradelete.do",
+                                {
+                                    mainid: paragraphId,
+                                    type: '23'
+                                },
+                                function (result) {
+                                    if (result.success) {
+                                        $.messager.alert(
+                                            "系统提示",
+                                            "数据已成功删除,等待审核");
+
+                                    } else {
+                                        $.messager.alert(
+                                            "系统提示",
+                                            "数据删除失败！");
+                                    }
+                                }, "json");
+                    }
+                });
 
     }
 
-    function openKnowledgepointAddDialog(){
+    function openKnowledgepointAddDialog(powers){
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert("系统提示",msg);
+            return;
+        }
             $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
             $('#input_knowledgepoint').focus();
     }
@@ -136,23 +155,11 @@
                    alert("添加成功");
 
               }
-              else{
-                  alert("知识点已存在");
-                  loadKnowledgepointParagraph1(result.id);
-                  // loadKnowledgepointParagraph(result.id);
-                 // window.location.href='index.html?qname='+result.knowledgepointName;
-
-                  // $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
-                  // $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
-                  //
-                  // displayTitle(result);
-                  // displayDescBlocks(result);
-              }
 
             },
             "error": function (result) {
                 var response = result.responseText;
-                alert('error');
+                alert('添加失败,或以存在相同知识点');
             }
 
         });
@@ -200,7 +207,12 @@
                    });
         }
 
-    function deleteKnowledgepoint(knowledgepointId){
+    function deleteKnowledgepoint(knowledgepointId,powers){
+        var msg = getUserPower(powers);
+        if (msg != '获得权限') {
+            $.messager.alert(msg);
+            return;
+        }
         $.messager
                         .confirm(
                                 "系统提示",
@@ -209,21 +221,22 @@
                                     if (r) {
                                         $
                                                 .post(
-                                                        "/knowledgepoint/delete.do",
+                                                        "/task/knowdelete.do",
                                                         {
-                                                            id: knowledgepointId
+                                                            mainid: knowledgepointId,
+                                                            type: '13'
                                                         },
                                                         function (result) {
                                                             if (result.success) {
                                                                 $.messager.alert(
                                                                         "系统提示",
-                                                                        "知识点已成功删除！");
+                                                                        "知识点已提交删除！等待审核");
                                                             } else {
                                                                 $.messager.alert(
                                                                         "系统提示",
                                                                         "知识点删除失败！");
                                                             }
-                                                             location.reload();
+
                                                         }, "json");
                                     }
                                 });
