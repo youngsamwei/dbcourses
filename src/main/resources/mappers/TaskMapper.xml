@@ -46,6 +46,32 @@
             <if test="max!=null">limit #{min},#{max}</if>
         </if>
     </select>
+    <select id="selectTaskCount" resultType="Integer" parameterType="Map">
+        SELECT  COUNT(id) total
+        FROM task
+        WHERE 1=1
+        <if test="typelike!=null">
+           AND type like #{typelike}
+        </if>
+        <if test="type!=null">
+            and type = #{type}
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="approver!=null">
+            and approver like #{approver}
+        </if>
+        <if test="submitter!=null">
+            and submitter like #{submitter}
+        </if>
+        <if test="beforetime!=null">
+            and createTime  &gt;  #{beforetime}
+        </if>
+        <if test="aftertime!=null">
+            and createTime  &lt;  #{aftertime}
+        </if>
+    </select>
     <select id="selectAllTaskpara" resultType="Task" >
         SELECT  id ,mainid,type,content,status,approver,submitter,createTime,approverTime
         FROM task
@@ -69,7 +95,7 @@
             and createTime  &lt;  #{aftertime}
         </if>
         <if test="min!=null">
-            <if test="max!=null">limit #{min},#{max}</if>
+            <if test="size!=null">limit #{min},#{size}</if>
         </if>
     </select>
 

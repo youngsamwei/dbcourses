@@ -46,4 +46,8 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
         flag=(this.baseMapper.deleteKbyid(params)&&this.baseMapper.updateTask(params));
         return flag;
     }
+    public Integer selectTaskCount(Map params)
+    {
+        return  this.baseMapper.selectTaskCount(params);
+    };
 }

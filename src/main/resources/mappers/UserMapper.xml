@@ -62,7 +62,7 @@
         </if>
         ORDER BY userId
         <if test="min!=null">
-            <if test="max!=null">limit #{min},#{max}</if>
+            <if test="size!=null">limit #{min},#{size}</if>
         </if>
     </select>
 

@@ -68,12 +68,12 @@ public class KnowledgepointController extends BaseController {
     List<Knowledgepoint> ls =  new ArrayList<>();
     if (knowledgepoint.getId() != null) {
       ew.eq("id", knowledgepoint.getId());
+      ew.where("status=1");
       ls = knowledgepointService.selectList(ew);
     } else if (knowledgepoint.getKnowledgepointName() != null){
       ew.like("knowledgepointName", MessageFormat.format("%{0}%", knowledgepoint.getKnowledgepointName().toUpperCase()));
-
       //这里可以动态设置每页显示知识点的条数；
-        ew.where("status=1");
+      ew.where("status=1");
       Page<Knowledgepoint> page = new Page<>(a,10);
       Page<Map<String, Object>> map = knowledgepointService.selectMapsPage(page,ew);
       List list = map.getRecords();
@@ -132,24 +132,48 @@ public class KnowledgepointController extends BaseController {
 //        List<Knowledgepoint> ls = knowledgepointService.selectList(ew);
 //        return ls;
 //    }
-  @RequestMapping("/add")
-  @ResponseBody
-  public Object add(Knowledgepoint knowledgepoint) {
-      try {
-          HashMap<String,Object> params=new HashMap<>();
-          String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
-          params.put("userName",userName);
-          params.put("createTime",DateUtil.getCurrentDateStr());
-          knowledgepoint.setAddName(userName);
-          knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
-          knowledgepointService.insertKnow(knowledgepoint,params);
-          return renderSuccess("添加成功");
-      } catch (Exception e) {
-          log.error(e.getMessage(), e);
-          return this.renderError(e.getLocalizedMessage());
-      }
+//  @RequestMapping("/add")
+//  @ResponseBody
+//  public Object add(Knowledgepoint knowledgepoint) {
+//      try {
+//          HashMap<String,Object> params=new HashMap<>();
+//          String userName= (String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+//          params.put("userName",userName);
+//          params.put("createTime",DateUtil.getCurrentDateStr());
+//          knowledgepoint.setAddName(userName);
+//          knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
+//          knowledgepointService.insertKnow(knowledgepoint,params);
+//          return renderSuccess("添加成功");
+//      } catch (Exception e) {
+//          log.error(e.getMessage(), e);
+//          return this.renderError(e.getLocalizedMessage());
+//      }
+//  }
+    @RequestMapping("/add")
+    @ResponseBody
+    public Object add(Knowledgepoint knowledgepoint) {
+        Knowledgepoint find = knowledgepointService.selectKnowledgepointByName(knowledgepoint.getKnowledgepointName());
+        if (find != null) {
+            return find.getId();
+        } else {
+            try {
+                HashMap<String, Object> params = new HashMap<>();
+                String userName = (String) ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user");
+                params.put("userName", userName);
+                params.put("createTime", DateUtil.getCurrentDateStr());
+                knowledgepoint.setAddName(userName);
+                knowledgepoint.setKnowledgepointCreateDate(DateUtil.getCurrentDateStr());
+                knowledgepointService.insertKnow(knowledgepoint, params);
+                return renderSuccess("添加成功");
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return this.renderError(e.getLocalizedMessage());
+            }
+        }
+    }
 
-  }
+
+
 
   @RequestMapping("/edit")
   @ResponseBody
