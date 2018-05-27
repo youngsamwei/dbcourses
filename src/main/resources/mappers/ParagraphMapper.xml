@@ -24,13 +24,13 @@
     where paragraphOrder >= #{paragraphOrder} and knowledgepointId = #{knowledgepointId}
   </update>
   <insert id="insertATaskP" parameterType="Map">
-      INSERT INTO TASK(mainid,submitter,type,createTime)
+      INSERT INTO task(mainid,submitter,type,createTime)
      VALUE (#{mainid},#{userName},21,#{createTime})
   </insert>
   <select id="selectPkname" parameterType="Integer" resultType="String">
   SELECT A.knowledgepointName
   FROM knowledgepoint A,paragraph B
-  WHERE b.id=#{id}
+  WHERE B.id=#{id}
   AND B.knowledgepointId=A.id
   </select>
 
@@ -83,6 +83,7 @@
 
   <select id="getParagraphsByKid" resultMap="ParagraphResult">
     SELECT  * from paragraph where knowledgepointId = #{kid}
+    and status=1
   </select>
 
 </mapper>

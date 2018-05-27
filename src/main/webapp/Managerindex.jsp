@@ -62,39 +62,39 @@ To change this template use File | Settings | File Templates.
                     <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="resourcelist.jsp" iframe="0">权限管理</a></li>
                     <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/alluserpage.jsp" iframe="0">用户管理</a></li>
                     <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="grouppage.jsp" iframe="0">分组管理</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">操作日志</a></li>
+                    <%--<li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">操作日志</a></li>--%>
                 </ul>
             </div>
-            <div title="内容管理" data-options="iconCls:'icon-application-form-edit'" style="padding:5px;">
-                <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="" iframe="0">知识点管理</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">段落管理</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题管理</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">学科管理</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                </ul>
-            </div>
+            <%--<div title="内容管理" data-options="iconCls:'icon-application-form-edit'" style="padding:5px;">--%>
+                <%--<ul class="easyui-tree wu-side-tree">--%>
+                    <%--<li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="" iframe="0">知识点管理</a></li>--%>
+                    <%--<li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="temp/layout-3.html" iframe="0">段落管理</a></li>--%>
+                    <%--<li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题管理</a></li>--%>
+                    <%--<li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">学科管理</a></li>--%>
+                    <%--<li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
             <div title="审核管理" data-options="iconCls:'icon-creditcards'" style="padding:5px;">
                 <ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="taskaudit.jsp" iframe="0">知识点审核</a></li>
                     <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="taskaudit2.jsp" iframe="0">段落审核</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题审核</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
+                    <%--<li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="temp/layout-3.html" iframe="0">习题审核</a></li>--%>
+                    <%--<li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
                 </ul>
             </div>
-            <div title="微信管理" data-options="iconCls:'icon-cart'" style="padding:5px;">
-                <ul class="easyui-tree wu-side-tree">
-                    <li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="layout-3.html" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="" iframe="0">导航标题</a></li>
-                    <li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>
-                </ul>
-            </div>
+            <%--<div title="微信管理" data-options="iconCls:'icon-cart'" style="padding:5px;">--%>
+                <%--<ul class="easyui-tree wu-side-tree">--%>
+                    <%--<li iconCls="icon-chart-organisation"><a href="javascript:void(0)" data-icon="icon-chart-organisation" data-link="layout-3.html" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-users"><a href="javascript:void(0)" data-icon="icon-users" data-link="" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-user-group"><a href="javascript:void(0)" data-icon="icon-user-group" data-link="" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-book"><a href="javascript:void(0)" data-icon="icon-book" data-link="" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="" iframe="0">导航标题</a></li>--%>
+                    <%--<li iconCls="icon-application-osx-error"><a href="javascript:void(0)" data-icon="icon-application-osx-error" data-link="temp/layout-3.html" iframe="0">导航标题</a></li>--%>
+                <%--</ul>--%>
+            <%--</div>--%>
         </div>
     </div>
     <!-- end of sidebar -->    

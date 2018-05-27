@@ -78,12 +78,12 @@
         $("#fm").form("submit", {
             url: url,
             onSubmit: function () {
-                //alert("保存成功");
                 return $(this).form("validate");
             },
             success: function (result) {
+                $.messager.alert("系统提示","保存成功，等待审核");
                 $("#dlg_edit_paragraph").dialog("close");
-               // alert("保存成功");
+                //location.reload() ;
             }
         });
     }
@@ -112,12 +112,12 @@
                                     if (result.success) {
                                         $.messager.alert(
                                             "系统提示",
-                                            "数据已成功删除,等待审核");
+                                            result.msg);
 
                                     } else {
                                         $.messager.alert(
                                             "系统提示",
-                                            "数据删除失败！");
+                                            result.msg);
                                     }
                                 }, "json");
                     }
@@ -128,7 +128,7 @@
     function openKnowledgepointAddDialog(powers){
         var msg = getUserPower(powers);
         if (msg != '获得权限') {
-            $.messager.alert("系统提示",msg);
+            alert(msg);
             return;
         }
             $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");
@@ -149,19 +149,29 @@
             data: "{}",
             dataType: "json",
             success: function (result) {
-               closeKnowledgepointAddDialog();
-              if("添加成功"==(result.msg))
-              {
-                   alert("添加成功");
-              }
-              else
-              {
-                  alert('添加失败,或以存在相同知识点');
-              }
+                closeKnowledgepointAddDialog();
+                if("添加成功"==(result.msg))
+                {
+                    $.messager.alert("系统提示","添加成功");
+
+                }
+                else{
+                    $.messager.alert("系统提示","知识点已存在");
+                    loadKnowledgepointParagraph1(result);
+                    // loadKnowledgepointParagraph(result.id);
+                    // window.location.href='index.html?qname='+result.knowledgepointName;
+
+                    // $("<div id='kbknowledgepoint' class='kbknowledgepoint'></div>").appendTo("body"); ;
+                    // $("<div id='kbparagraph' class='kbparagraph'></div>").appendTo("body"); ;
+                    //
+                    // displayTitle(result);
+                    // displayDescBlocks(result);
+                }
+
             },
             error: function (result) {
                 var response = result.responseText;
-                alert('添加失败,或以存在相同知识点');
+                $.messager.alert("系统提示",'error');
             }
 
         });
@@ -171,7 +181,7 @@
 移动知识点段落。缺点是数据库操作数据可能过大。遍历移动
 */
     function sortUpOne(knowledgepointId, paragraphOrder){
-       var correctParagraphOrder = paragraphOrder -1;
+        var correctParagraphOrder = paragraphOrder -1;
        $.ajax({
                    type:"POST",
                    async:false,
@@ -212,7 +222,7 @@
     function deleteKnowledgepoint(knowledgepointId,powers){
         var msg = getUserPower(powers);
         if (msg != '获得权限') {
-            $.messager.alert(msg);
+            $.messager.alert("系统提示",msg);
             return;
         }
         $.messager
@@ -231,15 +241,16 @@
                                                         function (result) {
                                                             if (result.success) {
                                                                 $.messager.alert(
-                                                                        "系统提示",
-                                                                        "知识点已提交删除！等待审核");
+                                                                    "系统提示",
+                                                                    result.msg);
+
                                                             } else {
                                                                 $.messager.alert(
-                                                                        "系统提示",
-                                                                        "知识点删除失败！");
+                                                                    "系统提示",
+                                                                    result.msg);
                                                             }
-
-                                                        }, "json");
+                                                        },
+                                                    "json");
                                     }
                                 });
     }

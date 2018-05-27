@@ -103,7 +103,7 @@ public class UserController extends BaseController {
         int row =Integer.parseInt(rows);
         HashMap<String,Object> pages=new HashMap<>();
         pages.put("min",(min-1)*row);
-        pages.put("max",min*row);
+        pages.put("size",row);
         if(userName!=null) {
             pages.put("userName", "%" + userName + "%");
         }
@@ -117,7 +117,7 @@ public class UserController extends BaseController {
         System.out.println(pages.toString());
         int total =userService.selectCount(pages);
         list =userService.selectAll(pages);
-        System.out.println("---------{\"total\":"+total+",\"rows\":"+list.toString()+"} -------------");
+       // System.out.println("---------{\"total\":"+total+",\"rows\":"+list.toString()+"} -------------");
         return "{\"total\":"+total+",\"rows\":"+list.toString()+"}";
     }
     @ResponseBody
