@@ -64,6 +64,9 @@
                                     $.messager.alert('错误', "用户名或者密码错误！");
                                     return;
                                 }
+                            },
+                            error : function(data){
+                            alert("登录失败");
                             }
                         });
                     }

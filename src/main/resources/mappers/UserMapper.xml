@@ -18,7 +18,7 @@
 
     <select id="selectAllByName" resultType="User" parameterType="Map">
         select userId, userName ,passWord , nickName, user.remark remark,power ,usergroup.`name` userGroup
-        from USER,usergroup
+        from user,usergroup
         WHERE user.userGroup=usergroup.id
         AND userName like #{username}
         GROUP BY userGroup
@@ -26,7 +26,7 @@
 
     <select id="selectUserById" resultType="User" parameterType="Integer">
         select userId, userName ,passWord , nickName, user.remark remark,power ,usergroup.`name` userGroup
-        from USER,usergroup
+        from user,usergroup
         WHERE user.userGroup=usergroup.id
         And userId= #{ userId }
     </select>
@@ -34,7 +34,7 @@
 
     <select id="selectCount" resultType="Integer" parameterType="Map">
         select COUNT(userId) total
-        from USER
+        from user
         where 1=1
         <if test="userName!=null">
             and userName like #{userName}
@@ -49,7 +49,7 @@
 
     <select id="selectAll" resultType="User" parameterType="Map">
         select userId, userName ,passWord , nickName, user.remark remark,power ,usergroup.name userGroup
-        from USER,usergroup
+        from user,usergroup
         WHERE user.userGroup=usergroup.id
         <if test="userName!=null">
             and userName like #{userName}
@@ -68,7 +68,7 @@
 
     <select id="selectChildren" resultType="User">
         select userId, userName ,passWord , nickName, user.remark remark,power ,usergroup.name userGroup
-        from USER,usergroup
+        from user,usergroup
         WHERE user.userGroup=usergroup.id
         and user.userGroup =#{param1}
         and userId not in
@@ -79,12 +79,12 @@
 
     <select id="selectPassword" resultType="User" parameterType="String">
         select userId, userName ,passWord,power
-        from USER
+        from user
         where userName = #{userName}
     </select>
     <select id="selectByUserpower" resultType="User" parameterType="String">
        select DISTINCT A.userId, userName ,passWord , nickName, A.remark remark,power ,C.name userGroup
-        FROM USER A,USERPOWER B,usergroup C
+        FROM user A,userpower B,usergroup C
         WHERE A.USERID=B.USERID
         AND A.userGroup =C.id
         AND (B.powercode= #{powerCode}
@@ -93,7 +93,7 @@
     </select>
 
     <delete id="deleteUsersBatch" parameterType="Integer">
-        DELETE FROM USER WHERE userId IN
+        DELETE FROM user WHERE userId IN
         <foreach item="list" collection="array" open="(" separator="," close=")">
             #{list}
         </foreach>
