@@ -78,12 +78,12 @@
         $("#fm").form("submit", {
             url: url,
             onSubmit: function () {
+                //alert("保存成功");
                 return $(this).form("validate");
             },
             success: function (result) {
-
                 $("#dlg_edit_paragraph").dialog("close");
-                location.reload() ;
+               // alert("保存成功");
             }
         });
     }
@@ -150,14 +150,16 @@
             dataType: "json",
             success: function (result) {
                closeKnowledgepointAddDialog();
-              if("添加成功！"==(result.msg))
+              if("添加成功"==(result.msg))
               {
                    alert("添加成功");
-
               }
-
+              else
+              {
+                  alert('添加失败,或以存在相同知识点');
+              }
             },
-            "error": function (result) {
+            error: function (result) {
                 var response = result.responseText;
                 alert('添加失败,或以存在相同知识点');
             }
@@ -169,7 +171,7 @@
 移动知识点段落。缺点是数据库操作数据可能过大。遍历移动
 */
     function sortUpOne(knowledgepointId, paragraphOrder){
-        var correctParagraphOrder = paragraphOrder -1;
+       var correctParagraphOrder = paragraphOrder -1;
        $.ajax({
                    type:"POST",
                    async:false,
