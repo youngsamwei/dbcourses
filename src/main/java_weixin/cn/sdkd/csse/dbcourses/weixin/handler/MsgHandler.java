@@ -61,7 +61,7 @@ public class MsgHandler extends AbstractHandler {
         WxMpXmlOutNewsMessage.Item article1 = new WxMpXmlOutNewsMessage.Item();
         article1.setTitle(kp.getKnowledgepointName());
         article1.setDescription("");
-        article1.setUrl("http://dbcourses.free.ngrok.cc/index.html?qid=" + kp.getId());
+        article1.setUrl("http://dbcourses.free.ngrok.cc/index.jsp?qid=" + kp.getId());
         nb.addArticle(article1);
       }
       return nb.fromUser(wxMessage.getToUser())
@@ -73,7 +73,7 @@ public class MsgHandler extends AbstractHandler {
       item.setTitle("数据库课程资源");
       item.setDescription("数据库知识点展示");
       item.setPicUrl("");
-      item.setUrl("http://dbcourses.free.ngrok.cc/index.html?q=2");
+      item.setUrl("http://dbcourses.free.ngrok.cc/index.jsp?q=2");
       return WxMpXmlOutMessage.NEWS().addArticle(item).fromUser(wxMessage.getToUser())
         .toUser(wxMessage.getFromUser()).build();
     }

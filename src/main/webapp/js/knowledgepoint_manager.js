@@ -179,7 +179,7 @@
                    dataType: "json",
                    success: function (result) {
                        //console.log("knowledgepointId=" + knowledgepointId + "paragraphOrder=" + correctParagraphOrder);
-                      window.location.href='index.html?qid='+knowledgepointId;
+                      window.location.href='index.jsp?qid='+knowledgepointId;
                    },
                    "error": function (result) {
                        var response = result.responseText;
@@ -198,7 +198,7 @@
                        dataType: "json",
                        success: function (result) {
                            //console.log("knowledgepointId=" + knowledgepointId + "paragraphOrder=" + correctParagraphOrder);
-                          window.location.href='index.html?qid='+knowledgepointId;
+                          window.location.href='index.jsp?qid='+knowledgepointId;
                        },
                        "error": function (result) {
                            var response = result.responseText;

@@ -93,12 +93,12 @@
        FROM paragraph
        where paragraph.id=#{mainid}
        ) C
-       SET a.paragraphContent=b.content,b.content=C.buff,b.status='1',b.approver=#{userName},b.approverTime=#{approverTime}
-       where a.id=#{mainid}
+       SET A.paragraphContent=B.content,B.content=C.buff,B.status='1',B.approver=#{userName},B.approverTime=#{approverTime}
+       where A.id=#{mainid}
        and B.id=#{taskid};
     </update>
     <delete id="deletePbyid" parameterType="Map">
-    update paragraph A, (SELECT paragraphOrder,knowledgepointId FROM PARAGRAPH WHERE id=#{mainid}) B
+    update paragraph A, (SELECT paragraphOrder,knowledgepointId FROM paragraph WHERE id=#{mainid}) B
     set		A.paragraphOrder = A.paragraphOrder - 1
     where A.paragraphOrder > B.paragraphOrder
     and A.knowledgepointId = B.knowledgepointId

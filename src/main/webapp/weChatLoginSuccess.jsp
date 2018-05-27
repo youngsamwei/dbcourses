@@ -40,7 +40,7 @@
 	<body class="bk" >
 
 <script src="../layui/layui.js"></script>
-<form class="layui-form" action="index.html" method="post" style="margin-top: 30%;">
+<form class="layui-form" action="index.jsp" method="post" style="margin-top: 30%;">
 	<div class="txt">
 		<a>恭喜您,</a>
 		<a>${name}</a>
