@@ -81,9 +81,9 @@
                 return $(this).form("validate");
             },
             success: function (result) {
-
+                alert("保存成功，等待审核");
                 $("#dlg_edit_paragraph").dialog("close");
-                location.reload() ;
+                //location.reload() ;
             }
         });
     }
@@ -128,7 +128,7 @@
     function openKnowledgepointAddDialog(powers){
         var msg = getUserPower(powers);
         if (msg != '获得权限') {
-            $.messager.alert("系统提示",msg);
+            alert(msg);
             return;
         }
             $("#dlg_add_knowledgepoint").dialog("open").dialog("setTitle", "请输入知识点名称");

@@ -54,7 +54,7 @@ public class solr {
     @Scheduled(cron = "0 0/30 * * * ?")
     public void solrDateImport() throws Exception{
         //URL url = new URL("http://localhost:8983/solr/mycore/dataimport?command=full-import");
-        URL url = new URL("http://localhost:8983/solr/mycore/dataimport?command=full-import&clean=true&commit=true&entity=knowledgepoint");
+        URL url = new URL("http://47.94.224.222:8983/solr/mycore/dataimport?command=full-import&clean=true&commit=true&entity=knowledgepoint");
         //URLConnection con = url.openConnection();
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         //设置连接超时的时间
@@ -82,7 +82,7 @@ public class solr {
     public SolrDocumentList querySolr(String keyword) throws Exception {
         //[1]获取连接
         // HttpSolrClient client= new HttpSolrClient.Builder("http://127.0.0.1:8080/solr/core1").build();
-        String solrUrl = "http://127.0.0.1:8983/solr/mycore";
+        String solrUrl = "http://47.94.224.222:8983/solr/mycore";
         //创建solrClient同时指定超时时间，不指定走默认配置
         HttpSolrClient client = new HttpSolrClient.Builder(solrUrl)
                 .withConnectionTimeout(10000)
