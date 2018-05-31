@@ -197,11 +197,12 @@ public class KnowledgepointController extends BaseController {
    */
   @RequestMapping("/solr")
   @ResponseBody
-  public SolrDocumentList solr(Knowledgepoint knowledgepoint) {
-    solr s = new solr();
+  public SolrDocumentList solr(Knowledgepoint knowledgepoint, HttpServletRequest request) {
+      String page = request.getParameter("page");
+      solr s = new solr();
       SolrDocumentList result = null;
     try {
-        result= s.querySolr(knowledgepoint.getKnowledgepointName());
+        result= s.querySolr(knowledgepoint.getKnowledgepointName(),Integer.parseInt(page));
     }catch (Exception e) {
     }
       return result;

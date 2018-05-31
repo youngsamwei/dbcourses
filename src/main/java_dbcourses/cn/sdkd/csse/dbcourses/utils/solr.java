@@ -79,7 +79,7 @@ public class solr {
      * 查询
      * @throws Exception
      */
-    public SolrDocumentList querySolr(String keyword) throws Exception {
+    public SolrDocumentList querySolr(String keyword, int page) throws Exception {
         //[1]获取连接
         // HttpSolrClient client= new HttpSolrClient.Builder("http://127.0.0.1:8080/solr/core1").build();
         String solrUrl = "http://47.94.224.222:8983/solr/mycore";
@@ -97,8 +97,9 @@ public class solr {
         //sort 排序，请注意，如果一个字段没有被索引，那么它是无法排序的
 //        query.set("sort", "product_price desc");
         //start row 分页信息，与mysql的limit的两个参数一致效果
-        query.setStart(0);
-        query.setRows(10000);
+        //System.out.println("当前开始行=========="+page);
+        query.setStart(page);
+        query.setRows(10);
         //fl 查询哪些结果出来，不写的话，就查询全部，所以我这里就不写了
 //        query.set("fl", "");
         //df 默认搜索的域
@@ -114,7 +115,7 @@ public class solr {
         //query.setHighlightSimplePost("&lt;/font&gt;");
         query.setHighlightSimplePre("&lt;b style=\"color:red\"&gt;");
         query.setHighlightSimplePost("&lt;/b&gt;");
-        query.setHighlightFragsize(1000);
+        query.setHighlightFragsize(2000);
 
 
 
@@ -147,7 +148,7 @@ public class solr {
             if(listt != null && listt.size() > 0) {
                 //System.out.println("paragraphContent:");
                 //System.out.println(listt.get(0));
-                doc.setField("paragraphContent",listt.get(0)+"...");
+                doc.setField("paragraphContent",listt.get(0));
             }
         }
 
