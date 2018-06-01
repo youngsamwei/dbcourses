@@ -24,6 +24,20 @@
         doSearchKnowledge(value,"knowledgepoint",page);
     }
 
+
+    //created by weihongwei 2018/5/28
+    //solr 分页支持
+    function solrUpPage(){
+        var value = $('#solrvalue').val();
+        var page = $('#solrpage').val()*1-10*1;
+        doSearchKnowledge(value,"solr",page);
+    }
+    function solrDownPage(){
+        var value = $('#solrvalue').val();
+        var page = $('#solrpage').val()*1+10*1;
+        doSearchKnowledge(value,"solr",page);
+    }
+
 /*将查询结果显示在div:search_result 中
 TODO: 需要支持分页，显示所有条数。
 TODO：需要controller，service，dao的支持，把知识点和（第一个段落的前N个字）一起返回。
@@ -37,8 +51,11 @@ created by weihongwei 2018/5/15
 */
 
     function doSearchKnowledge(value, name, page){
+       document.getElementById("upAndDownButton").style.display="none";
+       document.getElementById("solrPage").style.display="none";
        if(name == "knowledgepoint"){
-        document.getElementById("upAndDownButton").style.display="inline";
+            document.getElementById("solrPage").style.display="none";
+            document.getElementById("upAndDownButton").style.display="inline";
             $.ajax({
                 type: "POST",
                 url: "/knowledgepoint/list.do?knowledgepointName="+value+"&page="+page,
@@ -73,10 +90,11 @@ created by weihongwei 2018/5/15
                 }
             });
        }else if(name == "solr"){
-       document.getElementById("upAndDownButton").style.display="none";
+            document.getElementById("upAndDownButton").style.display="none";
+            document.getElementById("solrPage").style.display="inline";
              $.ajax({
                         type: "POST",
-                        url: "/knowledgepoint/solr.do?knowledgepointName="+value,
+                        url: "/knowledgepoint/solr.do?knowledgepointName="+value+"&page="+page,
                         contentType: "application/json; charset=utf-8",
                         data: "{}",
                         dataType: "json",
@@ -87,20 +105,21 @@ created by weihongwei 2018/5/15
                                                           : htmlDecode(element.paragraphContent);
                                  var name = (( element.knowledgepointName == "")||( element.knowledgepointName == null))? '<P>&nbsp;</P>'
                                                           : htmlDecode(element.knowledgepointName);
-                                 kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + name + "</a></div>";
+                                 kbhtml += "<div><a href='javascript:loadKnowledgepointParagraph(" + element.id + ")'>" + name +"<input type='hidden' id='solrpage' value='"+page+"'>"+"<input type='hidden' id='solrvalue' value='"+value+"'>"+"</a></div>";
                                  kbhtml += "<div style='background: #F0F8FF'>" + content + "</div>";
                             })
-                            kbhtml += "</div>";
+                            kbhtml += "<P></P></div>";
                             $("#kp_inner").remove();
                             $('#search_result').append(kbhtml);
                         },
                         "error": function (result) {
                             var response = result.responseText;
-                            alert('errot');
+                            alert('已到达最后一页');
                         }
                     });
        }else if (name == "relatesearch"){
            document.getElementById("upAndDownButton").style.display="none";
+           document.getElementById("solrPage").style.display="none";
            $.ajax({
                type: "POST",
                url: "/knowledgepoint/list1.do?knowledgepointName="+value,

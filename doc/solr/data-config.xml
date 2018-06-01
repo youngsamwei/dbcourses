@@ -11,13 +11,13 @@
 			<!-- column：数据库的字段名；name：solr的字段名 -->
 		   <field column="id"    name="id"/>
 		   <field column="knowledgepointName"  name="knowledgepointName"/>
-			<entity name="paragraph" dataSource="dbcourses" query="select paragraphContent from paragraph where knowledgepointId='${knowledgepoint.id}'">
+			<entity name="paragraph" dataSource="dbcourses" query="select paragraphContent from paragraph where knowledgepointId='${knowledgepoint.id}' and status='1'">
 				<!-- column：数据库的字段名；name：solr的字段名 -->
-			
+
 			   <field column="paragraphContent"  name="paragraphContent"/>
 			</entity>
-			
+
 		</entity>
-		
+
     </document>
 </dataConfig>

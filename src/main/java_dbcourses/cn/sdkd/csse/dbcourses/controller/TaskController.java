@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class TaskController extends BaseController {
         int min =Integer.parseInt(page);
         int row =Integer.parseInt(rows);
         HashMap<String,Object> pages=new HashMap<>();
+        pages.put("typelike","1_");
         if(approver!=null&&!approver.equals("")){
             pages.put("approver", "%"+approver+"%");
         }
@@ -67,9 +69,10 @@ public class TaskController extends BaseController {
         }
         pages.put("status",status);
         pages.put("min",(min-1)*row);
-        pages.put("max",min*row);
-        // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return taskService.getTasklistknow(pages).toString();
+        pages.put("size",row);
+        int total =taskService.selectTaskCount(pages);
+        return "{\"total\":"+total+",\"rows\":"+taskService.getTasklistknow(pages).toString()+"}";
+
     }
     @RequestMapping("/listpara")
     @ResponseBody
@@ -81,15 +84,11 @@ public class TaskController extends BaseController {
         String submitter =req.getParameter("submitter");
         String type =req.getParameter("type");
         String status =req.getParameter("taskstatus");
-        System.out.println("----------------------------------------------------");
-        System.out.println(approver);
-        System.out.println(beforetime);
-        System.out.println(aftertime);
-        System.out.println(submitter);
-        System.out.println(type);
+
         int min =Integer.parseInt(page);
         int row =Integer.parseInt(rows);
         HashMap<String,Object> pages=new HashMap<>();
+        pages.put("typelike","2_");
         if(approver!=null&&!approver.equals("")){
             pages.put("approver", "%"+approver+"%");
         }
@@ -107,9 +106,11 @@ public class TaskController extends BaseController {
         }
         pages.put("status",status);
         pages.put("min",(min-1)*row);
-        pages.put("max",min*row);
+        pages.put("size",row);
+        System.out.println((min-1)*row+"------1111111111111---------"+row);
+        int total =taskService.selectTaskCount(pages);
         // System.out.println("tast!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return taskService.getTasklistpara(pages).toString();
+        return "{\"total\":"+total+",\"rows\":"+taskService.getTasklistpara(pages).toString()+"}";
     }
     @RequestMapping("/auditadd")
     @ResponseBody
@@ -162,7 +163,8 @@ public class TaskController extends BaseController {
         params.put("userName",userName);
         try {
             params.put("approverTime", DateUtil.getCurrentDateStr());
-        }catch (Exception e){
+        }
+        catch (Exception e){
             return renderError("错误");
         }
         taskService.updateParaEdit(params);
@@ -172,17 +174,29 @@ public class TaskController extends BaseController {
     @ResponseBody
     public Object paradelete(@Valid Task task)
     {
-        task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
-        taskService.insert(task);
-        return renderSuccess();
+        try {
+            task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+            taskService.insert(task);
+            return renderSuccess("删除成功,等待审核");
+        }
+        catch (org.springframework.dao.DuplicateKeyException e){
+            System.out.println("创建任务失败,或以存在相同的任务");
+            return renderError("创建任务失败,或以存在相同的任务");
+        }
     }
     @RequestMapping("/knowdelete")
     @ResponseBody
     public Object knowdelete(@Valid Task task)
     {
-        task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
-        taskService.insert(task);
-        return renderSuccess();
+        try {
+            task.setSubmitter((String) ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+            taskService.insert(task);
+            return renderSuccess("删除成功,等待审核");
+        } catch (org.springframework.dao.DuplicateKeyException e){
+            System.out.println("创建任务失败,或以存在相同的任务");
+
+            return renderError("创建任务失败,或以存在相同的任务");
+        }
     }
 
     @ResponseBody

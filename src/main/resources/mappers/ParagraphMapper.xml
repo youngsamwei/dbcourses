@@ -83,6 +83,7 @@
 
   <select id="getParagraphsByKid" resultMap="ParagraphResult">
     SELECT  * from paragraph where knowledgepointId = #{kid}
+    and status=1
   </select>
 
 </mapper>

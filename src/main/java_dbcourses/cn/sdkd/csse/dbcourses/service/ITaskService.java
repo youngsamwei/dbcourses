@@ -15,4 +15,5 @@ public interface ITaskService extends IService<Task> {
     public boolean updateTaskPara(Map params);
     public boolean deleteParaAudit(Map params);
     public boolean deleteKnowAudit(Map params);
+    public Integer selectTaskCount(Map params);
 }

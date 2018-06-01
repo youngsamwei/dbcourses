@@ -78,7 +78,7 @@
             <div data-options="name:'video',iconCls:'icon-advice'">视频</div>
             <div data-options="name:'literature',iconCls:'icon-school'">文献</div>
             <div data-options="name:'solr',iconCls:'icon-search'">内容搜索</div>
-            <div data-options="name:'relatesearch',iconCls:'icon-search'">关联查询</div>
+            <div data-options="name:'relatesearch',iconCls:'icon-link'">关联查询</div>
         </div>
     </div>
 
@@ -90,6 +90,10 @@
         <div id="upAndDownButton">
             <a href="javascript:shangyiye()"    class="easyui-linkbutton" >上一页</a>
             <a href="javascript:xiayiye()"    class="easyui-linkbutton" >下一页</a>
+        </div>
+        <div id="solrPage">
+             <a href="javascript:solrUpPage()"    class="easyui-linkbutton" >上一页</a>
+             <a href="javascript:solrDownPage()"    class="easyui-linkbutton" >下一页</a>
         </div>
         <a href="javascript:closeSearchDialog()"    class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
     </div>
