@@ -32,9 +32,10 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
     ArrayList<String> list;
     ArrayList<String> GL=new ArrayList<>();
     String text=Add_lianjie.rmhtml(entity.getParagraphContent());
+    //System.out.println(entity.getParagraphContent()+"P0");
     list=Add_lianjie.fenci(text);
     String text1=Add_lianjie.rmlianjie(entity.getParagraphContent());
-    System.out.println(list+"nanning0");
+    //System.out.println(list+"nanning0");
     for(String s:list){
       Map<String, Object> params = new HashMap<String, Object>();
       params.put("knowledgepointName", "%" + s + "%");
@@ -62,6 +63,7 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
           GL.add(s);
       }
     }
+    System.out.println(text1+"Pa2");
     entity.setParagraphContent(text1);
     this.baseMapper.insertPara(entity);
     int pid =entity.getId();

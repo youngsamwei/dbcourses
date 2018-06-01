@@ -30,7 +30,7 @@
   <select id="selectPkname" parameterType="Integer" resultType="String">
   SELECT A.knowledgepointName
   FROM knowledgepoint A,paragraph B
-  WHERE b.id=#{id}
+  WHERE B.id=#{id}
   AND B.knowledgepointId=A.id
   </select>
 
