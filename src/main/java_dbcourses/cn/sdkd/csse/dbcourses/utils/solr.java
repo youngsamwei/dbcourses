@@ -115,7 +115,7 @@ public class solr {
         //query.setHighlightSimplePost("&lt;/font&gt;");
         query.setHighlightSimplePre("&lt;b style=\"color:red\"&gt;");
         query.setHighlightSimplePost("&lt;/b&gt;");
-        query.setHighlightFragsize(2000);
+        query.setHighlightFragsize(3000);
 
 
 
