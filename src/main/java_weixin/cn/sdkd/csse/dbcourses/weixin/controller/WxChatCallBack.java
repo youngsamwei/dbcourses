@@ -54,10 +54,15 @@ public class WxChatCallBack  extends BaseController {
         String sel = service.getSel(openid);
         if(sel != null){
             //账号和微信已绑定
+            service = new WxChatService();
+            WxUser user = service.getAccountByOpenid(openid);
             String username = userinfo.getString("nickname");
-            req.setAttribute("name",username);
+            System.out.println("-----------------------"+user.getAccount());
+            System.out.println("-----------------------"+user.getNickname());
+            req.setAttribute("power","0");
             HttpSession session = req.getSession();  //获取登录信息
-            session.setAttribute("name",username);
+            session.setAttribute("user",user.getAccount());
+            session.setAttribute("power","0");
             resp.sendRedirect("/weChatLoginSuccess.jsp");
         }
         else{
@@ -70,16 +75,19 @@ public class WxChatCallBack  extends BaseController {
     }
 
     @RequestMapping("bindUser")
-    public void bindWxUser(@RequestParam("account")String account,
+    public void bindWxUser(HttpServletRequest req,@RequestParam("userName")String userName,
                            @RequestParam("openid")String openid,
-                           @RequestParam("password")String password,
+                           @RequestParam("passWord")String passWord,
                             HttpServletResponse resp)throws Exception{
         WxChatService service = new WxChatService();
-        WxUser user = service.getAccount(account);
-        if(user.getAccount()!=null&&user.getAccount().equals(account)
-                &&user.getPassword()!=null&&user.getPassword().equals(password)){
+        WxUser user = service.getAccount(userName);
+        if(user.getAccount()!=null&&user.getAccount().equals(userName)
+                &&user.getPassword()!=null&&user.getPassword().equals(passWord)){
             //update
-            service.getUp(openid, account,password);
+            service.getUp(openid, userName,passWord);
+            HttpSession session = req.getSession();  //获取登录信息
+            session.setAttribute("user",userName);
+            session.setAttribute("power","0");
             resp.sendRedirect("/weChatLoginSuccess.jsp");
         }else{
             resp.sendRedirect("/weChatLoginEorr.jsp");

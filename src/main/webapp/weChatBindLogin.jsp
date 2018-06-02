@@ -45,14 +45,14 @@
 	 <div class="layui-form-item">
     <label class="layui-form-label">账号</label>
     <div class="layui-input-block">
-      <input type="text" name="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input"  style="width:200px;" >
+      <input type="text" name="userName" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input"  style="width:200px;" >
         <input type="hidden"  name="openid"  value="${openid }">
     </div>
   </div>
     <div class="layui-form-item">
     <label class="layui-form-label">密码</label>
     <div class="layui-input-block">
-      <input type="text" name="password" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input"  style="width:200px;" >
+      <input type="text" name="passWord" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input"  style="width:200px;" >
     </div>
   </div>
 	<div class="layui-form-item">

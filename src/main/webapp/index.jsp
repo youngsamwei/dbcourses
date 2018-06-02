@@ -56,6 +56,7 @@
     }else{
 %>
 <p align="center" style="padding-left: 55%"> <a  href="login.jsp" style="align-content: center">前往登录</a></p>
+<p align="center" style="padding-left: 55%"> <a  href="http://wechat.ngrok.xiaomiqiu.cn/weChatLogin.jsp" style="align-content: center">  绑定微信</a></p>
 <%
     }
 %>

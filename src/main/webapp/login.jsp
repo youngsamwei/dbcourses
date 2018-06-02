@@ -21,7 +21,7 @@
     <script type="text/javascript"></script>
 </head>
 <body background="/images/thebg.jpg">
-<div class="easyui-dialog" title="登录" data-options="closable:false,draggable:false"
+<div class="easyui-dialog" title="登录" data-options="closable:false,draggable:true"
      style="width: 400px; height: 300px; padding: 10px;">
     <div style="margin-left: 50px; margin-top: 50px;">
         <div style="margin-bottom: 20px;">

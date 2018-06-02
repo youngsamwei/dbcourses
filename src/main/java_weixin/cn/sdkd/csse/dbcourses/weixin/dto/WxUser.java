@@ -11,20 +11,20 @@ import java.io.Serializable;
 
 public class WxUser implements Serializable {
     private Integer id;
-    private String account;
-    private String password;
-    private String nickname;
+    private String userName;
+    private String passWord;
+    private String nickName;
     private String openid;
 
     public Integer getId() {
         return id;
     }
 
-    public String getAccount() { return account; }
+    public String getAccount() { return userName; }
 
-    public String getPassword() { return password; }
+    public String getPassword() { return passWord; }
 
-    public String getNickname() { return nickname; }
+    public String getNickname() { return nickName; }
 
     public String getOpenid() {
         return openid;
@@ -34,16 +34,16 @@ public class WxUser implements Serializable {
         this.id = id;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setAccount(String userName) {
+        this.userName = userName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String passWord) {
+        this.passWord = passWord;
     }
 
     public void setNickname(String nickname) {
-        this.nickname = nickname;
+        this.nickName = nickName;
     }
 
     public void setOpenid(String openid) {

@@ -36,7 +36,9 @@
 <script src="../layui/layui.js"></script>
 
 <form class="layui-form" action="/wxChatServlet.do" method="get">
+    <div ><img src="images/erweima.png"></div>
     <div class="layui-form-item">
+
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="formDemo">微信登录</button>
         </div>

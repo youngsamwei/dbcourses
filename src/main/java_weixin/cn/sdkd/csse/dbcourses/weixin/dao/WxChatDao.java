@@ -32,7 +32,7 @@ public class WxChatDao {
             }
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                str = resultSet.getString("nickname"); //数据库中的nickname一栏
+                str = resultSet.getString("nickName"); //数据库中的nickname一栏
             }
         }  catch (Exception e) {
             // TODO Auto-generated catch block
@@ -53,9 +53,31 @@ public class WxChatDao {
             }
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                //数据库中的account一栏
-                user.setAccount(resultSet.getString("account"));
-                user.setPassword(resultSet.getString("password"));
+                //数据库中的userName一栏
+                user.setAccount(resultSet.getString("userName"));
+                user.setPassword(resultSet.getString("passWord"));
+            }
+        }  catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }finally{
+            WxChatDButils.close(connection, resultSet, preparedStatement);
+        }
+        return user;
+    }
+    public WxUser selectUser(String sql,Object obj[]){
+        WxUser user = new WxUser();
+        try {
+            connection = WxChatDButils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            for(int i = 0; i < obj.length; i++){
+                preparedStatement.setObject(i+1, obj[i]);
+            }
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                //数据库中的userName一栏
+                user.setAccount(resultSet.getString("userName"));
+                user.setNickname(resultSet.getString("power"));
             }
         }  catch (Exception e) {
             // TODO Auto-generated catch block

@@ -99,7 +99,7 @@
         </foreach>
     </delete>
     <update id="updateUser"  parameterType="Map" >
-        UPDATE user A ,usergroup B SET A.nickName=#{nickName} ,A.power=#{power},A.userGroup=b.id,A.remark=#{remark}
+        UPDATE user A ,usergroup B SET A.nickName=#{nickName} ,A.userGroup=b.id,A.remark=#{remark}
         WHERE A.userId =#{userId}
         AND B.NAME=#{userGroup}
     </update>
