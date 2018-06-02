@@ -176,12 +176,17 @@ public class TaskController extends BaseController {
     {
         try {
             task.setSubmitter((String)((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+            task.setCreateTime(DateUtil.getCurrentDateStr());
             taskService.insert(task);
             return renderSuccess("删除成功,等待审核");
         }
         catch (org.springframework.dao.DuplicateKeyException e){
             System.out.println("创建任务失败,或以存在相同的任务");
             return renderError("创建任务失败,或以存在相同的任务");
+        }
+        catch (Exception ex)
+        {
+            return renderError("创建任务失败");
         }
     }
     @RequestMapping("/knowdelete")
@@ -190,12 +195,16 @@ public class TaskController extends BaseController {
     {
         try {
             task.setSubmitter((String) ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession().getAttribute("user"));
+            task.setCreateTime(DateUtil.getCurrentDateStr());
             taskService.insert(task);
             return renderSuccess("删除成功,等待审核");
         } catch (org.springframework.dao.DuplicateKeyException e){
             System.out.println("创建任务失败,或以存在相同的任务");
-
             return renderError("创建任务失败,或以存在相同的任务");
+        }
+
+        catch (Exception ex) {
+            return renderError("创建任务失败");
         }
     }
 
