@@ -40,7 +40,9 @@ public class Add_lianjie {
         }
     }
     public static String rmhtml(String paragraph){
+        System.out.println(paragraph+"Pa0");
         String str= Jsoup.parse(paragraph).text();//将转义字符重新改为html格式
+        System.out.println(str+"Pa1");
         String str1= Jsoup.parse(str).text();//吃掉html格式
         return str1;
     }
