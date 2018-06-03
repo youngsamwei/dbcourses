@@ -148,6 +148,12 @@ public class TaskController extends BaseController {
         task.setMainid(paragraph.getId());
         task.setContent(paragraph.getParagraphContent());
         task.setType("22");
+        try {
+            task.setCreateTime(DateUtil.getCurrentDateStr());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         taskService.insert(task);
         return renderSuccess();
     }

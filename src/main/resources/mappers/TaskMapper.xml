@@ -99,9 +99,9 @@
         </if>
     </select>
 
-    <update id="updateTask" parameterType="Map">
+    <update id="updateATask" parameterType="Map">
        UPDATE task
-       SET status=1,approver=#{userName},approverTime=#{approverTime}
+       SET status=1,approver=#{userName},approverTime=#{approverTime},createTime=createTime
        WHERE id = #{taskid};
     </update>
     <update id="updateKnow" parameterType="Map">

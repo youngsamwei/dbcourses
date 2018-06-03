@@ -24,7 +24,7 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
     }
     public boolean updateTaskKnow(Map ids){
         boolean flag=false;
-        flag=(this.baseMapper.updateTask(ids)&&this.baseMapper.updateKnow(ids));
+        flag=(this.baseMapper.updateATask(ids)&&this.baseMapper.updateKnow(ids));
         return flag;
     }
     public boolean updateParaEdit(Map params){
@@ -33,17 +33,17 @@ public class TaskServiceImpl extends ServiceImpl<ITaskDao,Task>  implements ITas
     public boolean updateTaskPara(Map params)
     {
         boolean flag=false;
-        flag=(this.baseMapper.updateTask(params)&&this.baseMapper.updatePara(params));
+        flag=(this.baseMapper.updateATask(params)&&this.baseMapper.updatePara(params));
         return flag;
     }
     public boolean deleteParaAudit(Map params){
         boolean flag=false;
-        flag=(this.baseMapper.deletePbyid(params)&&this.baseMapper.updateTask(params));
+        flag=(this.baseMapper.deletePbyid(params)&&this.baseMapper.updateATask(params));
         return flag;
     }
     public boolean deleteKnowAudit(Map params){
         boolean flag=false;
-        flag=(this.baseMapper.deleteKbyid(params)&&this.baseMapper.updateTask(params));
+        flag=(this.baseMapper.deleteKbyid(params)&&this.baseMapper.updateATask(params));
         return flag;
     }
     public Integer selectTaskCount(Map params)

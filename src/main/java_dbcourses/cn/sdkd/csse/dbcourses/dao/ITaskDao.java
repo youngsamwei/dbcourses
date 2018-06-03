@@ -10,7 +10,7 @@ public interface ITaskDao extends BaseMapper<Task>{
     public List<Task>  selectAllTask();
     public List<Task>  selectAllTaskpara(Map params);
     public List<Task>  selectAllTaskknow(Map params);
-    public boolean updateTask(Map ids);
+    public boolean updateATask(Map ids);
     public boolean updateKnow(Map ids);
     public boolean updateParaEdit(Map params);
     public boolean updatePara(Map params);
