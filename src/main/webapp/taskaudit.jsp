@@ -43,7 +43,7 @@
         <option value="13">删除</option>
     </select>
     <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="SearchTask()" plain="true">查找</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>
+    <%--<a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>--%>
     <input type="checkbox" id="taskstatus" value="0">只看未审核的任务
     <br>
     提交时间:

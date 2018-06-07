@@ -219,7 +219,7 @@
                               panelHeight:'auto'"></input>
 
         <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearchUser()" plain="true">查找</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openGroupadd()" plain="true">添加分组</a>
+        <%--<a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openGroupadd()" plain="true">添加分组</a>--%>
         <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="getDelete()" plain="true">批量删除</a>
     </div>
 <table id="tuser" ></table>
