@@ -38,10 +38,10 @@
   <!-- 对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，才由DispatcherServlet继续处理。
      比如对*.js, *.jpg 等静态资源的处理-->
   <!-- 配置哪些是静态资源，缺省Servlet 直接返回 -->
-  <mvc:resources mapping="/static/**" location="/static/" cache-period="31556926"/>
-  <mvc:resources mapping="/upload/**" location="/upload/" cache-period="31556926"/>
-  <mvc:resources mapping="/favicon.ico" location="/static/style/images/favicon.ico" cache-period="31556926"/>
-
+ <mvc:resources location="/js/" mapping="/js/**" />
+  <mvc:resources location="/css/" mapping="/css/**" />
+  <mvc:resources location="/images/" mapping="/images/**" />
+  
   <mvc:annotation-driven>
     <mvc:message-converters register-defaults="false">
       <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->

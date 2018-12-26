@@ -65,6 +65,11 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-install-plugin</artifactId>-->
+                <!--<version>${plugin.maven-compiler}</version>-->
+            <!--</plugin>-->
           <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

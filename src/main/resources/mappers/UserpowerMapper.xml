@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IUserpowerDao">
+    <resultMap type="Resource" id="ResourceResult">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="nickName" column="nickName"/>
+        <result property="userGroup" column="userGroup"/>
+        <result property="powerCode" column="powerCode"/>
+    </resultMap>
+    <delete id="deleteUserpower" parameterType="Map">
+       DELETE FROM userpower 
+       WHERE powercode = #{param1}
+       AND userid in
+        <foreach collection="param2" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <insert id="insertPower" >
+         insert into userpower(userid,powercode)
+         VALUES
+        <foreach item="user" collection="list" separator="," >
+            (#{user.userId},#{user.powerCode})
+        </foreach>
+    </insert>
+    <select id="selectuserPower" parameterType="Map" resultType="String">
+       SELECT B.powercode
+       FROM user A, userpower B
+       WHERE A.userId=B.userid
+       AND A.userName=#{userName}
+       AND (B.powercode='9999999' OR B.powercode=#{powerCode})
+    </select>
+
+</mapper>

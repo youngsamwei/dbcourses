@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.sdkd.csse.dbcourses.dao.IGroupDao">
+    <resultMap type="Group" id="GroupResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectAllGroup" resultType="Group" >
+        SELECT  id ,name ,remark
+        FROM usergroup
+        ORDER by id
+    </select>
+    <select id="selectSomeGroup" resultType="Group" >
+        SELECT  id ,name ,remark
+        FROM usergroup
+        where id >1
+        ORDER by id
+    </select>
+    <insert id="insertuserGroup" parameterType="String">
+        INSERT INTO usergroup(name)
+        VALUE (#{name})
+    </insert>
+
+</mapper>

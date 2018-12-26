@@ -36,15 +36,23 @@
   <!--不完全匹配，加入查询时不区分大小写-->
   <select id="selectTopTenByName" resultType="Knowledgepoint" parameterType="Map">
     select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
-    from Knowledgepoint
+    from knowledgepoint
     where Upper(knowledgepointName) like #{knowledgepointName}
     limit 8
   </select>
+  <insert id="insertKnow" parameterType="Knowledgepoint" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO knowledgepoint(knowledgepointName,addName,knowledgepointCreateDate)
+    VALUES(#{knowledgepointName},#{addName},#{knowledgepointCreateDate})
+  </insert>
+  <insert id="insertATask" parameterType="Map">
+     INSERT INTO task(mainid,submitter,type,createTime)
+     VALUE (#{mainid},#{userName},11,#{createTime})
+  </insert>
 
  <!-- 为了检查知识点添加时是否存在，加入的完全匹配的搜索-->
   <select id="selectKnowledgepointByName" resultType="Knowledgepoint" >
     select id, knowledgepointName, knowledgepointCreateDate, addName
-    from Knowledgepoint
+    from knowledgepoint
     where knowledgepointName = #{name}
   </select>
 
@@ -59,13 +67,13 @@
     <!--南宁添加相关查询-->
     <select id="selectByName" resultType="Knowledgepoint" parameterType="Map">
         select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
-        from Knowledgepoint
+        from knowledgepoint
         where knowledgepointName = #{knowledgepointName}
         limit 1
     </select>
     <select id="selectByKid" resultType="Knowledgepoint" parameterType="Map">
         select id, knowledgepointName, knowledgepointCreateDate, addName,'100' xiangguandu
-        from Knowledgepoint
+        from knowledgepoint
         where id=#{id}
     </select>
 </mapper>

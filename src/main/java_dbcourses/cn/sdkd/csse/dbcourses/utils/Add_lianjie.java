@@ -26,7 +26,7 @@ public class Add_lianjie {
         stopWord = new ArrayList<>();
         // FileInputStream i=new FileInputStream("F://github/stopword1.txt");
         try{
-            File file=new File("F://github//dbcourses//src//nannning//stopword1.txt");
+            File file=new File("src/nannning/stopword1.txt");
             InputStreamReader i = new InputStreamReader(new FileInputStream(file),"gbk");
             BufferedReader r=new BufferedReader(i);
             String str;
@@ -40,13 +40,15 @@ public class Add_lianjie {
         }
     }
     public static String rmhtml(String paragraph){
+        System.out.println(paragraph+"Pa0");
         String str= Jsoup.parse(paragraph).text();//将转义字符重新改为html格式
+        System.out.println(str+"Pa1");
         String str1= Jsoup.parse(str).text();//吃掉html格式
         return str1;
     }
     public static ArrayList<String> fenci(String paragraph){
         Charset charset=Charset.forName("UTF-8");
-        WordDictionary.getInstance().loadUserDict(Paths.get("F://github//dbcourses//src//nannning//ciku.txt"),charset);
+        WordDictionary.getInstance().loadUserDict(Paths.get("src/nannning/ciku.txt"),charset);
         JiebaSegmenter s=new JiebaSegmenter();
         ArrayList<String> list=new ArrayList<String>(s.sentenceProcess(paragraph));
         ArrayList list1=new ArrayList();

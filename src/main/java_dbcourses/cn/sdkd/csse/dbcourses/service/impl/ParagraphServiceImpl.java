@@ -26,15 +26,16 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
   @Resource
   private IKnowledgepointService knowledgepointService;
   /*增加一个知识点段落，需要指定一个位置编号，并将此编号后的所有顺序编号+1。*/
-  public boolean insert(Paragraph entity){
+  public boolean insert(Paragraph entity,Map lparams){
     Integer id=entity.getKnowledgepointId();
     //System.out.println(entity.getParagraphContent()+"nn00");
     ArrayList<String> list;
     ArrayList<String> GL=new ArrayList<>();
     String text=Add_lianjie.rmhtml(entity.getParagraphContent());
+    //System.out.println(entity.getParagraphContent()+"P0");
     list=Add_lianjie.fenci(text);
     String text1=Add_lianjie.rmlianjie(entity.getParagraphContent());
-    System.out.println(list+"nanning0");
+    //System.out.println(list+"nanning0");
     for(String s:list){
       Map<String, Object> params = new HashMap<String, Object>();
       params.put("knowledgepointName", "%" + s + "%");
@@ -62,9 +63,14 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
           GL.add(s);
       }
     }
+    System.out.println(text1+"Pa2");
     entity.setParagraphContent(text1);
+    this.baseMapper.insertPara(entity);
+    int pid =entity.getId();
+    System.out.println("11111111111111111111111111111"+pid);
+    lparams.put("mainid",pid);
     this.baseMapper.updateParagraphOrder(entity);
-    return super.insert(entity);
+    return this.baseMapper.insertATaskP(lparams);
   }
   public boolean updateById(Paragraph entity){
 
@@ -142,4 +148,16 @@ public class ParagraphServiceImpl extends ServiceImpl<IParagraphDao, Paragraph> 
     return this.baseMapper.getParagraphsByKid(kid);
   }
 
+  public boolean insertPara(Paragraph entity,Map params){
+    this.baseMapper.updateParagraphOrder(entity);
+    this.baseMapper.insertPara(entity);
+    int id =entity.getId();
+    System.out.println("11111111111111111111111111111"+id);
+    params.put("mainid",id);
+    return this.baseMapper.insertATaskP(params);
+  }
+  public String selectPkname(int id)
+  {
+    return this.baseMapper.selectPkname(id);
+  }
 }
